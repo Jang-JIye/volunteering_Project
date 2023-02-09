@@ -19,7 +19,7 @@ public class SignupRequestDto {
 
   private String adminToken;
 
-  @Pattern(regexp = "^([0-9]{3})-?([0-9]{2})-?([0-9]{4})", message = "-를 포함하여 사업자 등록번호를 10자리를 입력해주세요.")
+  @Pattern(regexp = "^([0-9]{3})-?([0-9]{2})-?([0-9]{4})", message = "-(하이픈)를 포함하여 사업자 등록번호를 10자리를 입력해주세요.")
   private String companyRegisterNumb;
 
 
