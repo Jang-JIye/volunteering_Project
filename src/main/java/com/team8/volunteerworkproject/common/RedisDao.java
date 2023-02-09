@@ -6,10 +6,10 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RedisDAO {
+public class RedisDao {
   private final RedisTemplate<String, Object> redisTemplate;
 
-  public RedisDAO(RedisTemplate<String, Object> redisTemplate) {
+  public RedisDao(RedisTemplate<String, Object> redisTemplate) {
     this.redisTemplate = redisTemplate;
   }
 
