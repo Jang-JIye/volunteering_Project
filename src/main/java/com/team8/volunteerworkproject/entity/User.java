@@ -1,0 +1,36 @@
+package com.team8.volunteerworkproject.entity;
+
+import com.team8.volunteerworkproject.enums.UserRoleEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity(name = "users")
+@Getter
+@NoArgsConstructor
+public class User extends Timestamp {
+    @Id
+    @Column(name = "user_id", nullable = false)
+    private String userId;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
+    public User(String userId, String password, UserRoleEnum role) {
+        this.userId = userId;
+        this.password = password;
+        this.role = role;
+    }
+
+    public void changeRole(UserRoleEnum role) {
+        this.role = role;
+    }
+}
