@@ -21,13 +21,20 @@ public class User extends Timestamp {
     private String password;
 
     @Column(nullable = false)
+    private String nickname;
+
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    public User(String userId, String password, UserRoleEnum role) {
+    private String companyRegisterNumb;
+
+    public User(String userId, String password, String nickname, UserRoleEnum role, String companyRegisterNumb) {
         this.userId = userId;
         this.password = password;
+        this.nickname = nickname;
         this.role = role;
+        this.companyRegisterNumb = companyRegisterNumb;
     }
 
     public void changeRole(UserRoleEnum role) {
