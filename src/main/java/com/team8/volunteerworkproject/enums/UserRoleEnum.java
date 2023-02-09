@@ -3,7 +3,7 @@ package com.team8.volunteerworkproject.enums;
 
 public enum UserRoleEnum {
   USER(Authority.USER),
-  CORPORATION(Authority.CORPORATION),
+  COMPANY(Authority.COMPANY),
   ADMIN(Authority.ADMIN);
 
   private final String authority;
@@ -18,7 +18,7 @@ public enum UserRoleEnum {
 
   public static class Authority {
     public static final String USER = "ROLE_USER";
-    public static final String CORPORATION = "ROLE_CORPORATION";
+    public static final String COMPANY = "ROLE_COMPANY";
     public static final String ADMIN = "ROLE_ADMIN";
   }
 }
