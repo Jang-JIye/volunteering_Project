@@ -21,7 +21,7 @@ public class VolunteerWorkPost {
     private String title;
 
     @Column(nullable = false)
-    private String content;
+    private String contents;
 
     @Column(nullable = false)
     private String interestArea;

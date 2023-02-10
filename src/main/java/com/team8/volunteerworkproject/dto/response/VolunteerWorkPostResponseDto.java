@@ -10,19 +10,20 @@ public class VolunteerWorkPostResponseDto {
 
     private Long postId;
     private String title;
-    private String writer;
-    private String local;
+    private String userId;
+    private String interestArea;
     private String status;
+    private String contents;
 //    private LocalDateTime schedule;
-
 
 
     public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
         this.postId = post.getId();
         this.title = post.getTitle();
-        this.writer = post.getUser().getWriter();
-        this.local = post.getInterestArea();
+        this.userId = post.getUser().getUserId();
+        this.interestArea = post.getInterestArea();
         this.status = post.getPostStatus();
+        this.contents = post.getContents();
 //        this.schedule = post.getSchedule();
 
     }
