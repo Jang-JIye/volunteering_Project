@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class VolunteerWorkPost {
+public class VolunteerWorkPost extends Timestamp{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postId;
 
     @Column(nullable = false)
     private String postStatus;
@@ -32,6 +32,5 @@ public class VolunteerWorkPost {
     @JoinColumn
     @ManyToOne
     private User user;
-
 
 }
