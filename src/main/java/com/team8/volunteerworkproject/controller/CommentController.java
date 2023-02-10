@@ -21,7 +21,7 @@ public class CommentController {
 
   private final CommentServiceImpl commentService;
 
-  // #17-2 댓글 작성
+  // #17-1 댓글 작성
   @PostMapping("/volunteerWorkPosts/{postsId}/comments")
   public ResponseEntity<CommentResponseDto> createComment(@PathVariable Long id,
       @RequestBody CommentRequestDto requestDto,

@@ -7,6 +7,7 @@ import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.jwt.AuthenticatedUserInfoDto;
 import com.team8.volunteerworkproject.jwt.JwtUtil;
+import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,22 +35,36 @@ public class UserController {
   public ResponseEntity<StatusResponseDto> signup(@RequestBody @Valid SignupRequestDto requestDto) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "회원가입이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     userService.signup(requestDto);
-    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);  }
+    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+  }
 
   @PostMapping("/users/signin")
-  public ResponseEntity<StatusResponseDto> signin(@RequestBody @Valid SigninRequestDto requestDto, HttpServletResponse response) {
+  public ResponseEntity<StatusResponseDto> signin(@RequestBody @Valid SigninRequestDto requestDto,
+      HttpServletResponse response) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "로그인이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
 
     AuthenticatedUserInfoDto userInfoDto = userService.signin(requestDto);
     String accessToken = jwtUtil.createToken(userInfoDto.getUsername(), userInfoDto.getRole());
-    String refreshToken = jwtUtil.createRefreshToken(userInfoDto.getUsername(), userInfoDto.getRole());
+    String refreshToken = jwtUtil.createRefreshToken(userInfoDto.getUsername(),
+        userInfoDto.getRole());
     response.addHeader(JwtUtil.AUTHORIZATION_HEADER, accessToken);
     redisDao.setValues(userInfoDto.getUsername(), refreshToken, Duration.ofMinutes(10));
 
+    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+  }
+
+  @PostMapping("/users/signout")
+  public ResponseEntity<StatusResponseDto> signout(
+      @AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response) {
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "로그아웃이 완료되었습니다.");
+    HttpHeaders headers = new HttpHeaders();
+    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    redisDao.deleteValues(userDetails.getUserId());
+    response.addHeader(JwtUtil.AUTHORIZATION_HEADER, null);
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
 

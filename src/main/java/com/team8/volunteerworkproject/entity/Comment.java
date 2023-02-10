@@ -10,9 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
 @Getter
 @Entity
 @NoArgsConstructor
@@ -23,28 +21,38 @@ public class Comment extends Timestamp {
   private Long commentId;
 
   @Column(nullable = false)
-  private String content;
+  private String contents;
 
+  //연관관계 끊기
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
-
+  //연관관계 끊기
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
   private VolunteerWorkPost volunteerWorkPost;
 
-  public boolean isWriter(Long userId) {
+  public boolean isWriter(String userId) {
     return this.user.isValidUserId(userId) || this.user.isAdmin();
   }
 
+//  // 작성자 검증을 어떻게 해야 할지? 기존 프로젝트에서는 40~48번 줄을 User엔티티에 입력 했음.
+//  public boolean isValidUserId(Long userId) {
+//    return this.id.equals(userId);
+//  }
+//
+//  public boolean isAdmin() {
+//    return this.userRoleEnum.equals(UserRoleEnum.ADMIN);
+//  }
+
   public Comment(CommentRequestDto requestDto, User user, VolunteerWorkPost volunteerWorkPost) {
-    this.content = requestDto.getContent();
+    this.contents = requestDto.getContents();
     this.user = user;
     this.volunteerWorkPost = volunteerWorkPost;
   }
 
   public void updateComment(CommentRequestDto requestDto) {
-    this.content = requestDto.getContent();
+    this.contents = requestDto.getContents();
   }
 
 }

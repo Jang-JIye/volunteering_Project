@@ -15,20 +15,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<StatusResponseDto> IllegalArgumentExceptionHandler(IllegalArgumentException e) {
-        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.BAD_REQUEST, e.getMessage());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
-        return new ResponseEntity<>(responseDto, headers, HttpStatus.BAD_REQUEST);
-    }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StatusResponseDto> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.BAD_REQUEST, message);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
-        return new ResponseEntity<>(responseDto, headers, HttpStatus.BAD_REQUEST);
-    }
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<StatusResponseDto> IllegalArgumentExceptionHandler(
+      IllegalArgumentException e) {
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.BAD_REQUEST, e.getMessage());
+    HttpHeaders headers = new HttpHeaders();
+    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    return new ResponseEntity<>(responseDto, headers, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<StatusResponseDto> MethodArgumentNotValidExceptionHandler(
+      MethodArgumentNotValidException e) {
+    String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.BAD_REQUEST, message);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    return new ResponseEntity<>(responseDto, headers, HttpStatus.BAD_REQUEST);
+  }
 }

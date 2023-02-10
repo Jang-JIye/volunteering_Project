@@ -46,9 +46,7 @@ public class WebSecurityConfig {
 
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    http.authorizeHttpRequests().requestMatchers("/users/signup").permitAll()
-        .requestMatchers("/users/signin").permitAll()
-        .requestMatchers("/admin/signup").permitAll()
+    http.authorizeHttpRequests().requestMatchers("/users/**").permitAll()
         .requestMatchers(HttpMethod.GET,"/posts/**").permitAll()
         .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
@@ -56,5 +54,6 @@ public class WebSecurityConfig {
 
 
     return http.build();
+    //깃허브 테스트용 커밋
   }
 }

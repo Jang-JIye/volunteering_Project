@@ -6,6 +6,7 @@ import com.team8.volunteerworkproject.entity.Comment;
 import com.team8.volunteerworkproject.entity.User;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import com.team8.volunteerworkproject.repository.CommentRepository;
+import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
     Comment comment = commentRepository.findById(commentId).orElseThrow(
         () -> new IllegalArgumentException("삭제할 댓글이 없습니다.")
     );
-    if (comment.isWriter(user.getId())) {
+    if (comment.isWriter(user.getUserId())) {
       commentRepository.delete(comment);
       return new ResponseEntity<>("삭제 완료!", HttpStatus.OK);
     }
