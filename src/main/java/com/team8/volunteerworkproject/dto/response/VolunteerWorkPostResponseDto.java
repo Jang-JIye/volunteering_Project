@@ -10,20 +10,18 @@ public class VolunteerWorkPostResponseDto {
 
     private Long postId;
     private String title;
-    private String userId;
-    private String interestArea;
+    private String content;
+    private String area;
     private String status;
-    private String contents;
 //    private LocalDateTime schedule;
 
 
     public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
-        this.postId = post.getId();
+        this.postId = post.getPostId();
         this.title = post.getTitle();
-        this.userId = post.getUser().getUserId();
-        this.interestArea = post.getInterestArea();
-        this.status = post.getPostStatus();
-        this.contents = post.getContents();
+        this.content = post.getContent();
+        this.area = post.getArea();
+        this.status = String.valueOf(post.getPostStatus());
 //        this.schedule = post.getSchedule();
 
     }
