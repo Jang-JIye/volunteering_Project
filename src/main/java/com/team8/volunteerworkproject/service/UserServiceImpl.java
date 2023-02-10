@@ -6,6 +6,7 @@ import com.team8.volunteerworkproject.entity.User;
 import com.team8.volunteerworkproject.enums.UserRoleEnum;
 import com.team8.volunteerworkproject.jwt.AuthenticatedUserInfoDto;
 import com.team8.volunteerworkproject.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +14,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
+
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
@@ -38,9 +40,10 @@ public class UserServiceImpl implements UserService{
       }
       role = UserRoleEnum.ADMIN;
     }
-    if(requestDto.getCompanyRegisterNumb() != null){
-      Optional<User> found2 = userRepository.findByCompanyRegisterNumb(requestDto.getCompanyRegisterNumb());
-      if(found2.isPresent()){
+    if (requestDto.getCompanyRegisterNumb() != null) {
+      Optional<User> found2 = userRepository.findByCompanyRegisterNumb(
+          requestDto.getCompanyRegisterNumb());
+      if (found2.isPresent()) {
         throw new IllegalArgumentException("중복된 사업자등록번호가 존재합니다.");
       }
       role = UserRoleEnum.COMPANY;
@@ -61,5 +64,8 @@ public class UserServiceImpl implements UserService{
     return new AuthenticatedUserInfoDto(user.getRole(), user.getUserId());
   }
 
+  @Override
+  public void signout(HttpServletRequest request) {
 
+  }
 }
