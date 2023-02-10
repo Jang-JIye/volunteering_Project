@@ -1,6 +1,7 @@
 package com.team8.volunteerworkproject.entity;
 
 
+import com.team8.volunteerworkproject.enums.PostStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,30 +9,29 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class VolunteerWorkPost {
+public class VolunteerWorkPost extends Timestamp{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postId;
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private PostStatus postStatus = PostStatus.TRUE;
 
     @Column(nullable = false)
-    private String postStatus;
+    private String userId;
 
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
-    private String contents;
+    private String content;
 
     @Column(nullable = false)
-    private String interestArea;
+    private String area;
 
 //    @Column(nullable = false)
 //    private LocalDateTime schedule;
-
-    @JoinColumn
-    @ManyToOne
-    private User user;
 
 
 }

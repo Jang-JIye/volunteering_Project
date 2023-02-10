@@ -46,14 +46,12 @@ public class WebSecurityConfig {
 
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    http.authorizeHttpRequests().requestMatchers("/users/**").permitAll()
-        .requestMatchers(HttpMethod.GET,"/posts/**").permitAll()
+    http.authorizeHttpRequests().requestMatchers("/**").permitAll()
         .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
     http.formLogin().disable();
 
 
     return http.build();
-    //깃허브 테스트용 커밋
   }
 }
