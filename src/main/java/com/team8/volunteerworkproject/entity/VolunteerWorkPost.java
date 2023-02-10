@@ -1,6 +1,7 @@
 package com.team8.volunteerworkproject.entity;
 
 
+import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,20 @@ public class VolunteerWorkPost {
     @ManyToOne
     private User user;
 
+    public VolunteerWorkPost(String title, String contents) {
+        this.title = getTitle();
+        this.contents = getContents();
+    }
 
+    public VolunteerWorkPost(VolunteerWorkPostRequestDto requestDto, User user) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.interestArea = requestDto.getPostStatus();
+    }
+
+    public void update(String title, String contents, String postStatus) {
+        this.title = getTitle();
+        this.contents = getContents();
+        this.postStatus = getPostStatus();
+    }
 }
