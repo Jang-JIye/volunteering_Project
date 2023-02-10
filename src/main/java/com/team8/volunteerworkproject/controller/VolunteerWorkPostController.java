@@ -32,33 +32,54 @@ public class VolunteerWorkPostController {
 
     //게시글 생성
     //@Secured(UserRoleEnum.Authority.COMPANY)
-    @Secured({"ROLE_COMPANY","ROLE_ADMIN"})
+   // @Secured({"ROLE_COMPANY","ROLE_ADMIN"})
     @PostMapping("/volunteerWorkPosts")
     public VolunteerWorkPostResponseDto createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return volunteerWorkPostService.createPost(requestDto, userDetails.getUsername());
+        VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(requestDto, userDetails.getUserId());
+
+        HttpHeaders headers = new HttpHeaders();//필추
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+
+        return volunteerWorkPostService.createPost(requestDto, userDetails.getUserId());
+        // ResponseEntity.setResponseEntity(data,headers, HttpStatus.OK);
+        // new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 
     //게시글 수정
     @PutMapping("/volunteerWorkPosts/{PostId}")
+    public VolunteerWorkPostResponseDto updatePost(@RequestBody VolunteerWorkPostRequestDto requestDto,
+                                                   @PathVariable Long postId,
+                                                   @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        VolunteerWorkPostResponseDto data = volunteerWorkPostService.updatePost(requestDto, postId, userDetails.getUserId());//getUserId??
+
+        HttpHeaders headers = new HttpHeaders();//필추
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+
+        return volunteerWorkPostService.updatePost(requestDto, postId, userDetails.getUserId());
+    }
 
 
     //게시글 삭제
     @DeleteMapping("/volunteerWorkPosts/{PostId}")
+    public VolunteerWorkPostResponseDto deletePost(@PathVariable Long postId,
+                                                   @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        VolunteerWorkPostResponseDto data = volunteerWorkPostService.deletePost(postId, userDetails.getUserId());
+
+        HttpHeaders headers = new HttpHeaders();//필추
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+
+        return volunteerWorkPostService.deletePost(postId, userDetails.getUserId()); //??
+    }
 
 
-
-
-
-
-
-    // 전제 모집글 조회
+    // 전체 모집글 조회
     @GetMapping("/volunteerWorkPosts")
     public ResponseEntity<StatusAndDataResponseDto> getAllPost(){
         List<AllVolunteerWorkPostResponseDto> data = volunteerWorkPostService.getAllPost();
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "전체 모집글 조회가 완료되었습니다.", data);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        HttpHeaders headers = new HttpHeaders();//필추
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 

@@ -1,6 +1,8 @@
 package com.team8.volunteerworkproject.entity;
 
 
+import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
+import com.team8.volunteerworkproject.enums.PostStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,20 +38,14 @@ public class VolunteerWorkPost extends Timestamp{
     @ManyToOne
     private User user;
 
-    public VolunteerWorkPost(String title, String contents) {
+    public VolunteerWorkPost(String title, String content) {
         this.title = getTitle();
-        this.contents = getContents();
+        this.content = getContent();
     }
 
-    public VolunteerWorkPost(VolunteerWorkPostRequestDto requestDto, User user) {
-        this.title = requestDto.getTitle();
-        this.contents = requestDto.getContents();
-        this.interestArea = requestDto.getPostStatus();
-    }
-
-    public void update(String title, String contents, String postStatus) {
+    public void update(String title, String content, String postStatus) {
         this.title = getTitle();
-        this.contents = getContents();
-        this.postStatus = getPostStatus();
+        this.content = getContent();
+        this.postStatus = getPostStatus();//지역
     }
 }
