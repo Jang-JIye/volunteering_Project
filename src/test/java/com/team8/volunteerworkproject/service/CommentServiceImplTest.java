@@ -13,7 +13,6 @@ import com.team8.volunteerworkproject.entity.User;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import com.team8.volunteerworkproject.jwt.JwtUtil;
 import com.team8.volunteerworkproject.repository.CommentRepository;
-import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,14 +41,14 @@ class CommentServiceImplTest {
   void createComment() {
     //given
     Long id = 1L;
-    CommentRequestDto commentRequestDto = mock(CommentRequestDto.class);
+    CommentRequestDto requestDto = mock(CommentRequestDto.class);
     User user = mock(User.class);
     VolunteerWorkPost volunteerWorkPost = mock(VolunteerWorkPost.class);
     Comment comment = mock(Comment.class);
     when(volunteerWorkPostRepository.findById(id)).thenReturn(ArgumentMatchers.any());
     CommentResponseDto commentResponseDto = mock(CommentResponseDto.class);
     //when
-    CommentResponseDto commentServiceComment = commentService.createComment(id, commentRequestDto,
+    CommentResponseDto commentServiceComment = commentService.createComment(id, requestDto,
         user);
     //then
     verify(commentRepository, times(1)).save(any());

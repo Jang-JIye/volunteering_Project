@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class CommentRequestDto {
 
+  private String nickname;
   private String content;
 }

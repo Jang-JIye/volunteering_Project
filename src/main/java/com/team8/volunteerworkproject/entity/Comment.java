@@ -20,7 +20,7 @@ public class Comment extends Timestamp {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long comment_id;
+  private Long commentId;
 
   @Column(nullable = false)
   private String content;
@@ -33,15 +33,18 @@ public class Comment extends Timestamp {
   @JoinColumn(name = "post_id", nullable = false)
   private VolunteerWorkPost volunteerWorkPost;
 
-  public Comment(CommentRequestDto commentRequestDto, User user,
-      VolunteerWorkPost volunteerWorkPost) {
-    this.content = commentRequestDto.getContent();
+  public boolean isWriter(Long userId) {
+    return this.user.isValidUserId(userId) || this.user.isAdmin();
+  }
+
+  public Comment(CommentRequestDto requestDto, User user, VolunteerWorkPost volunteerWorkPost) {
+    this.content = requestDto.getContent();
     this.user = user;
     this.volunteerWorkPost = volunteerWorkPost;
   }
 
-  public void updateComment(CommentRequestDto commentRequestDto) {
-    this.content = commentRequestDto.getContent();
+  public void updateComment(CommentRequestDto requestDto) {
+    this.content = requestDto.getContent();
   }
 
 }
