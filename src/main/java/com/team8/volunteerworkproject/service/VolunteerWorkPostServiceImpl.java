@@ -60,20 +60,22 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService{
     @Override
     @Transactional(readOnly = true)
     public List<AllVolunteerWorkPostResponseDto> getAllPost(){
-        List<VolunteerWorkPost> allVolunteerWorkPost = volunteerWorkPostRepository.findAllByCreatedAtDesc();
-        List<AllVolunteerWorkPostResponseDto> responseDtos = new ArrayList<>();
+        List<VolunteerWorkPost> allVolunteerWorkPost = volunteerWorkPostRepository.findAllByOrderByCreatedAtDesc();
+        List<AllVolunteerWorkPostResponseDto> responseDto = new ArrayList<>();
         for (VolunteerWorkPost volunteerWorkPost : allVolunteerWorkPost){
-            responseDtos.add(new AllVolunteerWorkPostResponseDto(volunteerWorkPost));
+            responseDto.add(new AllVolunteerWorkPostResponseDto(volunteerWorkPost));
         }
-        return responseDtos;
+        return responseDto;
     }
 
 
     @Override
+    @Transactional(readOnly = true)
     public VolunteerWorkPostResponseDto getPost(Long postId) {
-        VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
+        VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
                 () -> new IllegalArgumentException("찾으시는 모집글이 없습니다.")
         );
-        return new VolunteerWorkPostResponseDto(post);
+        VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post);
+        return responseDto;
     }
 }
