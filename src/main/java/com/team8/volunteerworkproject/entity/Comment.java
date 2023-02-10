@@ -23,31 +23,16 @@ public class Comment extends Timestamp {
   @Column(nullable = false)
   private String contents;
 
-  //연관관계 끊기
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  private String userId;
+
   //연관관계 끊기
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
   private VolunteerWorkPost volunteerWorkPost;
 
-  public boolean isWriter(String userId) {
-    return this.user.isValidUserId(userId) || this.user.isAdmin();
-  }
-
-//  // 작성자 검증을 어떻게 해야 할지? 기존 프로젝트에서는 40~48번 줄을 User엔티티에 입력 했음.
-//  public boolean isValidUserId(Long userId) {
-//    return this.id.equals(userId);
-//  }
-//
-//  public boolean isAdmin() {
-//    return this.userRoleEnum.equals(UserRoleEnum.ADMIN);
-//  }
-
-  public Comment(CommentRequestDto requestDto, User user, VolunteerWorkPost volunteerWorkPost) {
+  public Comment(CommentRequestDto requestDto, String userId, VolunteerWorkPost volunteerWorkPost) {
     this.contents = requestDto.getContents();
-    this.user = user;
+    this.userId = userId;
     this.volunteerWorkPost = volunteerWorkPost;
   }
 

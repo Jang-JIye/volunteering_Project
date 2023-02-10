@@ -1,24 +1,20 @@
 package com.team8.volunteerworkproject.dto.response;
 
 import com.team8.volunteerworkproject.entity.Comment;
-import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CommentResponseDto {
 
-  private final Long id;
-  private final String contents;
-  private final LocalDateTime createdAt;
-  private final LocalDateTime modifiedAt;
+  private Long commentId;
+  private Long postId;
+  private String contents;
 
   public CommentResponseDto(Comment comment) {
-    this.id = comment.getCommentId();
+    this.commentId = comment.getCommentId();
+    this.postId = comment.getVolunteerWorkPost().getPostId();
     this.contents = comment.getContents();
-    // createdAT, modifiedAt 삭제?
-    this.createdAt = comment.getCreatedAt();
-    this.modifiedAt = comment.getModifiedAt();
-
   }
-
 }

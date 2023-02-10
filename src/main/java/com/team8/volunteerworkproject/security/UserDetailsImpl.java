@@ -37,7 +37,7 @@ public class UserDetailsImpl implements UserDetails {
     return null;
   }
 
-  public User getUserId() {
+  public String getUserId() {
     return this.user.getUserId();
   }
 
@@ -59,5 +59,9 @@ public class UserDetailsImpl implements UserDetails {
   @Override
   public boolean isEnabled() {
     return false;
+  }
+
+  public boolean isValidId(String userId) {
+    return this.user.getUserId().equals(userId);
   }
 }
