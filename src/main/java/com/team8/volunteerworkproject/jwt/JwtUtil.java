@@ -1,6 +1,6 @@
 package com.team8.volunteerworkproject.jwt;
 
-import com.team8.volunteerworkproject.common.RedisDAO;
+import com.team8.volunteerworkproject.common.RedisDao;
 import com.team8.volunteerworkproject.enums.JwtEnum;
 import com.team8.volunteerworkproject.enums.UserRoleEnum;
 import io.jsonwebtoken.Claims;
@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class JwtUtil {
 
-  private final RedisDAO redisDAO;
+  private final RedisDao redisDAO;
 
   public static final String AUTHORIZATION_HEADER = "Authorization";
   public static final String REFRESH_HEADER = "Refresh";

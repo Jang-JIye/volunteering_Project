@@ -1,10 +1,12 @@
 package com.team8.volunteerworkproject.service;
 
+import com.team8.volunteerworkproject.dto.request.SigninRequestDto;
 import com.team8.volunteerworkproject.dto.request.SignupRequestDto;
-import com.team8.volunteerworkproject.repository.UserRepository;
+import com.team8.volunteerworkproject.jwt.AuthenticatedUserInfoDto;
 
 public interface UserService {
 
   void signup(SignupRequestDto requestDto);
+  AuthenticatedUserInfoDto signin(SigninRequestDto requestDto);
 
 }
