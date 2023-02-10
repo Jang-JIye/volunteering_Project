@@ -33,7 +33,7 @@ public class User extends Timestamp {
         this.userId = userId;
         this.password = password;
         this.nickname = nickname;
-        this.role = role;
+        this.role = role;    
         this.companyRegisterNumb = companyRegisterNumb;
     }
 

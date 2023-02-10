@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
       IllegalArgumentException e) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.BAD_REQUEST, e.getMessage());
     HttpHeaders headers = new HttpHeaders();
-    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return new ResponseEntity<>(responseDto, headers, HttpStatus.BAD_REQUEST);
   }
 
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.BAD_REQUEST, message);
     HttpHeaders headers = new HttpHeaders();
-    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return new ResponseEntity<>(responseDto, headers, HttpStatus.BAD_REQUEST);
   }
 }

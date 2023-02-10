@@ -35,7 +35,7 @@ public class UserController {
   public ResponseEntity<StatusResponseDto> signup(@RequestBody @Valid SignupRequestDto requestDto) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "회원가입이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
-    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     userService.signup(requestDto);
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
@@ -45,7 +45,7 @@ public class UserController {
       HttpServletResponse response) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "로그인이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
-    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
 
     AuthenticatedUserInfoDto userInfoDto = userService.signin(requestDto);
     String accessToken = jwtUtil.createToken(userInfoDto.getUsername(), userInfoDto.getRole());
@@ -62,7 +62,7 @@ public class UserController {
       @AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "로그아웃이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
-    headers.setcontentsType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     redisDao.deleteValues(userDetails.getUserId());
     response.addHeader(JwtUtil.AUTHORIZATION_HEADER, null);
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);

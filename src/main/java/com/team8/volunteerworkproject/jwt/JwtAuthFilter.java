@@ -66,7 +66,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
   public void jwtExceptionHandler(HttpServletResponse response, String msg, int statusCode) {
     response.setStatus(statusCode);
-    response.setcontentsType("application/json");
+    response.setContentType("application/json");
     try {
       String json = new ObjectMapper().writeValueAsString(
           new SecurityExceptionDto(statusCode, msg));
