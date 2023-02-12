@@ -3,7 +3,6 @@ package com.team8.volunteerworkproject.controller;
 
 import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
-import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.service.VolunteerWorkPostServiceImpl;

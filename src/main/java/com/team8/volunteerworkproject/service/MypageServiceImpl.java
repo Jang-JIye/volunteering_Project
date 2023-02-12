@@ -35,4 +35,29 @@ public class MypageServiceImpl implements MyPageService{
     myPageRepository.save(profile);
     return new ProfileResponseDto(userId, profile);
   }
+
+  @Override
+  public ProfileResponseDto getCustomerProfile(String userId) {
+    Profile profile = myPageRepository.findByUserId(userId).orElseThrow(
+        () -> new IllegalArgumentException("프로필을 작성해 주세요.")
+    );
+    return new ProfileResponseDto(userId, profile);
+
+  }
+
+  @Override
+  public ProfileResponseDto updateProfile(String userId, ProfileRequestDto requestDto) {
+    Profile profile = myPageRepository.findByUserId(userId).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 프로필입니다.")
+    );
+    if (requestDto.getImage() == null) {
+      profile.updateWithoutImage(requestDto);
+    } else {
+      profile.updateWithImage(requestDto);
+    }
+    myPageRepository.save(profile);
+    return new ProfileResponseDto(userId, profile);
+  }
+
+
 }
