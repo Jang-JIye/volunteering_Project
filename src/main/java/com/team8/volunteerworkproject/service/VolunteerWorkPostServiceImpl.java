@@ -49,13 +49,12 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService{
 //            volunteerWorkPostRepository.save(post); // update 로 변경된 나머지를 다시 DB에 저장
             post.update(requestDto);
         }
-        System.out.println("게시글이 수정되었습니다.");
         return new VolunteerWorkPostResponseDto(post);
     }
 
     //게시글 삭제
     @Override
-    public VolunteerWorkPostResponseDto deletePost(Long postId, String userId) {
+    public void deletePost(Long postId, String userId) {
         VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
@@ -64,7 +63,6 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService{
         } else {
             volunteerWorkPostRepository.delete(post);
         }
-        return new VolunteerWorkPostResponseDto(post);
     }
 //----------------------------------------------------------------------------------------------------------------------
 
