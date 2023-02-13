@@ -8,8 +8,6 @@ import lombok.Getter;
 @Getter
 public class VolunteerWorkPostResponseDto {
     private Long postId;
-
-    private String userId;
     private String title;
     private String content;
     private String area;
@@ -19,7 +17,6 @@ public class VolunteerWorkPostResponseDto {
 
     public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
         this.postId = post.getPostId();
-        this.userId = post.getUserId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.area = post.getArea();

@@ -8,6 +8,7 @@ import com.team8.volunteerworkproject.repository.UserRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,27 +24,30 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService{
 
     //게시글 작성
     @Override
-    public VolunteerWorkPostResponseDto createPost(VolunteerWorkPostRequestDto requestDto, String userId) {
-        //User user = (User) userRepository.findByUserId(userDetails.getUserId()).orElseThrow(() -> new IllegalArgumentException("동일한 유저가 아님"));
+    @Transactional
+    public VolunteerWorkPostResponseDto createPost(String userId, VolunteerWorkPostRequestDto requestDto) {
+//        User user = (User) userRepository.findByUserId(userDetails.getUserId()).orElseThrow(() -> new IllegalArgumentException("동일한 유저가 아님"));
 
-        VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto);//닉네임, 지역,
+        VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(), requestDto.getPostStatus(), requestDto.getArea());//닉네임, 지역,
         volunteerWorkPostRepository.save(post);
 
-        System.out.println("게시글이 등록되었습니다.");
         return new VolunteerWorkPostResponseDto(post);
     }
 
     //게시글 수정
     @Override
+    @Transactional
     public VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto, Long postId, String userId) {
         VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        if (!post.getUser().getUserId().equals(userId)) {
+        if (!post.getUserId().equals(userId)) {
             throw new IllegalArgumentException("게시글의 작성자가 아닙니다.");
         } else {
+//            post.update(requestDto);
+//            volunteerWorkPostRepository.save(post);
+//            volunteerWorkPostRepository.save(post); // update 로 변경된 나머지를 다시 DB에 저장
             post.update(requestDto);
-            volunteerWorkPostRepository.save(post); // update 로 변경된 나머지를 다시 DB에 저장
         }
         System.out.println("게시글이 수정되었습니다.");
         return new VolunteerWorkPostResponseDto(post);
@@ -55,12 +59,11 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService{
         VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        if (!post.getUser().getUserId().equals(userId)) {
-            throw new IllegalArgumentException("게시글의 작성자가 아닙니다.");
+        if (!post.getUserId().equals(userId)) {
+            throw new IllegalArgumentException("게시글의 작성자가 일치하지 않습니다.");
         } else {
             volunteerWorkPostRepository.delete(post);
         }
-        System.out.println("게시글이 삭제되었습니다.");
         return new VolunteerWorkPostResponseDto(post);
     }
 //----------------------------------------------------------------------------------------------------------------------

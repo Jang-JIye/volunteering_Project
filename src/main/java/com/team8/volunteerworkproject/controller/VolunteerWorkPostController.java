@@ -33,42 +33,40 @@ public class VolunteerWorkPostController {
     //게시글 작성
     //@Secured(UserRoleEnum.Authority.COMPANY)
     @PostMapping("/volunteerWorkPosts")
-    public VolunteerWorkPostResponseDto createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
-                                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(requestDto, userDetails.getUserId());
-
+    public ResponseEntity<StatusAndDataResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
-
-        return volunteerWorkPostService.createPost(requestDto, userDetails.getUserId());
-        // ResponseEntity.setResponseEntity(data,headers, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
         // new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 
     //게시글 수정
-    @PutMapping("/volunteerWorkPosts/{PostId}")
-    public VolunteerWorkPostResponseDto updatePost(@RequestBody VolunteerWorkPostRequestDto requestDto,
+    @PatchMapping("/volunteerWorkPosts/{postId}")
+    public ResponseEntity<StatusAndDataResponseDto> updatePost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                    @PathVariable Long postId,
                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
         VolunteerWorkPostResponseDto data = volunteerWorkPostService.updatePost(requestDto, postId, userDetails.getUserId());//getUserId??
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글이 수정되었습니다.", data);
 
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
 
-        return volunteerWorkPostService.updatePost(requestDto, postId, userDetails.getUserId());
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 
 
     //게시글 삭제
-    @DeleteMapping("/volunteerWorkPosts/{PostId}")
-    public VolunteerWorkPostResponseDto deletePost(@PathVariable Long postId,
+    @DeleteMapping("/volunteerWorkPosts/{postId}")
+    public ResponseEntity<StatusResponseDto> deletePost(@PathVariable Long postId,
                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        VolunteerWorkPostResponseDto data = volunteerWorkPostService.deletePost(postId, userDetails.getUserId());
-
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "해당 게시글이 삭제되었습니다.");
+        volunteerWorkPostService.deletePost(postId, userDetails.getUserId());
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
 
-        return volunteerWorkPostService.deletePost(postId,userDetails.getUserId()); //??
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);//responseDto
     }
 //-----------------------------------------------------------------------------------------------------------------------
 

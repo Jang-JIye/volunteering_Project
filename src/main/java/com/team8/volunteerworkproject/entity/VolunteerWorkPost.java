@@ -3,7 +3,6 @@ package com.team8.volunteerworkproject.entity;
 
 import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
 import com.team8.volunteerworkproject.enums.PostStatus;
-import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,36 +36,26 @@ public class VolunteerWorkPost extends Timestamp{
     @Column
     private String nickname;
 
+
+    public VolunteerWorkPost(String userId, String title, String content, PostStatus postStatus, String area) {
+        this.userId = userId;
+        this.title = title;
+        this.postStatus = postStatus;
+        this.content = content;
+        this.area = area;
+    }
+
+
 //    @Column(nullable = false)
 //    private LocalDateTime schedule;
 
-    @JoinColumn
-    @ManyToOne
-    private User user;
-
-
-    public VolunteerWorkPost(String userId, VolunteerWorkPostRequestDto requestDto) {
-        this.title = getTitle();
-        this.content = getContent();
-        this.nickname = getNickname();
-        this.postStatus = getPostStatus();
-        this.area = getArea();
-
-    }
-
-    public VolunteerWorkPost(String title, String content, PostStatus postStatus, String area) {
-        this.title = getTitle();
-        this.content = getContent();
-        this.postStatus = getPostStatus();
-        this.area = getArea();
-    }
 
 
     public void update(VolunteerWorkPostRequestDto requestDto) {//지역, 상태,
-        this.title = getTitle();
-        this.content = getContent();
-        this.postStatus = getPostStatus();//상태
-        this.area = getArea();
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.postStatus = requestDto.getPostStatus();//상태
+        this.area = requestDto.getArea();
 
     }
 }
