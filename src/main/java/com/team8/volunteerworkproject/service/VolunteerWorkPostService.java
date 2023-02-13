@@ -9,9 +9,10 @@ import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import java.util.List;
 
 public interface VolunteerWorkPostService {
-    VolunteerWorkPostResponseDto createPost(VolunteerWorkPostRequestDto requestDto, UserDetailsImpl userDetails);
-    VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto, Long postId, UserDetailsImpl userDetails);
-    VolunteerWorkPostResponseDto deletePost(Long postId, UserDetailsImpl userDetails);
+
+    VolunteerWorkPostResponseDto createPost(VolunteerWorkPostRequestDto requestDto, String userId);
+    VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto, Long postId,  String userId);
+    VolunteerWorkPostResponseDto deletePost(Long postId, String userId);
     List<AllVolunteerWorkPostResponseDto> getAllPost();
 
     VolunteerWorkPostResponseDto getPost(Long postId);

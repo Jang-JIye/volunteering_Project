@@ -30,9 +30,8 @@ public class VolunteerWorkPostController {
 
     private final VolunteerWorkPostServiceImpl volunteerWorkPostService;
 
-    //게시글 생성
+    //게시글 작성
     //@Secured(UserRoleEnum.Authority.COMPANY)
-   // @Secured({"ROLE_COMPANY","ROLE_ADMIN"})
     @PostMapping("/volunteerWorkPosts")
     public VolunteerWorkPostResponseDto createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -69,15 +68,17 @@ public class VolunteerWorkPostController {
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
 
-        return volunteerWorkPostService.deletePost(postId, userDetails.getUserId()); //??
+        return volunteerWorkPostService.deletePost(postId,userDetails.getUserId()); //??
     }
-
+//-----------------------------------------------------------------------------------------------------------------------
 
     // 전체 모집글 조회
     @GetMapping("/volunteerWorkPosts")
     public ResponseEntity<StatusAndDataResponseDto> getAllPost(){
         List<AllVolunteerWorkPostResponseDto> data = volunteerWorkPostService.getAllPost();
+
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "전체 모집글 조회가 완료되었습니다.", data);
+
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);

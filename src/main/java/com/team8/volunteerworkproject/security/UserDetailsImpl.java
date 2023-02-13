@@ -15,7 +15,8 @@ public class UserDetailsImpl implements UserDetails {
     this.user = user;
   }
 
-  @Override
+
+    @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     UserRoleEnum role = user.getRole();
     String authority = role.getAuthority();
@@ -36,7 +37,7 @@ public class UserDetailsImpl implements UserDetails {
     return null;
   }
 
-  public UserDetailsImpl getUserId() {
+  public String getUserId() {
     return this.user.getUserId();
   }
 
