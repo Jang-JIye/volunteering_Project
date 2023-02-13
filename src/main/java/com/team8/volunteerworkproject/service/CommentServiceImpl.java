@@ -5,7 +5,6 @@ import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
 import com.team8.volunteerworkproject.entity.Comment;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import com.team8.volunteerworkproject.repository.CommentRepository;
-import com.team8.volunteerworkproject.repository.UserRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,36 +19,27 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
-  private final UserRepository userRepository;
-  private final UserDetailsImpl userDetails;
 
   // #17-1 댓글 작성
   @Transactional
-  public CommentResponseDto createComment(Long id, CommentRequestDto requestDto, String userId) {
+  public CommentResponseDto createComment(Long postId, CommentRequestDto requestDto,
+      UserDetailsImpl userDetails) {
 
-    VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(id).orElseThrow(
+    VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 없습니다.")
     );
 
-    Comment comment = new Comment(requestDto, userId, volunteerWorkPost);
+    Comment comment = new Comment(requestDto, userDetails.getUserId(), volunteerWorkPost);
     commentRepository.save(comment);
     return new CommentResponseDto(comment);
   }
 
   // #17-2 댓글 수정
   @Transactional
-  public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto, String userId,
-      Long commentId) {
-    userRepository.findByUserId(userId).orElseThrow(
-        () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
-    );
+  public CommentResponseDto updateComment(Long postId, CommentRequestDto requestDto,
+      UserDetailsImpl userDetails, Long commentId) {
 
-    // 작성자 본인이 맞는지 검증
-    if (!userDetails.isValidId(userId)) {
-      throw new IllegalArgumentException("작성자가 일치하지 않습니다.");
-    }
-
-    VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(id).orElseThrow(
+    volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("게시글을 찾을 수 없습니다.")
     );
 
@@ -61,20 +51,11 @@ public class CommentServiceImpl implements CommentService {
     return new CommentResponseDto(comment);
   }
 
-
   // 17-3 댓글 삭제
   @Transactional
-  public ResponseEntity deleteComment(Long id, String userId, Long commentId) {
-    userRepository.findByUserId(userId).orElseThrow(
-        () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
-    );
+  public ResponseEntity deleteComment(Long postId, UserDetailsImpl userDetails, Long commentId) {
 
-    // 작성자 본인이 맞는지 검증
-    if (!userDetails.isValidId(userId)) {
-      throw new IllegalArgumentException("작성자가 일치하지 않습니다.");
-    }
-
-    VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(id).orElseThrow(
+    volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("게시글을 찾을 수 없습니다.")
     );
 

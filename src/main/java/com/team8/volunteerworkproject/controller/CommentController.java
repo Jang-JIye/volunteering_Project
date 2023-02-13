@@ -26,11 +26,11 @@ public class CommentController {
 
   // #17-1 댓글 작성
   @PostMapping("/volunteerWorkPosts/{postId}/comments")
-  public ResponseEntity<CommentResponseDto> createComment(@PathVariable Long id,
+  public ResponseEntity<CommentResponseDto> createComment(@PathVariable Long postId,
       @RequestBody CommentRequestDto requestDto,
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    CommentResponseDto commentResponseDto = commentService.createComment(id, requestDto,
-        userDetails.getUserId());
+    CommentResponseDto commentResponseDto = commentService.createComment(postId, requestDto,
+        userDetails);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return ResponseEntity.status(HttpStatus.CREATED).body(commentResponseDto);
@@ -38,11 +38,14 @@ public class CommentController {
 
   // #17-2 댓글 수정
   @PatchMapping("/volunteerWorkPosts/{postId}/comments/{commentId}")
-  public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id,
+  public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long postId,
       @RequestBody CommentRequestDto requestDto,
       @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long commentId) {
-    CommentResponseDto commentResponseDto = commentService.updateComment(id, requestDto,
-        userDetails.getUserId(), commentId);
+    if (!userDetails.isValidId(userDetails.getUserId())) {
+      throw new IllegalArgumentException("본인의 댓글만 수정 가능합니다.");
+    }
+    CommentResponseDto commentResponseDto = commentService.updateComment(postId, requestDto,
+        userDetails, commentId);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return ResponseEntity.status(HttpStatus.OK).body(commentResponseDto);
@@ -50,10 +53,13 @@ public class CommentController {
 
   // 17-3 댓글 삭제
   @DeleteMapping("/volunteerWorkPosts/{postId}/comments/{commentId}")
-  public ResponseEntity deleteComment(@PathVariable Long id,
+  public ResponseEntity deleteComment(@PathVariable Long postId,
       @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long commentId) {
+    if (!userDetails.isValidId(userDetails.getUserId())) {
+      throw new IllegalArgumentException("본인의 댓글만 삭제 가능합니다.");
+    }
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
-    return commentService.deleteComment(id, userDetails.getUserId(), commentId);
+    return commentService.deleteComment(postId, userDetails, commentId);
   }
 }
