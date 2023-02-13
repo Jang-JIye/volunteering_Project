@@ -1,6 +1,5 @@
 package com.team8.volunteerworkproject.service;
 
-import com.team8.volunteerworkproject.entity.User;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPostLike;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostLikeRepository;
@@ -9,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -2,10 +2,11 @@ package com.team8.volunteerworkproject.dto.response;
 
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import lombok.Getter;
-
+import lombok.NoArgsConstructor;
 
 
 @Getter
+@NoArgsConstructor //테스트 코드작성할 때 필요해서 추가
 public class VolunteerWorkPostResponseDto {
 
     private Long postId;
@@ -13,15 +14,17 @@ public class VolunteerWorkPostResponseDto {
     private String content;
     private String area;
     private String status;
+    private Integer likeNum;
 //    private LocalDateTime schedule;
 
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, Integer likeNum) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.area = post.getArea();
         this.status = String.valueOf(post.getPostStatus());
+        this.likeNum = likeNum;
 //        this.schedule = post.getSchedule();
 
     }

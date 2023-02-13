@@ -12,4 +12,6 @@ public interface VolunteerWorkPostService {
 
     VolunteerWorkPostResponseDto getPost(Long postId);
 
+    Integer count(Long postId);
+
 }
