@@ -47,6 +47,10 @@ public class CommentServiceImpl implements CommentService {
         () -> new IllegalArgumentException("수정할 댓글이 없습니다.")
     );
 
+    if (userDetails.getUser().isValidId(comment.getUserId())) {
+      throw new IllegalArgumentException("본인의 댓글만 수정 가능합니다.");
+    }
+
     comment.updateComment(requestDto);
     return new CommentResponseDto(comment);
   }
@@ -62,6 +66,9 @@ public class CommentServiceImpl implements CommentService {
     Comment comment = commentRepository.findById(commentId).orElseThrow(
         () -> new IllegalArgumentException("삭제할 댓글이 없습니다.")
     );
+    if (!userDetails.getUser().isValidId(comment.getUserId())) {
+      throw new IllegalArgumentException("본인의 댓글만 삭제 가능합니다.");
+    }
 
     commentRepository.delete(comment);
     return new ResponseEntity<>("삭제 완료!", HttpStatus.OK);

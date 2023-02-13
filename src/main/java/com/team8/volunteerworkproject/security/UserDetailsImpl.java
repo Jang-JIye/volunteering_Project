@@ -32,6 +32,10 @@ public class UserDetailsImpl implements UserDetails {
     return null;
   }
 
+  public User getUser() {
+    return user;
+  }
+
   @Override
   public String getUsername() {
     return null;
@@ -61,7 +65,5 @@ public class UserDetailsImpl implements UserDetails {
     return false;
   }
 
-  public boolean isValidId(String userId) {
-    return this.user.getUserId().equals(userId);
-  }
+
 }

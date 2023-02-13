@@ -1,6 +1,7 @@
 package com.team8.volunteerworkproject.entity;
 
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
+import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ public class Comment extends Timestamp {
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
   private VolunteerWorkPost volunteerWorkPost;
+  private UserDetailsImpl comment;
 
   public Comment(CommentRequestDto requestDto, String userId, VolunteerWorkPost volunteerWorkPost) {
     this.contents = requestDto.getContents();
