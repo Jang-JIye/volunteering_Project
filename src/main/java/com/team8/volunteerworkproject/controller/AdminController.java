@@ -94,7 +94,7 @@ public class AdminController {
 
     //댓글 삭제
     @DeleteMapping("admin/volunteerWorkPosts/{postId}/comments/{commentId}")
-    public ResponseEntity adminDeleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+    public ResponseEntity<StatusResponseDto> adminDeleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "(admin) 해당 댓글이 삭제되었습니다.");
         adminService.adminDeleteComment(postId, commentId);
         HttpHeaders headers = new HttpHeaders();
