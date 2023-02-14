@@ -8,20 +8,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor //테스트 코드작성할 때 필요해서 추가
 public class VolunteerWorkPostResponseDto {
 
-    private Long postId;
-    private String title;
-    private String content;
-    private String area;
-    private String status;
-    private int likeNum;
+  private Long postId;
+  private String title;
+  private String content;
+  private String area;
+  private String status;
+  private int likeNum;
 //    private LocalDateTime schedule;
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, int likeNum) {
-        this.postId = post.getPostId();
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.area = post.getArea();
-        this.likeNum = likeNum;
+  public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
+    this.postId = post.getPostId();
+    this.title = post.getTitle();
+    this.content = post.getContent();
+    this.area = post.getArea();
+    this.likeNum = likeNum;
 
 //        this.schedule = post.getSchedule();
 
