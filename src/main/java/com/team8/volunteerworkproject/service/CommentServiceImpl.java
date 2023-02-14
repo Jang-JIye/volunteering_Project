@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
         () -> new IllegalArgumentException("수정할 댓글이 없습니다.")
     );
 
-    if (userDetails.getUser().isValidId(comment.getUserId())) {
+    if (!userDetails.getUser().isValidId(comment.getUserId())) {
       throw new IllegalArgumentException("본인의 댓글만 수정 가능합니다.");
     }
 

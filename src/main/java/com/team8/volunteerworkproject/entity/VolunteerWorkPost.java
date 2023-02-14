@@ -1,10 +1,6 @@
 package com.team8.volunteerworkproject.entity;
 
-<<<<<<<HEAD
-    =======
-
 import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
->>>>>>>8a2d08e6f25cd15deeb5aac0841ec1fb471b76f5
 import com.team8.volunteerworkproject.enums.PostStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
