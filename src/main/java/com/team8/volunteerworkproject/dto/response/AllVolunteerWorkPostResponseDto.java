@@ -13,7 +13,7 @@ public class AllVolunteerWorkPostResponseDto {
     private String area;
     private String postStatus;
 
-    private Integer likeNum;
+    private int likeNum;
 
     //    private LocalDateTime schedule;
 
