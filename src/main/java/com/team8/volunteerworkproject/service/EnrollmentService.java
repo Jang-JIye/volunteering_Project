@@ -1,6 +1,6 @@
 package com.team8.volunteerworkproject.service;
 
-public interface ApplicationService {
+public interface EnrollmentService {
 
 /*
     void participation(Long postId, String userId);
