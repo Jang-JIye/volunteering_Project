@@ -13,7 +13,7 @@ public class ApplicationController {
     private final ApplicationServiceImpl applicationService;
 
     //참여 신청 & 취소
-    @PostMapping("/volunteerWorkPosts/{postId}/participations")
+    @PostMapping("/volunteerWorkPosts/{postId}")
     public void attend(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         applicationService.attend(postId, userDetails.getUserId());
     }

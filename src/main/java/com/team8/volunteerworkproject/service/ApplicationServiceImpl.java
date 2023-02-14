@@ -45,7 +45,7 @@ public class ApplicationServiceImpl implements ApplicationService{
             throw new IllegalArgumentException("참여한 모집글이 아닙니다.");
             //참여 취소 통과
         } else {
-            applicationRepository.delete(a);
+            applicationRepository.delete(postId, userId);
         }
 
     }
