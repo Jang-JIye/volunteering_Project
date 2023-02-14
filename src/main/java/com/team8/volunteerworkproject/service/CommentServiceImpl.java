@@ -74,4 +74,17 @@ public class CommentServiceImpl implements CommentService {
     return new ResponseEntity<>("삭제 완료!", HttpStatus.OK);
 
   }
+
+  // #18 댓글 신고
+
+  // 1. 게시글에 달린 댓글을 신고하기
+  // 2. 게시글 존재여부 판단
+  volunteerWorkPostRepository.findById(postId).orElseThrow(
+        () -> new IllegalArgumentException("게시글을 찾을 수 없습니다.")
+    );
+  // 3. 댓글 존재여부 판단
+  Comment comment = commentRepository.findById(commentId).orElseThrow(
+      () -> new IllegalArgumentException("신고할 댓글이 없습니다.")
+  // 4. 신고한 댓글을 CommentCaution 에 저장.
+  // 5. cautionId, commentId, postId, cautionReason 저장
 }

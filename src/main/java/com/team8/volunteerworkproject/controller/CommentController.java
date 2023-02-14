@@ -1,5 +1,6 @@
 package com.team8.volunteerworkproject.controller;
 
+import com.team8.volunteerworkproject.dto.request.CautionCommentRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -58,4 +60,24 @@ public class CommentController {
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return commentService.deleteComment(postId, userDetails, commentId);
   }
+
+  // #18 댓글 신고
+  @PostMapping("/volunteerWorkPosts/{postId}/comments/{commentId}/cautions")
+  @ResponseStatus(HttpStatus.CREATED)
+  public void cautionComment(@PathVariable Long cautionId,
+      @RequestBody CautionCommentRequestDto requestDto,
+      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    CreateDisapprovedSellerFormReqDto serviceRequestDto = new CreateDisapprovedSellerFormReqDto(
+        dto.getIntroduce(), userDetails.getUsername());
+    sellerRequestFormServiceImpl.createDisapprovedForm(serviceRequestDto);
+  }
+
+//  @PostMapping("/users/auth/waitings")
+//  @ResponseStatus(HttpStatus.CREATED)
+//  public void createSellerWaiting(@AuthenticationPrincipal UserDetailsImpl userDetails,
+//      @RequestBody SellerRequestDto dto) {
+//    CreateDisapprovedSellerFormReqDto serviceRequestDto = new CreateDisapprovedSellerFormReqDto(
+//        dto.getIntroduce(), userDetails.getUsername());
+//    sellerRequestFormServiceImpl.createDisapprovedForm(serviceRequestDto);
+//  }
 }

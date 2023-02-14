@@ -18,5 +18,9 @@ public interface CommentService {
   // #17-3 댓글 삭제
   ResponseEntity deleteComment(Long postId, UserDetailsImpl userDetails, Long commentId);
 
+  // #18 댓글 신고
+
+  cautionComment()
+
 }
 
