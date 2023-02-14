@@ -9,5 +9,6 @@ public class ProfileRequestDto {
   private String phoneNumber;
   private String interestArea;
   private String image;
+  private String password;
 
 }
