@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
-       @RequiredArgsConstructor
+@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
   private final JwtUtil jwtUtil;
@@ -62,7 +62,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     context.setAuthentication(authentication);
 
     SecurityContextHolder.setContext(context);
-}
+  }
 
   public void jwtExceptionHandler(HttpServletResponse response, String msg, int statusCode) {
     response.setStatus(statusCode);

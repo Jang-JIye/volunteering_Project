@@ -9,13 +9,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserDetailsImpl implements UserDetails {
+
   private final User user;
 
   public UserDetailsImpl(User user) {
     this.user = user;
   }
 
-  @Override
+
+    @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     UserRoleEnum role = user.getRole();
     String authority = role.getAuthority();
@@ -29,6 +31,10 @@ public class UserDetailsImpl implements UserDetails {
   @Override
   public String getPassword() {
     return null;
+  }
+
+  public User getUser() {
+    return user;
   }
 
   @Override
@@ -59,4 +65,6 @@ public class UserDetailsImpl implements UserDetails {
   public boolean isEnabled() {
     return false;
   }
+
+
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MypageServiceImpl implements MyPageService{
+public class MypageServiceImpl implements MyPageService {
 
   private final UserRepository userRepository;
   private final MyPageRepository myPageRepository;
@@ -22,15 +22,20 @@ public class MypageServiceImpl implements MyPageService{
     userRepository.findByUserId(userId).orElseThrow(
         () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
     );
+
     // 입력한 아이디의 회원의 프로필이 존재하는지 확인
     Optional<Profile> found = myPageRepository.findByUserId(userId);
-    if (found.isPresent()) throw new IllegalArgumentException("프로필이 존재합니다.");
+    if (found.isPresent()) {
+      throw new IllegalArgumentException("프로필이 존재합니다.");
+    }
     // Dto 의 image 값이 null 이면 이미지를 제외하고 객체 생성
     Profile profile;
     if (requestDto.getImage() == null) {
-      profile = new Profile(userId, requestDto.getNickname(), requestDto.getPhoneNumber(), requestDto.getInterestArea());
+      profile = new Profile(userId, requestDto.getNickname(), requestDto.getPhoneNumber(),
+          requestDto.getInterestArea());
     } else {
-      profile = new Profile(userId, requestDto.getNickname(), requestDto.getImage(), requestDto.getInterestArea(), requestDto.getPhoneNumber());
+      profile = new Profile(userId, requestDto.getNickname(), requestDto.getImage(),
+          requestDto.getInterestArea(), requestDto.getPhoneNumber());
     }
     myPageRepository.save(profile);
     return new ProfileResponseDto(userId, profile);
