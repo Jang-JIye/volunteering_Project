@@ -23,6 +23,8 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   private final VolunteerWorkPostLikeRepository volunteerWorkPostLikeRepository;
   private final UserRepository userRepository;
 
+  private final VolunteerWorkPostLikeRepository volunteerWorkPostLikeRepository;
+
   //게시글 작성
   @Override
   @Transactional

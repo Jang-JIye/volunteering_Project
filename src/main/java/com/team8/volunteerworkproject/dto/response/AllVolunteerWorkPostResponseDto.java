@@ -23,6 +23,7 @@ public class AllVolunteerWorkPostResponseDto {
     this.area = volunteerWorkPost.getArea();
     this.postStatus = String.valueOf(volunteerWorkPost.getPostStatus());
     this.likeNum = likeNum;
+
 //        this.schedule = volunteerWorkPost.getSchedule();
   }
 
