@@ -5,13 +5,14 @@ import com.team8.volunteerworkproject.dto.response.ProfileResponseDto;
 import com.team8.volunteerworkproject.entity.Profile;
 import com.team8.volunteerworkproject.repository.MyPageRepository;
 import com.team8.volunteerworkproject.repository.UserRepository;
+import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MypageServiceImpl implements MyPageService {
+public class ProfileServiceImpl implements ProfileService {
 
   private final UserRepository userRepository;
   private final MyPageRepository myPageRepository;
@@ -22,7 +23,6 @@ public class MypageServiceImpl implements MyPageService {
     userRepository.findByUserId(userId).orElseThrow(
         () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
     );
-
     // 입력한 아이디의 회원의 프로필이 존재하는지 확인
     Optional<Profile> found = myPageRepository.findByUserId(userId);
     if (found.isPresent()) {
@@ -51,17 +51,20 @@ public class MypageServiceImpl implements MyPageService {
   }
 
   @Override
-  public ProfileResponseDto updateProfile(String userId, ProfileRequestDto requestDto) {
-    Profile profile = myPageRepository.findByUserId(userId).orElseThrow(
-        () -> new IllegalArgumentException("존재하지 않는 프로필입니다.")
+  public ProfileResponseDto updateProfile(UserDetailsImpl userDetails, ProfileRequestDto requestDto) {
+    Profile profile = myPageRepository.findByUserId(userDetails.getUserId()).orElseThrow(
+        () -> new IllegalArgumentException("프로필이 존재하지 않습니다.")
     );
+    if (!userDetails.getUser().isValidId(profile.getUserId())) {
+      throw new IllegalArgumentException("본인의 댓글만 삭제 가능합니다.");
+    }
     if (requestDto.getImage() == null) {
       profile.updateWithoutImage(requestDto);
     } else {
       profile.updateWithImage(requestDto);
     }
     myPageRepository.save(profile);
-    return new ProfileResponseDto(userId, profile);
+    return new ProfileResponseDto(userDetails.getUserId(), profile);
   }
 
 

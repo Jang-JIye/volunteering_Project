@@ -6,7 +6,7 @@ import com.team8.volunteerworkproject.dto.response.ProfileResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
-import com.team8.volunteerworkproject.service.MyPageService;
+import com.team8.volunteerworkproject.service.ProfileService;
 import java.nio.charset.Charset;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -23,22 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 
-public class MyPageController {
+public class ProfileController {
 
-  private final MyPageService myPageService;
+  private final ProfileService profileService;
 
-  @PostMapping("/profiles/customers")
+  @PostMapping("/profiles")
   public ResponseEntity<StatusAndDataResponseDto> createProfile(@RequestBody ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    ProfileResponseDto data = myPageService.createProfile(userDetails.getUserId(), requestDto);
+    ProfileResponseDto data = profileService.createProfile(userDetails.getUserId(), requestDto);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 작성이 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
 
-  @GetMapping("/profiles/customers")
+  @GetMapping("/profiles")
   public ResponseEntity<StatusAndDataResponseDto> getCustomerProfileByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-    ProfileResponseDto data = myPageService.getCustomerProfile(userDetails.getUserId());
+    ProfileResponseDto data = profileService.getCustomerProfile(userDetails.getUserId());
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 조회 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
@@ -47,7 +47,7 @@ public class MyPageController {
 
   @PatchMapping("/profiles")
   public ResponseEntity<StatusAndDataResponseDto> updateProfile(@RequestBody ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    ProfileResponseDto data = myPageService.updateProfile(userDetails.getUserId(), requestDto);
+    ProfileResponseDto data = profileService.updateProfile(userDetails, requestDto);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 수정이 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
