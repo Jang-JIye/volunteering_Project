@@ -1,6 +1,8 @@
 package com.team8.volunteerworkproject.service;
 
+import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
+import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,9 @@ public interface CommentService {
   ResponseEntity deleteComment(Long postId, UserDetailsImpl userDetails, Long commentId);
 
   // #18 댓글 신고
-
-  cautionComment()
+  CommentCautionResponseDto cautionComment(Long postId, Long commentId,
+      CommentCautionRequestDto requestDto,
+      UserDetailsImpl userDetails);
 
 }
 

@@ -1,8 +1,10 @@
 package com.team8.volunteerworkproject.controller;
 
-import com.team8.volunteerworkproject.dto.request.CautionCommentRequestDto;
+import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
+import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
+import com.team8.volunteerworkproject.entity.CommentCaution;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.CommentServiceImpl;
 import java.nio.charset.Charset;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -63,21 +64,17 @@ public class CommentController {
 
   // #18 댓글 신고
   @PostMapping("/volunteerWorkPosts/{postId}/comments/{commentId}/cautions")
-  @ResponseStatus(HttpStatus.CREATED)
-  public void cautionComment(@PathVariable Long cautionId,
-      @RequestBody CautionCommentRequestDto requestDto,
+  public ResponseEntity<CommentCautionResponseDto> cautionComment(@PathVariable Long postId,
+      @PathVariable Long commentId,
+      @RequestBody CommentCautionRequestDto requestDto,
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    CreateDisapprovedSellerFormReqDto serviceRequestDto = new CreateDisapprovedSellerFormReqDto(
-        dto.getIntroduce(), userDetails.getUsername());
-    sellerRequestFormServiceImpl.createDisapprovedForm(serviceRequestDto);
+    CommentCautionResponseDto responseDto = new CommentCautionResponseDto(
+        new CommentCaution(postId, commentId, requestDto,
+            userDetails));
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
   }
 
-//  @PostMapping("/users/auth/waitings")
-//  @ResponseStatus(HttpStatus.CREATED)
-//  public void createSellerWaiting(@AuthenticationPrincipal UserDetailsImpl userDetails,
-//      @RequestBody SellerRequestDto dto) {
-//    CreateDisapprovedSellerFormReqDto serviceRequestDto = new CreateDisapprovedSellerFormReqDto(
-//        dto.getIntroduce(), userDetails.getUsername());
-//    sellerRequestFormServiceImpl.createDisapprovedForm(serviceRequestDto);
-//  }
+
 }
