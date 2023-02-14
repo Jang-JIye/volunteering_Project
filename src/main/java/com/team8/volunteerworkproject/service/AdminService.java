@@ -8,15 +8,19 @@ import java.util.List;
 
 public interface AdminService {
 
-    NoticeResponseDto createNotice(String userId, NoticeRequestDto requestDto);
+    NoticeResponseDto createNotice(NoticeRequestDto requestDto);
 
     List<NoticeResponseDto> getNoticeList();
 
-    NoticeResponseDto findNotice(Long noticeId ,String userId);
+    NoticeResponseDto findNotice(Long noticeId );
 
-    NoticeResponseDto updateNotice(Long noticeId,NoticeRequestDto requestDto,String userId);
+    NoticeResponseDto updateNotice(Long noticeId,NoticeRequestDto requestDto);
 
-    NoticeResponseDto deleteNotice(Long noticeId ,String userId);
+    void deleteNotice(Long noticeId );
+
+    void adminDeletePost(Long postId);
+
+    void adminDeleteComment(Long postId,Long commentId);
 
 
 }
