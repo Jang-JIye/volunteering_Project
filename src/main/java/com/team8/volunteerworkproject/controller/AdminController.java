@@ -7,6 +7,7 @@ import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.AdminService;
+import com.team8.volunteerworkproject.service.VolunteerWorkPostService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,23 +28,25 @@ public class AdminController {
 
     private final AdminService adminService;
 
+
+
     //공지사항 작성
-    @PostMapping("/notices")
-    public ResponseEntity<StatusAndDataResponseDto> createNotice(@RequestBody NoticeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        NoticeResponseDto data = adminService.createNotice(userDetails.getUserId(), requestDto);
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "공지사항 작성이 완료되었습니다.", data);
+
+    @PostMapping("/admin/notices")
+    public ResponseEntity<StatusAndDataResponseDto> createNotice(@RequestBody NoticeRequestDto requestDto){
+        NoticeResponseDto data = adminService.createNotice(requestDto);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "(admin) 공지사항 작성이 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
 
-//        return  ResponseEntity.status(HttpStatus.CREATED).body(adminService.createNotice(requestDto,userDetails.getUserId()));
     }
 
     //공지사항 조회
     @GetMapping("/notices")
     public ResponseEntity<StatusAndDataResponseDto> getNoticeList() {
         List<NoticeResponseDto> data = adminService.getNoticeList();
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "공지사항 조회가 완료되었습니다.", data);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "(admin) 공지사항 조회가 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         ResponseEntity<List<StatusAndDataResponseDto>> ResponseEntity;
@@ -50,31 +54,51 @@ public class AdminController {
     }
     //공지사항 선택 조회
     @GetMapping("/notices/{noticeId}")
-    public ResponseEntity<StatusAndDataResponseDto> findNotice(@PathVariable Long noticeId,@AuthenticationPrincipal UserDetailsImpl userDetails){
-     NoticeResponseDto data = adminService.findNotice(noticeId,userDetails.getUserId());
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "공지사항 선택 조회가 완료되었습니다.", data);
+    public ResponseEntity<StatusAndDataResponseDto> findNotice(@PathVariable Long noticeId){
+     NoticeResponseDto data = adminService.findNotice(noticeId);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "(admin) 공지사항 선택 조회가 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
     }
 
     //공지사항 수정
-    @PatchMapping("/notices/{noticeId}")
-    public ResponseEntity<StatusAndDataResponseDto> updateNotice(@PathVariable Long noticeId, @RequestBody NoticeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        NoticeResponseDto data = adminService.updateNotice(noticeId, requestDto, userDetails.getUserId());
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "공지사항 수정이 완료되었습니다.", data);
+    @PatchMapping("/admin/notices/{noticeId}")
+    public ResponseEntity<StatusAndDataResponseDto> updateNotice(@PathVariable Long noticeId, @RequestBody NoticeRequestDto requestDto) {
+        NoticeResponseDto data = adminService.updateNotice(noticeId, requestDto);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "(admin) 공지사항 수정이 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
     }
 
     //공지사항 삭제
-    @DeleteMapping("/notices/{noticeId}")
-    public  ResponseEntity<StatusResponseDto> deleteNotice(@PathVariable Long noticeId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        adminService.deleteNotice(noticeId,userDetails.getUserId());
-        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK,"공지사항 삭제가 완료되었습니다.");
+    @DeleteMapping("/admin/notices/{noticeId}")
+    public  ResponseEntity<StatusResponseDto> deleteNotice(@PathVariable Long noticeId){
+        adminService.deleteNotice(noticeId);
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK,"(admin) 공지사항 삭제가 완료되었습니다.");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
+    }
+
+    //게시글 삭제
+    @DeleteMapping("/admin/volunteerWorkPosts/{postId}")
+    public ResponseEntity<StatusResponseDto> adminDeletePost(@PathVariable Long postId) {
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "(admin) 해당 게시글이 삭제되었습니다.");
+        adminService.adminDeletePost(postId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);//responseDto
+    }
+
+    //댓글 삭제
+    @DeleteMapping("admin/volunteerWorkPosts/{postId}/comments/{commentId}")
+    public ResponseEntity<StatusResponseDto> adminDeleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "(admin) 해당 댓글이 삭제되었습니다.");
+        adminService.adminDeleteComment(postId, commentId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);//responseDto
     }
 }

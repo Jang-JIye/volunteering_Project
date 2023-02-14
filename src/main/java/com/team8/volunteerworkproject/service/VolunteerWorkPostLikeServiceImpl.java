@@ -31,4 +31,10 @@ public class VolunteerWorkPostLikeServiceImpl implements VolunteerWorkPostLikeSe
         }
     }
 
+    //좋아요 카운트
+    @Override
+    public int count(Long postId) {
+        List<VolunteerWorkPostLike> postLikes = volunteerWorkPostLikeRepository.findAllByPostId(postId);
+        return postLikes.size();
+    }
 }

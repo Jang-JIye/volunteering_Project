@@ -18,7 +18,6 @@ public class Profile extends Timestamp{
   @Id
   @Column(name = "user_id", nullable = false)
   private String userId;
-  @Column(nullable = false)
   private String phoneNumber;
   @Column(nullable = false)
   private String nickname;
@@ -43,6 +42,11 @@ public class Profile extends Timestamp{
     this.phoneNumber = phoneNumber;
     this.nickname = nickname;
     this.interestArea = interestArea;
+  }
+
+  public Profile(String userId, String nickname) {
+    this.userId = userId;
+    this.nickname = nickname;
   }
 
   public void updateWithImage(ProfileRequestDto requestDto) {

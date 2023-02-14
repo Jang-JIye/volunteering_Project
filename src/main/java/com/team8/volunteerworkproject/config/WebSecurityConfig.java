@@ -46,7 +46,11 @@ public class WebSecurityConfig {
 
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    http.authorizeHttpRequests().requestMatchers("/**").permitAll()
+    http.authorizeHttpRequests()
+        .requestMatchers("/users/signup").permitAll()
+        .requestMatchers("/users/signin").permitAll()
+        .requestMatchers("/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
         .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
     http.formLogin().disable();

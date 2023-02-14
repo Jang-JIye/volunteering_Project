@@ -8,23 +8,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AllVolunteerWorkPostResponseDto {
 
-  private Long postId;
-  private String title;
-  private String area;
-  private String postStatus;
+    private Long postId;
+    private String title;
+    private String area;
+    private String postStatus;
 
-  private Integer likeNum;
+    private int likeNum;
 
-  //    private LocalDateTime schedule;
+    //    private LocalDateTime schedule;
 
-  public AllVolunteerWorkPostResponseDto(VolunteerWorkPost volunteerWorkPost) {
-    this.postId = volunteerWorkPost.getPostId();
-    this.title = volunteerWorkPost.getTitle();
-    this.area = volunteerWorkPost.getArea();
-    this.postStatus = String.valueOf(volunteerWorkPost.getPostStatus());
-    this.likeNum = likeNum;
-
+    public AllVolunteerWorkPostResponseDto(VolunteerWorkPost volunteerWorkPost) {
+        this.postId = volunteerWorkPost.getPostId();
+        this.title = volunteerWorkPost.getTitle();
+        this.area = volunteerWorkPost.getArea();
+        this.postStatus = String.valueOf(volunteerWorkPost.getPostStatus());
+        this.likeNum = likeNum;
 //        this.schedule = volunteerWorkPost.getSchedule();
-  }
+    }
 
 }
