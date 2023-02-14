@@ -1,7 +1,6 @@
 package com.team8.volunteerworkproject.dto.response;
 
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +13,8 @@ public class AllVolunteerWorkPostResponseDto {
     private String area;
     private String postStatus;
 
+    private Integer likeNum;
+
     //    private LocalDateTime schedule;
 
     public AllVolunteerWorkPostResponseDto(VolunteerWorkPost volunteerWorkPost) {
@@ -21,6 +22,7 @@ public class AllVolunteerWorkPostResponseDto {
         this.title = volunteerWorkPost.getTitle();
         this.area = volunteerWorkPost.getArea();
         this.postStatus = String.valueOf(volunteerWorkPost.getPostStatus());
+        this.likeNum = likeNum;
 //        this.schedule = volunteerWorkPost.getSchedule();
     }
 
