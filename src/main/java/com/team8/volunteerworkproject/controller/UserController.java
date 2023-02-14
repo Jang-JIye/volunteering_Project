@@ -1,8 +1,12 @@
 package com.team8.volunteerworkproject.controller;
 
 import com.team8.volunteerworkproject.common.RedisDao;
+import com.team8.volunteerworkproject.dto.request.ProfileRequestDto;
+import com.team8.volunteerworkproject.dto.request.PwcheckRequestDto;
 import com.team8.volunteerworkproject.dto.request.SigninRequestDto;
 import com.team8.volunteerworkproject.dto.request.SignupRequestDto;
+import com.team8.volunteerworkproject.dto.response.ProfileResponseDto;
+import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.jwt.AuthenticatedUserInfoDto;
@@ -19,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,5 +73,13 @@ public class UserController {
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
 
+  @PatchMapping("users/unregister")
+  public ResponseEntity<StatusResponseDto> updateProfile(@RequestBody PwcheckRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    userService.unregister(userDetails.getUserId(), requestDto);
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "회원탈퇴가 완료되었습니다.");
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+  }
 
 }

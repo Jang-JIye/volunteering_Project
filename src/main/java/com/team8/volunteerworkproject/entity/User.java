@@ -1,6 +1,7 @@
 package com.team8.volunteerworkproject.entity;
 
 import com.team8.volunteerworkproject.enums.UserRoleEnum;
+import com.team8.volunteerworkproject.enums.UserStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
