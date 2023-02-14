@@ -37,17 +37,20 @@ public class UserController {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     userService.signup(requestDto);
-    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);  }
+    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+  }
 
   @PostMapping("/users/signin")
-  public ResponseEntity<StatusResponseDto> signin(@RequestBody @Valid SigninRequestDto requestDto, HttpServletResponse response) {
+  public ResponseEntity<StatusResponseDto> signin(@RequestBody @Valid SigninRequestDto requestDto,
+      HttpServletResponse response) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "로그인이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
 
     AuthenticatedUserInfoDto userInfoDto = userService.signin(requestDto);
     String accessToken = jwtUtil.createToken(userInfoDto.getUsername(), userInfoDto.getRole());
-    String refreshToken = jwtUtil.createRefreshToken(userInfoDto.getUsername(), userInfoDto.getRole());
+    String refreshToken = jwtUtil.createRefreshToken(userInfoDto.getUsername(),
+        userInfoDto.getRole());
     response.addHeader(JwtUtil.AUTHORIZATION_HEADER, accessToken);
     redisDao.setValues(userInfoDto.getUsername(), refreshToken, Duration.ofMinutes(10));
 
@@ -55,7 +58,8 @@ public class UserController {
   }
 
   @PostMapping("/users/signout")
-  public ResponseEntity<StatusResponseDto> signout(@AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response){
+  public ResponseEntity<StatusResponseDto> signout(
+      @AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "로그아웃이 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
