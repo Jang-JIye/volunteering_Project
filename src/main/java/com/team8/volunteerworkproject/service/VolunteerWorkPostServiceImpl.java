@@ -74,13 +74,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
       volunteerWorkPostRepository.delete(post);
     }
   }
-  
-  //좋아요 갯수
-  @Override
-  public Integer count(Long postId) {
-      List<VolunteerWorkPostLike> postLikes = volunteerWorkPostLikeRepository.findAllByPostId(postId);
-      return postLikes.size();
-  }
+
     
   // 전체 모집글 조회
   @Override
