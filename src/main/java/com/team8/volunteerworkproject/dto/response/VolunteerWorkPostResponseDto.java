@@ -16,7 +16,7 @@ public class VolunteerWorkPostResponseDto {
     private int likeNum;
 //    private LocalDateTime schedule;
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, int likeNum) {
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
