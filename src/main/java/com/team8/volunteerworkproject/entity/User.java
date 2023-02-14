@@ -13,31 +13,38 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class User extends Timestamp {
-    @Id
-    @Column(name = "user_id", nullable = false)
-    private String userId;
 
-    @Column(nullable = false)
-    private String password;
+  @Id
+  @Column(name = "user_id", nullable = false)
+  private String userId;
 
-    @Column(nullable = false)
-    private String nickname;
+  @Column(nullable = false)
+  private String password;
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum role;
+  @Column(nullable = false)
+  private String nickname;
 
-    private String companyRegisterNumb;
+  @Column(nullable = false)
+  @Enumerated(value = EnumType.STRING)
+  private UserRoleEnum role;
 
-    public User(String userId, String password, String nickname, UserRoleEnum role, String companyRegisterNumb) {
-        this.userId = userId;
-        this.password = password;
-        this.nickname = nickname;
-        this.role = role;    
-        this.companyRegisterNumb = companyRegisterNumb;
-    }
+  private String companyRegisterNumb;
 
-    public void changeRole(UserRoleEnum role) {
-        this.role = role;
-    }
+  public User(String userId, String password, String nickname, UserRoleEnum role,
+      String companyRegisterNumb) {
+    this.userId = userId;
+    this.password = password;
+    this.nickname = nickname;
+    this.role = role;
+    this.companyRegisterNumb = companyRegisterNumb;
+  }
+
+  public void changeRole(UserRoleEnum role) {
+    this.role = role;
+  }
+
+  public boolean isValidId(String userId) {
+    return this.userId.equals(userId);
+  }
+
 }
