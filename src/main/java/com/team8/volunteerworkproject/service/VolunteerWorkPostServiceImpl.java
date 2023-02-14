@@ -4,7 +4,12 @@ import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
 import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
+
+import com.team8.volunteerworkproject.entity.VolunteerWorkPostLike;
+import com.team8.volunteerworkproject.repository.VolunteerWorkPostLikeRepository;
+
 import com.team8.volunteerworkproject.repository.UserRepository;
+
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+
 public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
 
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
@@ -52,6 +58,8 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     return new VolunteerWorkPostResponseDto(post);
   }
 
+  
+
   //게시글 삭제
   @Override
   public void deletePost(Long postId, String userId) {
@@ -64,8 +72,15 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
       volunteerWorkPostRepository.delete(post);
     }
   }
-//----------------------------------------------------------------------------------------------------------------------
-
+  
+  //좋아요 갯수
+  @Override
+  public Integer count(Long postId) {
+      List<VolunteerWorkPostLike> postLikes = volunteerWorkPostLikeRepository.findAllByPostId(postId);
+      return postLikes.size();
+  }
+    
+  // 전체 모집글 조회
   @Override
   @Transactional(readOnly = true)
   public List<AllVolunteerWorkPostResponseDto> getAllPost() {
@@ -77,7 +92,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     return responseDto;
   }
 
-
+  // 선택 모집글 조회
   @Override
   @Transactional(readOnly = true)
   public VolunteerWorkPostResponseDto getPost(Long postId) {
@@ -87,4 +102,5 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post);
     return responseDto;
   }
+
 }

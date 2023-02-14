@@ -14,13 +14,16 @@ public class AllVolunteerWorkPostResponseDto {
     private String area;
     private String postStatus;
 
+    private Integer likeNum;
+
     //    private LocalDateTime schedule;
 
-    public AllVolunteerWorkPostResponseDto(VolunteerWorkPost volunteerWorkPost) {
+    public AllVolunteerWorkPostResponseDto(VolunteerWorkPost volunteerWorkPost , Integer likeNum) {
         this.postId = volunteerWorkPost.getPostId();
         this.title = volunteerWorkPost.getTitle();
         this.area = volunteerWorkPost.getArea();
         this.postStatus = String.valueOf(volunteerWorkPost.getPostStatus());
+        this.likeNum = likeNum;
 //        this.schedule = volunteerWorkPost.getSchedule();
     }
 
