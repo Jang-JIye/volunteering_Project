@@ -43,7 +43,7 @@ public class AdminController {
     }
 
     //공지사항 조회
-    @GetMapping("/admin/notices")
+    @GetMapping("/notices")
     public ResponseEntity<StatusAndDataResponseDto> getNoticeList() {
         List<NoticeResponseDto> data = adminService.getNoticeList();
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "(admin) 공지사항 조회가 완료되었습니다.", data);
@@ -53,7 +53,7 @@ public class AdminController {
         return new ResponseEntity<>(responseDto,headers, HttpStatus.OK);
     }
     //공지사항 선택 조회
-    @GetMapping("/admin/notices/{noticeId}")
+    @GetMapping("/notices/{noticeId}")
     public ResponseEntity<StatusAndDataResponseDto> findNotice(@PathVariable Long noticeId){
      NoticeResponseDto data = adminService.findNotice(noticeId);
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "(admin) 공지사항 선택 조회가 완료되었습니다.", data);
