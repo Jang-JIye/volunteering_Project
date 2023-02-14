@@ -27,7 +27,7 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    private final VolunteerWorkPostService volunteerWorkPostService;
+
 
     //공지사항 작성
     @PostMapping("/admin/notices")
@@ -38,7 +38,6 @@ public class AdminController {
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
 
-//        return  ResponseEntity.status(HttpStatus.CREATED).body(adminService.createNotice(requestDto,userDetails.getUserId()));
     }
 
     //공지사항 조회
