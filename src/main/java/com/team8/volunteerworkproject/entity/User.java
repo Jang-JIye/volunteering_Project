@@ -43,6 +43,10 @@ public class User extends Timestamp {
     this.role = role;
   }
 
+  public void changeNickname(String nickname){
+    this.nickname = nickname;
+  }
+
   public boolean isValidId(String userId) {
     return this.userId.equals(userId);
   }

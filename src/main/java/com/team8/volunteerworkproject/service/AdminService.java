@@ -12,11 +12,11 @@ public interface AdminService {
 
     List<NoticeResponseDto> getNoticeList();
 
-    NoticeResponseDto findNotice(Long id ,String userId);
+    NoticeResponseDto findNotice(Long noticeId ,String userId);
 
-    NoticeResponseDto updateNotice(Long id,NoticeRequestDto requestDto,String userId);
+    NoticeResponseDto updateNotice(Long noticeId,NoticeRequestDto requestDto,String userId);
 
-    NoticeResponseDto deleteNotice(Long id ,String userId);
+    NoticeResponseDto deleteNotice(Long noticeId ,String userId);
 
 
 }

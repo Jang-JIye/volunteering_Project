@@ -49,9 +49,9 @@ public class AdminController {
         return new ResponseEntity<>(responseDto,headers, HttpStatus.OK);
     }
     //공지사항 선택 조회
-    @GetMapping("/notices/{id}")
-    public ResponseEntity<StatusAndDataResponseDto> findNotice(@PathVariable Long id,@AuthenticationPrincipal UserDetailsImpl userDetails){
-     NoticeResponseDto data = adminService.findNotice(id,userDetails.getUserId());
+    @GetMapping("/notices/{noticeId}")
+    public ResponseEntity<StatusAndDataResponseDto> findNotice(@PathVariable Long noticeId,@AuthenticationPrincipal UserDetailsImpl userDetails){
+     NoticeResponseDto data = adminService.findNotice(noticeId,userDetails.getUserId());
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "공지사항 선택 조회가 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
@@ -59,9 +59,9 @@ public class AdminController {
     }
 
     //공지사항 수정
-    @PatchMapping("/notices/{id}")
-    public ResponseEntity<StatusAndDataResponseDto> updateNotice(@PathVariable Long id, @RequestBody NoticeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        NoticeResponseDto data = adminService.updateNotice(id, requestDto, userDetails.getUserId());
+    @PatchMapping("/notices/{noticeId}")
+    public ResponseEntity<StatusAndDataResponseDto> updateNotice(@PathVariable Long noticeId, @RequestBody NoticeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        NoticeResponseDto data = adminService.updateNotice(noticeId, requestDto, userDetails.getUserId());
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "공지사항 수정이 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
@@ -69,9 +69,9 @@ public class AdminController {
     }
 
     //공지사항 삭제
-    @DeleteMapping("/notices/{id}")
-    public  ResponseEntity<StatusResponseDto> deleteNotice(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        adminService.deleteNotice(id,userDetails.getUserId());
+    @DeleteMapping("/notices/{noticeId}")
+    public  ResponseEntity<StatusResponseDto> deleteNotice(@PathVariable Long noticeId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        adminService.deleteNotice(noticeId,userDetails.getUserId());
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK,"공지사항 삭제가 완료되었습니다.");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
