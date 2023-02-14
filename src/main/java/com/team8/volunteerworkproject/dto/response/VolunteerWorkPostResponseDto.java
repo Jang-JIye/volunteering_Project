@@ -14,16 +14,15 @@ public class VolunteerWorkPostResponseDto {
     private String content;
     private String area;
     private String status;
-    private Integer likeNum;
+    private int likeNum;
 //    private LocalDateTime schedule;
 
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, Integer likeNum) {
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, int likeNum) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.area = post.getArea();
-        this.status = String.valueOf(post.getPostStatus());
         this.likeNum = likeNum;
 //        this.schedule = post.getSchedule();
 
