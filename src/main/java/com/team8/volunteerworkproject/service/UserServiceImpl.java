@@ -22,10 +22,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  private final ProfileRepository profileRepository;
   private final PasswordEncoder passwordEncoder;
 
   private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+  private final ProfileRepository profileRepository;
 
   @Override
   public void signup(SignupRequestDto requestDto) {
@@ -56,7 +56,9 @@ public class UserServiceImpl implements UserService {
     }
 
     User user = new User(userId, password, nickname, role, companyRegisterNumb);
+    Profile profile = new Profile(userId, nickname);
     userRepository.save(user);
+    profileRepository.save(profile);
   }
 
   @Override
