@@ -20,29 +20,29 @@ public class ProfileServiceImpl implements ProfileService {
   private final ProfileRepository profileRepository;
   private final PasswordEncoder passwordEncoder;
 
-  @Override
-  public ProfileResponseDto createProfile(String userId, ProfileRequestDto requestDto) {
-    // 입력한 아이디의 회원이 존재하는지 확인
-    userRepository.findByUserId(userId).orElseThrow(
-        () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
-    );
-    // 입력한 아이디의 회원의 프로필이 존재하는지 확인
-    Optional<Profile> found = profileRepository.findByUserId(userId);
-    if (found.isPresent()) {
-      throw new IllegalArgumentException("프로필이 존재합니다.");
-    }
-    // Dto 의 image 값이 null 이면 이미지를 제외하고 객체 생성
-    Profile profile;
-    if (requestDto.getImage() == null) {
-      profile = new Profile(userId, requestDto.getNickname(), requestDto.getPhoneNumber(),
-          requestDto.getInterestArea());
-    } else {
-      profile = new Profile(userId, requestDto.getNickname(), requestDto.getImage(),
-          requestDto.getInterestArea(), requestDto.getPhoneNumber());
-    }
-    profileRepository.save(profile);
-    return new ProfileResponseDto(userId, profile);
-  }
+//  @Override
+//  public ProfileResponseDto createProfile(String userId, ProfileRequestDto requestDto) {
+//    // 입력한 아이디의 회원이 존재하는지 확인
+//    userRepository.findByUserId(userId).orElseThrow(
+//        () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
+//    );
+//    // 입력한 아이디의 회원의 프로필이 존재하는지 확인
+//    Optional<Profile> found = profileRepository.findByUserId(userId);
+//    if (found.isPresent()) {
+//      throw new IllegalArgumentException("프로필이 존재합니다.");
+//    }
+//    // Dto 의 image 값이 null 이면 이미지를 제외하고 객체 생성
+//    Profile profile;
+//    if (requestDto.getImage() == null) {
+//      profile = new Profile(userId, requestDto.getNickname(), requestDto.getPhoneNumber(),
+//          requestDto.getInterestArea());
+//    } else {
+//      profile = new Profile(userId, requestDto.getNickname(), requestDto.getImage(),
+//          requestDto.getInterestArea(), requestDto.getPhoneNumber());
+//    }
+//    profileRepository.save(profile);
+//    return new ProfileResponseDto(userId, profile);
+//  }
 
   @Override
   public ProfileResponseDto getCustomerProfile(String userId) {

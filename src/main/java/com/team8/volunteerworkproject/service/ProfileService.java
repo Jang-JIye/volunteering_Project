@@ -6,7 +6,7 @@ import com.team8.volunteerworkproject.security.UserDetailsImpl;
 
 public interface ProfileService {
 
-  ProfileResponseDto createProfile(String userId, ProfileRequestDto requestDto);
+//  ProfileResponseDto createProfile(String userId, ProfileRequestDto requestDto);
 
   ProfileResponseDto getCustomerProfile(String userId);
 
