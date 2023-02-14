@@ -8,8 +8,13 @@ import java.util.Optional;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository <Enrollment, String> {
-    Optional<Enrollment> findByPostIdAndUserId(Long postId, String userId);
 
-    Optional<Enrollment> delete(Long postId, String userId);
+/*
+    void attend(Enrollment enrollment);
+
+    void cancel(Enrollment enrollment);
+*/
+
+    Optional<Enrollment> findById(Long enrollmentId);
 }
 
