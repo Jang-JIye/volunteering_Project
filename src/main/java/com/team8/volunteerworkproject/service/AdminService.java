@@ -16,7 +16,11 @@ public interface AdminService {
 
     NoticeResponseDto updateNotice(Long noticeId,NoticeRequestDto requestDto,String userId);
 
-    NoticeResponseDto deleteNotice(Long noticeId ,String userId);
+    void deleteNotice(Long noticeId , String userId);
+
+    void adminDeletePost(Long postId);
+
+    void adminDeleteComment(Long postId,Long commentId);
 
 
 }
