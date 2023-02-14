@@ -27,14 +27,14 @@ public class ProfileController {
 
   private final ProfileService profileService;
 
-  @PostMapping("/profiles")
-  public ResponseEntity<StatusAndDataResponseDto> createProfile(@RequestBody ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    ProfileResponseDto data = profileService.createProfile(userDetails.getUserId(), requestDto);
-    StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 작성이 완료되었습니다.", data);
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
-    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
-  }
+//  @PostMapping("/profiles")
+//  public ResponseEntity<StatusAndDataResponseDto> createProfile(@RequestBody ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//    ProfileResponseDto data = profileService.createProfile(userDetails.getUserId(), requestDto);
+//    StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 작성이 완료되었습니다.", data);
+//    HttpHeaders headers = new HttpHeaders();
+//    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+//    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+//  }
 
   @GetMapping("/profiles")
   public ResponseEntity<StatusAndDataResponseDto> getCustomerProfileByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
