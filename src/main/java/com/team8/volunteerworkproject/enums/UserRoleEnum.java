@@ -4,7 +4,8 @@ package com.team8.volunteerworkproject.enums;
 public enum UserRoleEnum {
   USER(Authority.USER),
   COMPANY(Authority.COMPANY),
-  ADMIN(Authority.ADMIN);
+  ADMIN(Authority.ADMIN),
+  UNREGISTER(Authority.UNREGISTER);
 
 
   private final String authority;
@@ -21,6 +22,7 @@ public enum UserRoleEnum {
     public static final String USER = "ROLE_USER";
     public static final String COMPANY = "ROLE_COMPANY";
     public static final String ADMIN = "ROLE_ADMIN";
+    public static final String UNREGISTER = "ROLE_UNREGISTER";
   }
 
 }
