@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
     public class Notice extends Timestamp {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+        private Long noticeId;
 
         @Column(nullable = false)
         private String userId;

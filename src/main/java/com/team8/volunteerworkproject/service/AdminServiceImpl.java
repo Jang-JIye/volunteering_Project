@@ -45,8 +45,8 @@ public class AdminServiceImpl implements AdminService {
     //공지사항 선택 조회
     @Override
     @Transactional
-    public  NoticeResponseDto findNotice(Long id,String userId){
-        Notice notice = noticeRepository.findById(id).orElseThrow(
+    public  NoticeResponseDto findNotice(Long noticeId,String userId){
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
                 () -> new IllegalArgumentException("조회하려는 공지사항이 없습니다.")
         );
         return  new NoticeResponseDto(notice);
@@ -56,8 +56,8 @@ public class AdminServiceImpl implements AdminService {
     //공지사항 수정
     @Override
     @Transactional
-    public NoticeResponseDto updateNotice(Long id, NoticeRequestDto requestDto,String userId) {
-        Notice notice = noticeRepository.findById(id)
+    public NoticeResponseDto updateNotice(Long noticeId, NoticeRequestDto requestDto,String userId) {
+        Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 공지사항이 없습니다."));
 
         notice.update(requestDto.getTitle(), requestDto.getContent());
@@ -74,8 +74,8 @@ public class AdminServiceImpl implements AdminService {
     //공지사항 삭제
         @Override
         @Transactional
-        public NoticeResponseDto deleteNotice (Long id, String userId){
-            Notice notice = noticeRepository.findById(id).orElseThrow(
+        public NoticeResponseDto deleteNotice (Long noticeId, String userId){
+            Notice notice = noticeRepository.findById(noticeId).orElseThrow(
                     () -> new IllegalArgumentException("삭제하고자 하는 공지사항이 없습니다.")
             );
             noticeRepository.delete(notice);
