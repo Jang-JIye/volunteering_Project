@@ -27,6 +27,7 @@ public class Enrollment extends  Timestamp{
         this.userId = userId;
 
     }
+    //주석
 
     public void save(String userId) {
         this.userId = getUserId();
