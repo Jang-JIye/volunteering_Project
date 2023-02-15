@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnrollmentRequestDto {
 
+    private Long postId;
+    private String userId;
     private String username;
-    private int phoneNum;
 //    private int phoneNum;
 
 

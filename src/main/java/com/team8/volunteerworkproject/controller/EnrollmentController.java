@@ -24,12 +24,13 @@ public class EnrollmentController {
     private final EnrollmentServiceImpl enrollmentService;
 
     //참여 신청(TRUE(확정) or FALSE(대기))
-    @PostMapping("/volunteerWorkPosts/{postId}/enrollments") //TRUE, FALSE
+    @PatchMapping("/volunteerWorkPosts/{postId}/enrollments/{enrollmentId}") //TRUE, FALSE
     public ResponseEntity<StatusAndDataResponseDto> attend(@PathVariable Long postId,
                                                            @RequestBody EnrollmentRequestDto requestDto,
-                                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        EnrollmentResponseDto data = enrollmentService.attend(postId, requestDto, userDetails);
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,"참여신청이 완료되었습니다.", data);
+                                                           @AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                           @PathVariable Long enrollmentId) {
+        EnrollmentResponseDto data = enrollmentService.attend(postId, requestDto, userDetails, enrollmentId);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,"모집글에 참가신청을 하였습니다.", data);
 
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
@@ -52,4 +53,3 @@ public class EnrollmentController {
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 }
-    //전체 조회

@@ -11,35 +11,28 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Enrollment extends Timestamp{
+@AllArgsConstructor
+public class Enrollment extends  Timestamp{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long enrollmentId;
 
+    @Column(nullable = false)
+    private Long postId;
+
+    @Column(nullable = false)
+    private String userId;
+
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private EnrollmentStatus enrollmentStatus = EnrollmentStatus.TRUE;
 
-
-    private String userId;
-
     @Column
     private String username;
 
-    @Column
-    private int phoneNum;
-
-    @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    private VolunteerWorkPost post;
-
-
-    public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId, VolunteerWorkPost post) {
-        /*this.postId = postId;*/
-        this.userId = userId;
-        this.username = requestDto.getUsername();
-        this.phoneNum = requestDto.getPhoneNum();
-        this.post = post;
+    public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId) {
+        this.postId = requestDto.getPostId();
+        this.userId = requestDto.getUserId();
     }
 }
