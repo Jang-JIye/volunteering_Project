@@ -1,11 +1,16 @@
 package com.team8.volunteerworkproject.service;
 
 import com.team8.volunteerworkproject.dto.request.ChallengeRequestDto;
+import com.team8.volunteerworkproject.dto.response.AllChallengeResponseDto;
 import com.team8.volunteerworkproject.dto.response.ChallengeResponseDto;
 import com.team8.volunteerworkproject.entity.Challenge;
 import com.team8.volunteerworkproject.repository.ChallengeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -41,5 +46,27 @@ public class ChallengeServiceImpl implements ChallengeService {
 
         challengeRepository.delete(challenge);
 
+    }
+
+    //챌린지 전체 조회
+    @Override
+    @Transactional(readOnly = true)
+    public List<AllChallengeResponseDto> getAllChallenge() {
+        List<Challenge> challengeList = challengeRepository.findAll();
+        List<AllChallengeResponseDto> responseDtoList = new ArrayList<>();
+        for (Challenge challenge : challengeList){
+            responseDtoList.add(new AllChallengeResponseDto(challenge));
+        }
+        return responseDtoList;
+    }
+
+    //챌린지 선택 조회
+    @Override
+    @Transactional(readOnly = true)
+    public ChallengeResponseDto getChallenge(Long challengeId) {
+        Challenge challenge = challengeRepository.findByChallengeId(challengeId).orElseThrow(
+                ()-> new IllegalArgumentException("찾으시는 챌린지가 없습니다."));
+        ChallengeResponseDto responseDto = new ChallengeResponseDto(challenge);
+        return responseDto;
     }
 }
