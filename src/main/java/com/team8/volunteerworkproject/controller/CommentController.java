@@ -4,7 +4,6 @@ import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
 import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
-import com.team8.volunteerworkproject.entity.CommentCaution;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.CommentServiceImpl;
 import java.nio.charset.Charset;
@@ -65,12 +64,10 @@ public class CommentController {
   // #18 댓글 신고
   @PostMapping("/volunteerWorkPosts/{postId}/comments/{commentId}/cautions")
   public ResponseEntity<CommentCautionResponseDto> cautionComment(@PathVariable Long postId,
-      @PathVariable Long commentId,
-      @RequestBody CommentCautionRequestDto requestDto,
-      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    CommentCautionResponseDto responseDto = new CommentCautionResponseDto(
-        new CommentCaution(postId, commentId, requestDto,
-            userDetails));
+      @PathVariable Long commentId, @RequestBody CommentCautionRequestDto requestDto) {
+    CommentCautionResponseDto responseDto = new CommentCautionResponseDto(postId, commentId,
+        requestDto);
+    commentService.cautionComment(postId, commentId, requestDto);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);

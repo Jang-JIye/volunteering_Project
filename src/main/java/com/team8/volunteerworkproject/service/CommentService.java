@@ -22,8 +22,7 @@ public interface CommentService {
 
   // #18 댓글 신고
   CommentCautionResponseDto cautionComment(Long postId, Long commentId,
-      CommentCautionRequestDto requestDto,
-      UserDetailsImpl userDetails);
+      CommentCautionRequestDto requestDto);
 
 }
 
