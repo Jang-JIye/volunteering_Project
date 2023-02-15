@@ -23,7 +23,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
   private final EnrollmentRepository enrollmentRepository;
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
 
-  //참여 신청
+    //참여 신청
   @Override
   public EnrollmentResponseDto attend(Long postId, EnrollmentRequestDto requestDto, String userId) {
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
@@ -75,5 +75,17 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
     return responseDto;
   }
+
+  //봉사 게시글 별 참여 신청 내역
+    @Override
+    public List<EnrollmentResponseDto> getPostEnrollments (Long postId) {
+
+      List<Enrollment> postEnrollments = enrollmentRepository.findAllByPostIdOrderByCreatedAtDesc (postId);
+      List<EnrollmentResponseDto> responseDtos = new ArrayList<>();
+        for (Enrollment enrollment : postEnrollments) {
+          responseDtos.add (new EnrollmentResponseDto(enrollment));
+      }
+      return responseDtos;
+    }
 
 }

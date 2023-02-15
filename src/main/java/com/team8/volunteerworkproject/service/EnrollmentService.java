@@ -18,4 +18,6 @@ public interface EnrollmentService {
     void cancel(Long postId, String userId, Long enrollmentId);
 
     List<EnrollmentResponseDto> getAllMyEnrollments(String userId);
+
+    List<EnrollmentResponseDto> getPostEnrollments(Long postId);
 }

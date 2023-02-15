@@ -20,5 +20,7 @@ public interface EnrollmentRepository extends JpaRepository <Enrollment, String>
 
     Optional<Enrollment> findByEnrollmentId(Long enrollmentId);
     List<Enrollment> findAllByUserIdAndEnrollmentStatusOrderByCreatedAtDesc(String userId, EnrollmentStatus status);
+
+    List<Enrollment> findAllByPostIdOrderByCreatedAtDesc(Long postId);
 }
 
