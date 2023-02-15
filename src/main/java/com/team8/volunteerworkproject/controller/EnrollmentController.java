@@ -28,7 +28,7 @@ public class EnrollmentController {
     public ResponseEntity<StatusAndDataResponseDto> attend(@PathVariable Long postId,
                                                            @RequestBody EnrollmentRequestDto requestDto,
                                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        EnrollmentResponseDto data = enrollmentService.attend(postId, requestDto, userDetails);
+        EnrollmentResponseDto data = enrollmentService.attend(postId, requestDto, userDetails.getUserId());
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,"참여신청이 완료되었습니다.", data);
 
         HttpHeaders headers = new HttpHeaders();//필추
@@ -44,7 +44,7 @@ public class EnrollmentController {
                                                     @PathVariable Long enrollmentId
     ) {
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "참여신청을 취소하였습니다.");
-        enrollmentService.cancel(postId, userDetails, enrollmentId);
+        enrollmentService.cancel(postId, userDetails.getUserId(), enrollmentId);
 
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추

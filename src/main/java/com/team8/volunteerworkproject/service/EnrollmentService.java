@@ -10,8 +10,8 @@ public interface EnrollmentService {
     void participation(Long postId, String userId);
 */
     //참가 신청
-    EnrollmentResponseDto attend(Long postId, EnrollmentRequestDto requestDto, UserDetailsImpl userDetails);
+    EnrollmentResponseDto attend(Long postId, EnrollmentRequestDto requestDto, String userId);
 
     //참가 신청 취소(삭제)
-    void cancel(Long postId, UserDetailsImpl userDetails, Long enrollmentId);
+    void cancel(Long postId, String userId, Long enrollmentId);
 }
