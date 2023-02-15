@@ -4,9 +4,12 @@ import com.team8.volunteerworkproject.dto.request.NoticeRequestDto;
 import com.team8.volunteerworkproject.dto.response.NoticeResponseDto;
 import com.team8.volunteerworkproject.entity.Comment;
 import com.team8.volunteerworkproject.entity.Notice;
+import com.team8.volunteerworkproject.entity.Profile;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
+import com.team8.volunteerworkproject.enums.UserStatus;
 import com.team8.volunteerworkproject.repository.CommentRepository;
 import com.team8.volunteerworkproject.repository.NoticeRepository;
+import com.team8.volunteerworkproject.repository.ProfileRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +28,8 @@ public class AdminServiceImpl implements AdminService {
     private final VolunteerWorkPostRepository volunteerWorkPostRepository;
 
     private final CommentRepository commentRepository;
+
+    private final ProfileRepository profileRepository;
 
     //공지사항 작성
     @Override
@@ -102,7 +107,7 @@ public class AdminServiceImpl implements AdminService {
     //댓글 삭제
     @Override
     public void adminDeleteComment(Long postId ,Long commentId) {
-        VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
+         volunteerWorkPostRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(
@@ -112,6 +117,26 @@ public class AdminServiceImpl implements AdminService {
         commentRepository.delete(comment);
 
     }
+    //유저 활동 정지
+    @Override
+    public void userBlock(String userId){
+        Profile profile = profileRepository.findByUserId(userId).orElseThrow(
+                () -> new IllegalArgumentException("프로필이 존재하지 않습니다.")
+        );
+        profile.changeUserEnum(UserStatus.BLOCK);
+        profileRepository.save(profile);
+    }
+
+    //유저 활동 재개
+    @Override
+    public void userNormal(String userId){
+        Profile profile = profileRepository.findByUserId(userId).orElseThrow(
+                () -> new IllegalArgumentException("프로필이 존재하지 않습니다.")
+        );
+        profile.changeUserEnum(UserStatus.NORMAL);
+        profileRepository.save(profile);
+    }
+
 }
 
 
