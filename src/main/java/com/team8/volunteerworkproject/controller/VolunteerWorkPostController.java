@@ -33,11 +33,14 @@ public class VolunteerWorkPostController {
     //게시글 작성
     //@Secured(UserRoleEnum.Authority.COMPANY)
     @PostMapping("/volunteerWorkPosts")
-    public ResponseEntity<StatusAndDataResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<StatusAndDataResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
+                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
         VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.", data);
+
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
         // new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
@@ -63,6 +66,7 @@ public class VolunteerWorkPostController {
                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "해당 게시글이 삭제되었습니다.");
         volunteerWorkPostService.deletePost(postId, userDetails.getUserId());
+
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
 
