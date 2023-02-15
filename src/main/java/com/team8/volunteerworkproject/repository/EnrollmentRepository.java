@@ -15,6 +15,6 @@ public interface EnrollmentRepository extends JpaRepository <Enrollment, String>
     void cancel(Enrollment enrollment);
 */
 
-    Optional<Enrollment> findById(Long enrollmentId);
+    Optional<Enrollment> findByEnrollmentId(Long enrollmentId);
 }
 
