@@ -15,10 +15,12 @@ public class EnrollmentResponseDto {
     private String userId;
     private String username;
     private String enrollmentStatus;
+    private Long enrollmentId;
 
     public EnrollmentResponseDto(Enrollment enrollment) {
-        this.postId = enrollment.getPostId();
+        this.postId = enrollment.getPost().getPostId();
         this.userId = enrollment.getUserId();
+        this.enrollmentId = enrollment.getEnrollmentId();
         this.username = enrollment.getUsername();
         this.enrollmentStatus = String.valueOf(enrollment.getEnrollmentStatus());
     }
