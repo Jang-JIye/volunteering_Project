@@ -66,8 +66,8 @@ public class CommentController {
   public ResponseEntity<CommentCautionResponseDto> cautionComment(@PathVariable Long postId,
       @PathVariable Long commentId, @RequestBody CommentCautionRequestDto requestDto) {
     CommentCautionResponseDto responseDto = new CommentCautionResponseDto(postId, commentId,
-        requestDto);
-    commentService.cautionComment(postId, commentId, requestDto);
+        requestDto, "댓글이 신고되었습니다.");
+    commentService.cautionComment(postId, commentId, requestDto.getCautionReason());
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);

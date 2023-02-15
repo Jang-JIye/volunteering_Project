@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 public class CommentCautionResponseDto {
 
   private Long postId;
-  private String cautionReason;
   private Long commentId;
+  private String cautionReason;
+  private String message;
 
   public CommentCautionResponseDto(CommentCaution commentCaution) {
     this.cautionReason = commentCaution.getCautionReason();
@@ -19,9 +20,11 @@ public class CommentCautionResponseDto {
   }
 
   public CommentCautionResponseDto(Long postId, Long commentId,
-      CommentCautionRequestDto requestDto) {
+      CommentCautionRequestDto requestDto, String message) {
     this.postId = postId;
     this.commentId = commentId;
     this.cautionReason = requestDto.getCautionReason();
+    this.message = message;
+
   }
 }

@@ -1,6 +1,5 @@
 package com.team8.volunteerworkproject.service;
 
-import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
 import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
@@ -84,14 +83,14 @@ public class CommentServiceImpl implements CommentService {
   // #18 댓글 신고
   @Transactional
   public CommentCautionResponseDto cautionComment(Long postId, Long commentId,
-      CommentCautionRequestDto requestDto) {
+      String cautionReason) {
     VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 없습니다.")
     );
     Comment comment = commentRepository.findById(commentId).orElseThrow(
         () -> new IllegalArgumentException("신고할 댓글이 없습니다.")
     );
-    CommentCaution commentCaution = new CommentCaution(post.getUserId(), commentId, requestDto);
+    CommentCaution commentCaution = new CommentCaution(post.getUserId(), commentId, cautionReason);
     commentCautionRepository.save(commentCaution);
     return new CommentCautionResponseDto(commentCaution);
 

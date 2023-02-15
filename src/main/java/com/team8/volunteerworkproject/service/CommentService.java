@@ -1,6 +1,5 @@
 package com.team8.volunteerworkproject.service;
 
-import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
 import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
@@ -22,7 +21,7 @@ public interface CommentService {
 
   // #18 댓글 신고
   CommentCautionResponseDto cautionComment(Long postId, Long commentId,
-      CommentCautionRequestDto requestDto);
+      String cautionReason);
 
 }
 

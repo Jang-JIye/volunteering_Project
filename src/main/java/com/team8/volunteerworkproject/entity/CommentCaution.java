@@ -1,6 +1,5 @@
 package com.team8.volunteerworkproject.entity;
 
-import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +27,9 @@ public class CommentCaution extends Timestamp {
   private Long commentId;
 
 
-  public CommentCaution(String cautionUserId, Long commentId, CommentCautionRequestDto requestDto) {
+  public CommentCaution(String cautionUserId, Long commentId, String cautionReason) {
     this.cautionUserId = cautionUserId;
     this.commentId = commentId;
-    this.cautionReason = requestDto.getCautionReason();
+    this.cautionReason = cautionReason;
   }
 }
