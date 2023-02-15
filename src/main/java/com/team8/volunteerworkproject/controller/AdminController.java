@@ -101,4 +101,24 @@ public class AdminController {
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);//responseDto
     }
+
+    //유저 활동 정지
+    @PatchMapping("/admin/users/{userId}/block")
+    public ResponseEntity<StatusResponseDto> userBlock(@PathVariable String userId){
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "(admin) 해당 유저가 활동 정지되었습니다.");
+        adminService.userBlock(userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+    }
+
+    //유저 활동 재개
+    @PatchMapping("/admin/users/{userId}/normal")
+    public ResponseEntity<StatusResponseDto> userNormal(@PathVariable String userId){
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "(admin) 해당 유저가 활동 재개되었습니다.");
+        adminService.userNormal(userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+    }
 }
