@@ -63,4 +63,7 @@ public class Profile extends Timestamp{
   }
 
 
+  public void changeUserEnum(UserStatus status){
+    this.status = status;
+  }
 }

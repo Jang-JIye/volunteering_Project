@@ -22,5 +22,9 @@ public interface AdminService {
 
     void adminDeleteComment(Long postId,Long commentId);
 
+    void userBlock(String userId);
+
+    void  userNormal(String userId);
+
 
 }
