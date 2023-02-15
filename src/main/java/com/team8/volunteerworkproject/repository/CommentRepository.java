@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
   @Override
-  Optional<Comment> findById(Long CommentId);
+  Optional<Comment> findById(Long commentId);
 
   Optional<Comment> findByUserId(String userId);
 }

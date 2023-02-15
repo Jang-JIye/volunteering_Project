@@ -1,10 +1,14 @@
 package com.team8.volunteerworkproject.service;
 
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
+import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
 import com.team8.volunteerworkproject.entity.Comment;
+import com.team8.volunteerworkproject.entity.CommentCaution;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
+import com.team8.volunteerworkproject.repository.CommentCautionRepository;
 import com.team8.volunteerworkproject.repository.CommentRepository;
+import com.team8.volunteerworkproject.repository.UserRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,8 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
+  private final CommentCautionRepository commentCautionRepository;
+  private final UserRepository userRepository;
 
   // #17-1 댓글 작성
   @Transactional
@@ -28,7 +34,6 @@ public class CommentServiceImpl implements CommentService {
     VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 없습니다.")
     );
-
     Comment comment = new Comment(requestDto, userDetails.getUserId(), volunteerWorkPost);
     commentRepository.save(comment);
     return new CommentResponseDto(comment);
@@ -74,4 +79,21 @@ public class CommentServiceImpl implements CommentService {
     return new ResponseEntity<>("삭제 완료!", HttpStatus.OK);
 
   }
+
+  // #18 댓글 신고
+  @Transactional
+  public CommentCautionResponseDto cautionComment(Long postId, Long commentId,
+      String cautionReason) {
+    VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
+        () -> new IllegalArgumentException("해당 게시글이 없습니다.")
+    );
+    Comment comment = commentRepository.findById(commentId).orElseThrow(
+        () -> new IllegalArgumentException("신고할 댓글이 없습니다.")
+    );
+    CommentCaution commentCaution = new CommentCaution(post.getUserId(), commentId, cautionReason);
+    commentCautionRepository.save(commentCaution);
+    return new CommentCautionResponseDto(commentCaution);
+
+  }
+
 }

@@ -1,6 +1,8 @@
 package com.team8.volunteerworkproject.controller;
 
+import com.team8.volunteerworkproject.dto.request.CommentCautionRequestDto;
 import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
+import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.CommentServiceImpl;
@@ -58,4 +60,18 @@ public class CommentController {
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return commentService.deleteComment(postId, userDetails, commentId);
   }
+
+  // #18 댓글 신고
+  @PostMapping("/volunteerWorkPosts/{postId}/comments/{commentId}/cautions")
+  public ResponseEntity<CommentCautionResponseDto> cautionComment(@PathVariable Long postId,
+      @PathVariable Long commentId, @RequestBody CommentCautionRequestDto requestDto) {
+    CommentCautionResponseDto responseDto = new CommentCautionResponseDto(postId, commentId,
+        requestDto, "댓글이 신고되었습니다.");
+    commentService.cautionComment(postId, commentId, requestDto.getCautionReason());
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+    return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+  }
+
+
 }
