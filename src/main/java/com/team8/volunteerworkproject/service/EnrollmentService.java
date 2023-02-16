@@ -20,4 +20,7 @@ public interface EnrollmentService {
     List<EnrollmentResponseDto> getAllMyEnrollments(String userId);
 
     List<EnrollmentResponseDto> getPostEnrollments(Long postId);
+
+    //봉사 게시글 별 참여 신청 내역
+    List<EnrollmentResponseDto> getPostEnrollments(Long postId, Long enrollmentId);
 }

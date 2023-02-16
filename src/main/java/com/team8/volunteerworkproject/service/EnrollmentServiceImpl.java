@@ -1,20 +1,17 @@
 package com.team8.volunteerworkproject.service;
 
 import com.team8.volunteerworkproject.dto.request.EnrollmentRequestDto;
-import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.dto.response.EnrollmentResponseDto;
 import com.team8.volunteerworkproject.entity.Enrollment;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import com.team8.volunteerworkproject.enums.EnrollmentStatus;
 import com.team8.volunteerworkproject.repository.EnrollmentRepository;
-import com.team8.volunteerworkproject.repository.UserRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
-import com.team8.volunteerworkproject.security.UserDetailsImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -77,15 +74,15 @@ public class EnrollmentServiceImpl implements EnrollmentService {
   }
 
   //봉사 게시글 별 참여 신청 내역
-    @Override
-    public List<EnrollmentResponseDto> getPostEnrollments (Long postId) {
+  @Override
+  public List<EnrollmentResponseDto> getPostEnrollments(Long postId, Long enrollmentId) {
 
-      List<Enrollment> postEnrollments = enrollmentRepository.findAllByPostIdOrderByCreatedAtDesc (postId);
-      List<EnrollmentResponseDto> responseDtos = new ArrayList<>();
-        for (Enrollment enrollment : postEnrollments) {
-          responseDtos.add (new EnrollmentResponseDto(enrollment));
-      }
-      return responseDtos;
+    List<Enrollment> postEnrollments = enrollmentRepository.findAllByPostIdAndEnrollmentIdOrderByCreatedAtDesc (postId, enrollmentId);
+    List<EnrollmentResponseDto> responseDtos = new ArrayList<>();
+    for (Enrollment enrollment : postEnrollments) {
+      responseDtos.add (new EnrollmentResponseDto(enrollment));
     }
+    return responseDtos;
+  }
 
 }

@@ -6,6 +6,7 @@ import com.team8.volunteerworkproject.dto.response.EnrollmentResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import java.util.List;
 
+import com.team8.volunteerworkproject.entity.Enrollment;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import org.springframework.http.ResponseEntity;
 import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
@@ -68,8 +69,8 @@ public class EnrollmentController {
     }
 
     //봉사 게시글 별 참여 신청 내역
-    @GetMapping("/volunteerWorkPosts/{postId}/enrollments")
-    public ResponseEntity<StatusAndDataResponseDto> getPostEnrollment (VolunteerWorkPost post) {
+    @GetMapping("/volunteerWorkPosts/{postId}/enrollments/{enrollmentId}")
+    public ResponseEntity<StatusAndDataResponseDto> getPostEnrollment (VolunteerWorkPost post, Enrollment enrollment) {
         List <EnrollmentResponseDto> data = enrollmentService.getPostEnrollments(post.getPostId());
 
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글 참여신청 내역 조회가 완료되었습니다.", data);
