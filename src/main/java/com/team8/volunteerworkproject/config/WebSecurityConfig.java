@@ -17,16 +17,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer {
 
   private final JwtUtil jwtUtil;
 
   private final UserDetailsServiceImpl userDetailsService;
+
+  public static final String ALLOWED_METHOD_NAMES = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
 
 
   @Bean
@@ -47,6 +51,7 @@ public class WebSecurityConfig {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.OPTIONS).permitAll()
         .requestMatchers("/users/signup").permitAll()
         .requestMatchers("/users/signin").permitAll()
         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -57,5 +62,12 @@ public class WebSecurityConfig {
 
 
     return http.build();
+
+  }
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+        .exposedHeaders("Authorization")
+        .allowedMethods(ALLOWED_METHOD_NAMES.split(","));
   }
 }
