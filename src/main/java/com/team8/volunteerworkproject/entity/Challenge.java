@@ -1,11 +1,9 @@
 package com.team8.volunteerworkproject.entity;
 
 import com.team8.volunteerworkproject.dto.request.ChallengeRequestDto;
-import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Entity
@@ -25,15 +23,20 @@ public class Challenge extends Timestamp{
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private String image;
+
 
     public Challenge(ChallengeRequestDto requestDto) {
         this.userId = requestDto.getUserId();
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.image = requestDto.getImage();
     }
 
-    public void update(String title, String content) {
+    public void update(String title, String content, String image) {
         this.title = title;
         this.content = content;
+        this.image = image;
     }
 }

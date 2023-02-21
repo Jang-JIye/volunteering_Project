@@ -25,9 +25,9 @@ public class ChallengeController {
 
     // 챌린지 등록
     @PostMapping("/admin/challenges")
-    public ResponseEntity<StatusAndDataResponseDto> createChallenge(@RequestBody ChallengeRequestDto requestDto){
+    public ResponseEntity<StatusResponseDto> createChallenge(@RequestBody ChallengeRequestDto requestDto){
         ChallengeResponseDto data = challengeService.createChallenge(requestDto);
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "챌린지 등록이 완료되었습니다.", data);
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "챌린지 등록이 완료되었습니다.");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers, HttpStatus.OK);

@@ -46,18 +46,15 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf().disable();
+    http.cors().and().csrf().disable().authorizeHttpRequests()
+            .requestMatchers(HttpMethod.OPTIONS).permitAll()
+            .requestMatchers("/users/signup").permitAll()
+            .requestMatchers("/users/signin").permitAll()
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            .anyRequest().authenticated()
+            .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-    http.authorizeHttpRequests()
-        .requestMatchers(HttpMethod.OPTIONS).permitAll()
-        .requestMatchers("/users/signup").permitAll()
-        .requestMatchers("/users/signin").permitAll()
-        .requestMatchers("/admin/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
-        .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
-
     http.formLogin().disable();
 
 
