@@ -21,6 +21,8 @@ public class NoticeResponseDto  extends  Timestamp{
 
     private LocalDateTime modifiedAt;
 
+    private Long noticeId;
+
 
 
 
@@ -29,6 +31,7 @@ public class NoticeResponseDto  extends  Timestamp{
         this.content = notice.getContent();
         this.createdAt = notice.getCreatedAt();
         this.modifiedAt =notice.getModifiedAt();
+        this.noticeId = notice.getNoticeId();
 
 
     }
