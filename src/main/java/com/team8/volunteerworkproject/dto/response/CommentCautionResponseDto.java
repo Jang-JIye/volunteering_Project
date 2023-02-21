@@ -14,7 +14,8 @@ public class CommentCautionResponseDto {
   private String cautionReason;
   private String message;
 
-  public CommentCautionResponseDto(CommentCaution commentCaution) {
+  public CommentCautionResponseDto(
+      CommentCaution commentCaution) {
     this.cautionReason = commentCaution.getCautionReason();
     this.commentId = commentCaution.getCommentId();
   }
