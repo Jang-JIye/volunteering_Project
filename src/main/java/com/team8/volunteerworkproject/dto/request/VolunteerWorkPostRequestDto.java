@@ -9,7 +9,10 @@ import lombok.Getter;
 @Builder
 public class VolunteerWorkPostRequestDto{
     private String title;
+
     private String content;
-    private PostStatus postStatus;
+  //  private PostStatus postStatus;
     private String area;
+
+    private String centerName;
 }
