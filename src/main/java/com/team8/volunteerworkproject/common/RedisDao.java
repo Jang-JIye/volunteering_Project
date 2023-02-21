@@ -13,11 +13,6 @@ public class RedisDao {
     this.redisTemplate = redisTemplate;
   }
 
-  public void setValues(String key, Object data) {
-    ValueOperations<String, Object> values = redisTemplate.opsForValue();
-    values.set(key, data);
-  }
-
   public void setValues(String key, Object data, Duration duration) {
     ValueOperations<String, Object> values = redisTemplate.opsForValue();
     values.set(key, data, duration);

@@ -1,5 +1,6 @@
 package com.team8.volunteerworkproject.service;
 
+import com.team8.volunteerworkproject.common.S3Uploader;
 import com.team8.volunteerworkproject.dto.request.ProfileRequestDto;
 import com.team8.volunteerworkproject.dto.response.ProfileResponseDto;
 import com.team8.volunteerworkproject.entity.Profile;
@@ -9,8 +10,10 @@ import com.team8.volunteerworkproject.repository.UserRepository;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,13 @@ public class ProfileServiceImpl implements ProfileService {
   private final UserRepository userRepository;
   private final ProfileRepository profileRepository;
   private final PasswordEncoder passwordEncoder;
+
+  private final S3Uploader s3Uploader;
+
+  @Value("${cloud.aws.s3.bucket}")
+  private String bucketName;
+
+
 
 //  @Override
 //  public ProfileResponseDto createProfile(String userId, ProfileRequestDto requestDto) {
@@ -54,7 +64,7 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
-  public ProfileResponseDto updateProfile(String userId, ProfileRequestDto requestDto) {
+  public ProfileResponseDto updateProfile(String userId, MultipartFile multipartFile, ProfileRequestDto requestDto) {
     User user = userRepository.findByUserId(userId).orElseThrow(
         () -> new IllegalArgumentException("등록된 아이디가 없습니다.")
     );
@@ -75,6 +85,4 @@ public class ProfileServiceImpl implements ProfileService {
     userRepository.save(user);
     return new ProfileResponseDto(userId, profile);
   }
-
-
 }

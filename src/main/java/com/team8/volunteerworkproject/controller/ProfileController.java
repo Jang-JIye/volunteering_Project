@@ -7,6 +7,7 @@ import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.ProfileService;
+import jakarta.validation.Valid;
 import java.nio.charset.Charset;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,8 +49,9 @@ public class ProfileController {
   }
 
   @PatchMapping("/profiles")
-  public ResponseEntity<StatusAndDataResponseDto> updateProfile(@RequestBody ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    ProfileResponseDto data = profileService.updateProfile(userDetails.getUserId(), requestDto);
+  public ResponseEntity<StatusAndDataResponseDto> updateProfile(@RequestPart(required = false,value = "image") MultipartFile multipartFile,
+      @RequestPart(value="profile") @Valid ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    ProfileResponseDto data = profileService.updateProfile(userDetails.getUserId(), multipartFile, requestDto);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 수정이 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));

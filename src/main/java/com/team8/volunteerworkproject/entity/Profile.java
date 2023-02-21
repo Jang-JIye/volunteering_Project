@@ -23,7 +23,7 @@ public class Profile extends Timestamp{
   private String nickname;
   private String interestArea;
   private String companyRegisterNumb;
-  private String image = "기본 프로필 사진";
+  private String image;
   @Column(nullable = false)
   @Enumerated(value = EnumType.STRING)
   private UserStatus status = UserStatus.NORMAL;
@@ -53,7 +53,6 @@ public class Profile extends Timestamp{
     this.nickname = requestDto.getNickname();
     this.phoneNumber = requestDto.getPhoneNumber();
     this.interestArea = requestDto.getInterestArea();
-    this.image = requestDto.getImage();
   }
 
   public void updateWithoutImage(ProfileRequestDto requestDto) {
