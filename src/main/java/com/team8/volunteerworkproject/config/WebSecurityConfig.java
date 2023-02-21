@@ -40,8 +40,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     return (web) -> web.ignoring()
-        .requestMatchers(PathRequest.toH2Console())
-        .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+            .requestMatchers(PathRequest.toH2Console())
+            .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
   }
 
   @Bean
@@ -51,6 +51,9 @@ public class WebSecurityConfig implements WebMvcConfigurer {
             .requestMatchers("/users/signup").permitAll()
             .requestMatchers("/users/signin").permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers("/challenges/**").permitAll()
+            .requestMatchers("/volunteerWorkPosts/**").permitAll()
+            .requestMatchers("/notices/**").permitAll()
             .anyRequest().authenticated()
             .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
@@ -64,7 +67,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .exposedHeaders("Authorization")
-        .allowedMethods(ALLOWED_METHOD_NAMES.split(","));
+            .exposedHeaders("Authorization")
+            .allowedMethods(ALLOWED_METHOD_NAMES.split(","));
   }
 }
