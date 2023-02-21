@@ -4,6 +4,7 @@ import com.team8.volunteerworkproject.dto.request.CommentRequestDto;
 import com.team8.volunteerworkproject.dto.response.CommentCautionResponseDto;
 import com.team8.volunteerworkproject.dto.response.CommentResponseDto;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 public interface CommentService {
@@ -23,5 +24,11 @@ public interface CommentService {
   CommentCautionResponseDto cautionComment(Long postId, Long commentId,
       String cautionReason);
 
+  // 댓글 조회
+  List<CommentResponseDto> getCommentList();
+
+//  // #댓글 조회
+//  @Transactional
+//  List<CommentResponseDto> getCommentList();
 }
 

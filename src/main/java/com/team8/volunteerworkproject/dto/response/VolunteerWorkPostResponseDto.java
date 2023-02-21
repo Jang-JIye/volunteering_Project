@@ -12,10 +12,9 @@ public class VolunteerWorkPostResponseDto {
     private String title;
     private String content;
     private String area;
-
+    private String status;
+    private int likeNum;
     private String centerName;
-    //  private String status;
-   // private int likeNum;
 //    private LocalDateTime schedule;
 
     public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
@@ -23,8 +22,8 @@ public class VolunteerWorkPostResponseDto {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.area = post.getArea();
+        this.likeNum = likeNum;
         this.centerName = post.getCenterName();
-        //        this.likeNum = likeNum;
 
 //        this.schedule = post.getSchedule();
 

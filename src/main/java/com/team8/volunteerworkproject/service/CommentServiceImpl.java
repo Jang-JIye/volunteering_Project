@@ -11,6 +11,8 @@ import com.team8.volunteerworkproject.repository.CommentRepository;
 import com.team8.volunteerworkproject.repository.UserRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,8 @@ public class CommentServiceImpl implements CommentService {
     VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 없습니다.")
     );
-    Comment comment = new Comment(requestDto, userDetails.getUserId(), volunteerWorkPost);
+    Comment comment = new Comment(requestDto, userDetails.getUserId(),
+        userDetails.getUser().getNickname(), volunteerWorkPost);
     commentRepository.save(comment);
     return new CommentResponseDto(comment);
   }
@@ -95,5 +98,29 @@ public class CommentServiceImpl implements CommentService {
     return new CommentCautionResponseDto(commentCaution);
 
   }
+
+  @Override
+  public List<CommentResponseDto> getCommentList() {
+    List<Comment> comments = commentRepository.findAllByOrderByModifiedAtDesc();
+    List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+    for (Comment comment : comments) {
+      commentResponseDtoList.add(new CommentResponseDto(comment));
+    }
+    return commentResponseDtoList;
+  }
+
+//  @Override
+//  public List<CommentResponseDto> getCommentList(String nickname) {
+//
+//    List<Comment> comments = commentRepository.findAllByOrderByModifiedAtDesc();
+//    List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+//
+//    for (Comment comment : comments) {
+//      commentResponseDtoList.add(new CommentResponseDto(comment));
+//    }
+//    return commentResponseDtoList;
+//  }
+
 
 }

@@ -4,12 +4,8 @@ import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
 import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
-
-import com.team8.volunteerworkproject.entity.VolunteerWorkPostLike;
-import com.team8.volunteerworkproject.repository.VolunteerWorkPostLikeRepository;
-
 import com.team8.volunteerworkproject.repository.UserRepository;
-
+import com.team8.volunteerworkproject.repository.VolunteerWorkPostLikeRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +56,6 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     return new VolunteerWorkPostResponseDto(post);
   }
 
-  
 
   //게시글 삭제
   @Override
@@ -75,7 +70,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     }
   }
 
-    
+
   // 전체 모집글 조회
   @Override
   @Transactional(readOnly = true)
