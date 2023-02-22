@@ -77,10 +77,10 @@ public class CommentController {
     return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
   }
 
-  // 댓글 조회
+  // 게시글의 댓글 조회
   @GetMapping("/volunteerWorkPosts/{postId}/comments")
   public ResponseEntity<StatusAndDataResponseDto> getCommentList(@PathVariable Long postId) {
-    List<CommentResponseDto> data = commentService.getCommentList();
+    List<CommentResponseDto> data = commentService.getCommentList(postId);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,
         "댓글 조회가 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
