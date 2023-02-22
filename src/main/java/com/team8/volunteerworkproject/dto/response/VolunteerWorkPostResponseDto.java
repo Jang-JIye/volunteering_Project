@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 
 @Getter
-@NoArgsConstructor //테스트 코드작성할 때 필요해서 추가
+@NoArgsConstructor
 public class VolunteerWorkPostResponseDto {
 
     private Long postId;
@@ -20,7 +20,7 @@ public class VolunteerWorkPostResponseDto {
     private String date;//모집 날짜
 //    private LocalDateTime schedule;
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, int likeNum) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
@@ -29,7 +29,16 @@ public class VolunteerWorkPostResponseDto {
         this.centerName = post.getCenterName();
         this.date = post.getDate();
 
+  }
+
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post ){
+        this.postId = post.getPostId();
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.area = post.getArea();
+        this.centerName = post.getCenterName();
+
 //        this.schedule = post.getSchedule();
 
-  }
+    }
 }
