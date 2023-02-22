@@ -5,6 +5,7 @@ import com.team8.volunteerworkproject.dto.response.AllChallengeAuthResponseDto;
 import com.team8.volunteerworkproject.dto.response.ChallengeAuthResponseDto;
 import com.team8.volunteerworkproject.entity.ChallengeAuth;
 import com.team8.volunteerworkproject.repository.ChallengeAuthRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,17 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
         int likeNum = challengeAuthLikeService.count(challengeAuthId);
         ChallengeAuthResponseDto responseDto = new ChallengeAuthResponseDto(challengeAuth, likeNum);
         return responseDto;
+    }
+
+    //나의 챌린지 조회
+    @Override
+    public List<AllChallengeAuthResponseDto> getAllChallengeMyAuth(String userId) {
+        List<ChallengeAuth> challengeAuths = challengeAuthRepository.findAllByUserId(userId);
+        List<AllChallengeAuthResponseDto> responseDtos = new ArrayList<>();
+        for(ChallengeAuth challengeAuth : challengeAuths){
+            responseDtos.add(new AllChallengeAuthResponseDto(challengeAuth));
+        }
+        return responseDtos;
     }
 
 }

@@ -66,6 +66,18 @@ public class ChallengeAuthController {
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
     }
 
+    //나의 챌린지 전체조회
+    @GetMapping
+    public ResponseEntity<StatusAndDataResponseDto> getAllChallenge(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        List<AllChallengeAuthResponseDto> data = challengeAuthService.getAllChallengeMyAuth(userDetails.getUserId());
+
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "나의 챌린지를 조회했습니다.", data);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+    }
+
 
     
 }

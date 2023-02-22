@@ -15,6 +15,7 @@ public interface ChallengeAuthService {
     void deleteChallengeAuth (@PathVariable Long challengeAuthId);
     List<AllChallengeAuthResponseDto> getAllChallengeAuth();
     ChallengeAuthResponseDto getCahllengeAuth(Long challengeAuthId);
+    List<AllChallengeAuthResponseDto> getAllChallengeMyAuth(String userId);
 
 
 
