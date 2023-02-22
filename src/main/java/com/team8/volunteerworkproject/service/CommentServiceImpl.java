@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
         () -> new IllegalArgumentException("해당 게시글이 없습니다.")
     );
     Comment comment = new Comment(requestDto, userDetails.getUserId(),
-        userDetails.getUser().getNickname(), volunteerWorkPost);
+        userDetails.getUser().getNickname(), postId);
     commentRepository.save(comment);
     return new CommentResponseDto(comment);
   }
@@ -99,28 +99,20 @@ public class CommentServiceImpl implements CommentService {
 
   }
 
+  // 게시글의 댓글 조회
   @Override
-  public List<CommentResponseDto> getCommentList() {
-    List<Comment> comments = commentRepository.findAllByOrderByModifiedAtDesc();
+  public List<CommentResponseDto> getCommentList(Long postId) {
+    List<Comment> comments = commentRepository.findByPostId(postId).orElseThrow(
+        () -> new IllegalArgumentException("해당 게시글에 댓글이 없습니다.")
+    );
     List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
     for (Comment comment : comments) {
       commentResponseDtoList.add(new CommentResponseDto(comment));
     }
+
     return commentResponseDtoList;
   }
-
-//  @Override
-//  public List<CommentResponseDto> getCommentList(String nickname) {
-//
-//    List<Comment> comments = commentRepository.findAllByOrderByModifiedAtDesc();
-//    List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-//
-//    for (Comment comment : comments) {
-//      commentResponseDtoList.add(new CommentResponseDto(comment));
-//    }
-//    return commentResponseDtoList;
-//  }
 
 
 }

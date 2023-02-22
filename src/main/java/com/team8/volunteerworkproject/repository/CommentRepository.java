@@ -14,5 +14,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
   Optional<Comment> findByUserId(String userId);
 
-  List<Comment> findAllByOrderByModifiedAtDesc();
+  Optional<List<Comment>> findByPostId(Long postId);
+
+
 }

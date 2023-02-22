@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,17 +25,14 @@ public class Comment extends Timestamp {
 
   private String userId;
 
-  //연관관계 끊기
-  @ManyToOne
-  @JoinColumn(name = "post_id", nullable = false)
-  private VolunteerWorkPost volunteerWorkPost;
+  private Long postId;
 
   public Comment(CommentRequestDto requestDto, String userId, String userNickname,
-      VolunteerWorkPost volunteerWorkPost) {
+      Long postId) {
     this.contents = requestDto.getContents();
     this.userNickname = userNickname;
     this.userId = userId;
-    this.volunteerWorkPost = volunteerWorkPost;
+    this.postId = postId;
   }
 //  Comment comment = new Comment(requestDto, userDetails.getUserId(), volunteerWorkPost);
 //    commentRepository.save(comment);
