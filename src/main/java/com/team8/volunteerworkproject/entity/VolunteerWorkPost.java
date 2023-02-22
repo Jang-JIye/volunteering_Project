@@ -40,14 +40,19 @@ public class VolunteerWorkPost extends Timestamp {
   @Column
   private String nickname;
 
+  @Column
+  private String centerName;
 
-  public VolunteerWorkPost(String userId, String title, String content, PostStatus postStatus,
-      String area) {
+
+  public VolunteerWorkPost(String userId, String title, String content,
+                           String area, String centerName) {
     this.userId = userId;
     this.title = title;
-    this.postStatus = postStatus;
+    //this.postStatus = postStatus;
     this.content = content;
     this.area = area;
+
+    this.centerName = centerName;
   }
 
 //    @Column(nullable = false)
@@ -57,8 +62,8 @@ public class VolunteerWorkPost extends Timestamp {
   public void update(VolunteerWorkPostRequestDto requestDto) {//지역, 상태,
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
-    this.postStatus = requestDto.getPostStatus();//상태
+   // this.postStatus = requestDto.getPostStatus();//상태
     this.area = requestDto.getArea();
-
   }
+
 }

@@ -33,7 +33,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         Challenge challenge = challengeRepository.findByChallengeId(challengeId).orElseThrow(
                 ()-> new IllegalArgumentException("수정할 챌린지가 없습니다."));
 
-        challenge.update(requestDto.getTitle(), requestDto.getContent());
+        challenge.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getImage());
         Challenge savedChallenge = challengeRepository.save(challenge);
         return new ChallengeResponseDto(savedChallenge);
     }

@@ -33,10 +33,11 @@ public class VolunteerWorkPostController {
     //게시글 작성
     //@Secured(UserRoleEnum.Authority.COMPANY)
     @PostMapping("/volunteerWorkPosts")
-    public ResponseEntity<StatusAndDataResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
+    public ResponseEntity<StatusResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.", data);
+        //VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.");
+        volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
 
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
