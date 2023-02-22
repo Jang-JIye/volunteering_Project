@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -43,9 +45,12 @@ public class VolunteerWorkPost extends Timestamp {
   @Column
   private String centerName;
 
+  @Column
+  private String date;
+
 
   public VolunteerWorkPost(String userId, String title, String content,
-                           String area, String centerName) {
+                           String area, String centerName, String date) {
     this.userId = userId;
     this.title = title;
     //this.postStatus = postStatus;
@@ -53,6 +58,7 @@ public class VolunteerWorkPost extends Timestamp {
     this.area = area;
 
     this.centerName = centerName;
+    this.date = date;
   }
 
 //    @Column(nullable = false)

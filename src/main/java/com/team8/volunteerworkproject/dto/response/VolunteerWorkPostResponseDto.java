@@ -4,6 +4,8 @@ import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Getter
 @NoArgsConstructor //테스트 코드작성할 때 필요해서 추가
 public class VolunteerWorkPostResponseDto {
@@ -14,7 +16,8 @@ public class VolunteerWorkPostResponseDto {
     private String area;
     private String status;
     private int likeNum;
-    private String centerName;
+    private String centerName; //세부 주소
+    private String date;//모집 날짜
 //    private LocalDateTime schedule;
 
     public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
@@ -24,6 +27,7 @@ public class VolunteerWorkPostResponseDto {
         this.area = post.getArea();
         this.likeNum = likeNum;
         this.centerName = post.getCenterName();
+        this.date = post.getDate();
 
 //        this.schedule = post.getSchedule();
 

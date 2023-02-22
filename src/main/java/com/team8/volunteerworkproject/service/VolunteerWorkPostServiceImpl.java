@@ -31,7 +31,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
 //        User user = (User) userRepository.findByUserId(userDetails.getUserId()).orElseThrow(() -> new IllegalArgumentException("동일한 유저가 아님"));
 
     VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(),
-            /*requestDto.getPostStatus(),*/ requestDto.getArea(), requestDto.getCenterName());//닉네임, 지역,
+            /*requestDto.getPostStatus(),*/ requestDto.getArea(), requestDto.getCenterName(), requestDto.getDate());//닉네임, 지역,
     volunteerWorkPostRepository.save(post);
 
     return new VolunteerWorkPostResponseDto(post);
