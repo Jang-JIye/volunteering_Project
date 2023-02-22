@@ -58,7 +58,7 @@ public class EnrollmentController {
     }
 
     @GetMapping("/enrollments")
-    public ResponseEntity<StatusAndDataResponseDto> getAllMyEnrollment(UserDetailsImpl userDetails){
+    public ResponseEntity<StatusAndDataResponseDto> getAllMyEnrollment(@AuthenticationPrincipal UserDetailsImpl userDetails){
         List<EnrollmentResponseDto> data = enrollmentService.getAllMyEnrollments(userDetails.getUserId());
 
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "나의 봉사활동 참여 목록 조회가 완료되었습니다.", data);
