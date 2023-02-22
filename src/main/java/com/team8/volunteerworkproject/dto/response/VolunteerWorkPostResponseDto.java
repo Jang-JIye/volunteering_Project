@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor //테스트 코드작성할 때 필요해서 추가
+@NoArgsConstructor
 public class VolunteerWorkPostResponseDto {
 
     private Long postId;
@@ -17,7 +17,7 @@ public class VolunteerWorkPostResponseDto {
     private String centerName;
 //    private LocalDateTime schedule;
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post) {
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post, int likeNum) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
@@ -25,7 +25,16 @@ public class VolunteerWorkPostResponseDto {
         this.likeNum = likeNum;
         this.centerName = post.getCenterName();
 
+  }
+
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post ){
+        this.postId = post.getPostId();
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.area = post.getArea();
+        this.centerName = post.getCenterName();
+
 //        this.schedule = post.getSchedule();
 
-  }
+    }
 }

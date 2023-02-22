@@ -19,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
 
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
-  private final UserRepository userRepository;
-
-  private final VolunteerWorkPostLikeRepository volunteerWorkPostLikeRepository;
+  private final VolunteerWorkPostLikeServiceImpl volunteerWorkPostLikeService;
 
   //게시글 작성
   @Override
@@ -90,7 +88,9 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("찾으시는 모집글이 없습니다.")
     );
-    VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post);
+    int likeNum = volunteerWorkPostLikeService.count(postId);
+    VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post, likeNum);
+
     return responseDto;
   }
 
