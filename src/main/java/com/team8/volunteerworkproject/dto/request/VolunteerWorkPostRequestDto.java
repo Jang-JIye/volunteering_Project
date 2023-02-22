@@ -5,6 +5,8 @@ import com.team8.volunteerworkproject.enums.PostStatus;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Date;
+
 @Getter
 @Builder
 public class VolunteerWorkPostRequestDto{
@@ -14,5 +16,7 @@ public class VolunteerWorkPostRequestDto{
   //  private PostStatus postStatus;
     private String area;
 
-    private String centerName;
+    private String centerName; //세부 주소
+
+    private String date; // 모집 날짜
 }
