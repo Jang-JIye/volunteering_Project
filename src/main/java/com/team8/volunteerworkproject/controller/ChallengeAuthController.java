@@ -67,7 +67,7 @@ public class ChallengeAuthController {
     }
 
     //나의 챌린지 전체조회
-    @GetMapping
+    @GetMapping("/myChallengeAuthList")
     public ResponseEntity<StatusAndDataResponseDto> getAllChallenge(@AuthenticationPrincipal UserDetailsImpl userDetails){
         List<AllChallengeAuthResponseDto> data = challengeAuthService.getAllChallengeMyAuth(userDetails.getUserId());
 
