@@ -5,6 +5,9 @@ import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseD
 import com.team8.volunteerworkproject.dto.response.EnrollmentResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import java.util.List;
+
+import com.team8.volunteerworkproject.entity.Enrollment;
+import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import org.springframework.http.ResponseEntity;
 import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
@@ -62,6 +65,19 @@ public class EnrollmentController {
 
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+        return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+    }
+
+    //봉사 게시글 별 참여 신청 내역
+    @GetMapping("/volunteerWorkPosts/{postId}/enrollments")
+    public ResponseEntity<StatusAndDataResponseDto> getEnrollmentList(@PathVariable Long postId) {
+        List <EnrollmentResponseDto> data = enrollmentService.getEnrollmentList();
+
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "참여신청 조회가 완료되었습니다.", data);
+
+        HttpHeaders headers = new HttpHeaders();//필추
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 }
