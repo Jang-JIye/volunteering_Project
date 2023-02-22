@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,16 +74,14 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     return responseDto;
   }
 
-  //봉사 게시글 별 참여 신청 내역
+  //게시글 별 참여 신청 내역 조회
   @Override
-  public List<EnrollmentResponseDto> getPostEnrollments(Long postId, Long enrollmentId) {
-
-    List<Enrollment> postEnrollments = enrollmentRepository.findAllByPostIdAndEnrollmentIdOrderByCreatedAtDesc (postId, enrollmentId);
-    List<EnrollmentResponseDto> responseDtos = new ArrayList<>();
+  public List<EnrollmentResponseDto> getEnrollmentList() {
+    List<Enrollment> postEnrollments = enrollmentRepository.findAllByOrderByCreatedAtDesc();
+    List<EnrollmentResponseDto> responseDto = new ArrayList<>();
     for (Enrollment enrollment : postEnrollments) {
-      responseDtos.add (new EnrollmentResponseDto(enrollment));
+      responseDto.add (new EnrollmentResponseDto(enrollment));
     }
-    return responseDtos;
+    return responseDto;
   }
-
 }

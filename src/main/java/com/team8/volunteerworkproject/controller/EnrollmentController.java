@@ -69,11 +69,11 @@ public class EnrollmentController {
     }
 
     //봉사 게시글 별 참여 신청 내역
-    @GetMapping("/volunteerWorkPosts/{postId}/enrollments/{enrollmentId}")
-    public ResponseEntity<StatusAndDataResponseDto> getPostEnrollment (VolunteerWorkPost post, Enrollment enrollment) {
-        List <EnrollmentResponseDto> data = enrollmentService.getPostEnrollments(post.getPostId());
+    @GetMapping("/volunteerWorkPosts/{postId}/enrollments")
+    public ResponseEntity<StatusAndDataResponseDto> getEnrollmentList(@PathVariable Long postId) {
+        List <EnrollmentResponseDto> data = enrollmentService.getEnrollmentList();
 
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글 참여신청 내역 조회가 완료되었습니다.", data);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "참여신청 조회가 완료되었습니다.", data);
 
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추

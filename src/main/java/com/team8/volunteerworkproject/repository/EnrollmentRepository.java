@@ -1,7 +1,6 @@
 package com.team8.volunteerworkproject.repository;
 
 import com.team8.volunteerworkproject.entity.Enrollment;
-import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
 import com.team8.volunteerworkproject.enums.EnrollmentStatus;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +19,9 @@ public interface EnrollmentRepository extends JpaRepository <Enrollment, String>
 
     Optional<Enrollment> findByEnrollmentId(Long enrollmentId);
     List<Enrollment> findAllByUserIdAndEnrollmentStatusOrderByCreatedAtDesc(String userId, EnrollmentStatus status);
-    List<Enrollment> findAllByPostIdAndEnrollmentIdOrderByCreatedAtDesc(Long postId, Long enrollmentId);
+    //List<Enrollment> findAllByPostIdOrderByCreatedAtDesc(Long postId);
+    List<Enrollment> findAllByOrderByCreatedAtDesc();
+
+    //List<Enrollment> findByPostIdOrderByCreatedAtDesc(Long postId);
 }
 
