@@ -25,7 +25,8 @@ public class ChallengeAuthCommentServiceImpl implements ChallengeAuthCommentServ
         ChallengeAuth challengeAuth = challengeAuthRepository.findById(challengeAuthId).orElseThrow(
                 ()-> new IllegalArgumentException("선택하신 글이 존재하지 않습니다.")
         );
-        ChallengeAuthComment authComment = new ChallengeAuthComment(challengeAuth);
+        ChallengeAuthComment authComment = new ChallengeAuthComment(challengeAuth,  requestDto.getComment());
+
         challengeAuthCommentRepository.save(authComment);
         return new ChallengeAuthCommentResponseDto(authComment);
     }
@@ -46,3 +47,4 @@ public class ChallengeAuthCommentServiceImpl implements ChallengeAuthCommentServ
         challengeAuthCommentRepository.delete(challengeAuthComment);
     }
 }
+

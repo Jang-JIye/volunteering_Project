@@ -1,6 +1,5 @@
 package com.team8.volunteerworkproject.entity;
 
-import com.team8.volunteerworkproject.dto.request.ChallengeAuthCommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,19 +13,21 @@ public class ChallengeAuthComment extends Timestamp{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ChallengeAuthCommentId;
 
-    @Column(nullable = false)
-    private Long challengeAuthId;
+    @ManyToOne
+    @JoinColumn(name = "challenge_auth_id")
+    private ChallengeAuth challengeAuth;
 
     @Column(nullable = false)
-    private String content;
+    private String comment;
 
     @Column(nullable = false)
     private String userId;
 
 
-    public ChallengeAuthComment(ChallengeAuth challengeAuth) {
-        this.content = challengeAuth.getContent();
+
+    public ChallengeAuthComment(ChallengeAuth challengeAuth, String comment) {
+        this.comment = comment;
         this.userId = challengeAuth.getUserId();
-        this.challengeAuthId = challengeAuth.getChallengeAuthId();
+        this.challengeAuth = challengeAuth;
     }
 }

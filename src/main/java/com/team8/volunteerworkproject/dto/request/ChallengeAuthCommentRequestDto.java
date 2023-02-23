@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChallengeAuthCommentRequestDto {
-    private String content;
+    private String comment;
 }

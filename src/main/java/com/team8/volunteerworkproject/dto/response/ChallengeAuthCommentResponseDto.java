@@ -10,14 +10,14 @@ public class ChallengeAuthCommentResponseDto {
 
     private Long challengeAuthCommentId;
     private Long challengeAuthId;
-    private String content;
+    private String comment;
     private String userId; //일단 유저 아이디 받아오고 리팩토링할 때 닉넥임으로 변경 예정
 
 
     public ChallengeAuthCommentResponseDto(ChallengeAuthComment challengeAuthComments) {
         this.challengeAuthCommentId = challengeAuthComments.getChallengeAuthCommentId();
-        this.challengeAuthId = challengeAuthComments.getChallengeAuthId();
-        this.content = challengeAuthComments.getContent();
+        this.challengeAuthId = challengeAuthComments.getChallengeAuth().getChallengeAuthId();
+        this.comment = challengeAuthComments.getComment();
         this.userId = challengeAuthComments.getUserId();
     }
 }
