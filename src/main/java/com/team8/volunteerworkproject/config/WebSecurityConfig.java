@@ -54,6 +54,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
             .requestMatchers("/challenges/**").permitAll()
             .requestMatchers("/volunteerWorkPosts/**").permitAll()
             .requestMatchers("/notices/**").permitAll()
+            .requestMatchers("/challenge-auth/**").permitAll()
             .anyRequest().authenticated()
             .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
