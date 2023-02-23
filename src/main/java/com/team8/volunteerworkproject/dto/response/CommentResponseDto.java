@@ -11,14 +11,14 @@ public class CommentResponseDto {
 
   private Long commentId;
   private Long postId;
-  private String contents;
+  private String comments;
   private String nickname;
   private LocalDateTime modifiedAt;
 
   public CommentResponseDto(Comment comment) {
     this.commentId = comment.getCommentId();
     this.postId = comment.getPostId();
-    this.contents = comment.getContents();
+    this.comments = comment.getComments();
     this.nickname = comment.getUserNickname();
     this.modifiedAt = comment.getModifiedAt();
   }
