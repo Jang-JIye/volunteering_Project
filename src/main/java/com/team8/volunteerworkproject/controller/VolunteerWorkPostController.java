@@ -8,6 +8,7 @@ import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.enums.UserRoleEnum;
+import com.team8.volunteerworkproject.enums.UserRoleEnum.Authority;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.VolunteerWorkPostServiceImpl;
 import java.nio.charset.Charset;
@@ -31,7 +32,7 @@ public class VolunteerWorkPostController {
     private final VolunteerWorkPostServiceImpl volunteerWorkPostService;
 
     //게시글 작성
-    //@Secured(UserRoleEnum.Authority.COMPANY)
+    @Secured(UserRoleEnum.Authority.COMPANY)
     @PostMapping("/volunteerWorkPosts")
     public ResponseEntity<StatusResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -47,6 +48,7 @@ public class VolunteerWorkPostController {
     }
 
     //게시글 수정
+    @Secured(UserRoleEnum.Authority.COMPANY)
     @PatchMapping("/volunteerWorkPosts/{postId}")
     public ResponseEntity<StatusAndDataResponseDto> updatePost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                    @PathVariable Long postId,
@@ -62,6 +64,7 @@ public class VolunteerWorkPostController {
 
 
     //게시글 삭제
+    @Secured({UserRoleEnum.Authority.COMPANY, Authority.ADMIN})
     @DeleteMapping("/volunteerWorkPosts/{postId}")
     public ResponseEntity<StatusResponseDto> deletePost(@PathVariable Long postId,
                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
