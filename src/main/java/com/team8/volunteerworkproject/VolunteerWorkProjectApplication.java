@@ -3,6 +3,7 @@ package com.team8.volunteerworkproject;
 import com.team8.volunteerworkproject.entity.Challenge;
 import com.team8.volunteerworkproject.entity.ChallengeAuth;
 import com.team8.volunteerworkproject.entity.Comment;
+import com.team8.volunteerworkproject.entity.Enrollment;
 import com.team8.volunteerworkproject.entity.Notice;
 import com.team8.volunteerworkproject.entity.Profile;
 import com.team8.volunteerworkproject.entity.User;
@@ -12,6 +13,7 @@ import com.team8.volunteerworkproject.enums.UserRoleEnum;
 import com.team8.volunteerworkproject.repository.ChallengeAuthRepository;
 import com.team8.volunteerworkproject.repository.ChallengeRepository;
 import com.team8.volunteerworkproject.repository.CommentRepository;
+import com.team8.volunteerworkproject.repository.EnrollmentRepository;
 import com.team8.volunteerworkproject.repository.NoticeRepository;
 import com.team8.volunteerworkproject.repository.ProfileRepository;
 import com.team8.volunteerworkproject.repository.UserRepository;
@@ -39,6 +41,7 @@ public class VolunteerWorkProjectApplication {
                                 NoticeRepository noticeRepository,
                                 ChallengeAuthRepository challengeAuthRepository,
                                 CommentRepository commentRepository,
+                                EnrollmentRepository enrollmentRepository,
                                 PasswordEncoder passwordEncoder){
     return (args) -> {
       userRepository.save(new User("customer1@naver.com", passwordEncoder.encode("1234?5678"), "장현재", UserRoleEnum.USER, null));
@@ -52,7 +55,14 @@ public class VolunteerWorkProjectApplication {
       userRepository.save(new User("admin@naver.com", passwordEncoder.encode("1234?5678"), "어드민", UserRoleEnum.ADMIN, null));
 
       profileRepository.save(new Profile("customer1@naver.com", "010-1111-2222", "장현재",  "서울", "기본프로필사진"));
-      profileRepository.save(new Profile("customer2@naver.com", "010-3333-4444", "조용연",  "부천", "기본프로필사진"));
+      profileRepository.save(new Profile("customer2@naver.com", "010-3333-4444", "조용연",  "인천", "기본프로필사진"));
+      profileRepository.save(new Profile("customer3@naver.com", "010-5555-6666", "손혜은",  "부산", "기본프로필사진"));
+      profileRepository.save(new Profile("customer4@naver.com", "010-7777-8888", "장지예",  "부천", "기본프로필사진"));
+      profileRepository.save(new Profile("company1@naver.com", "010-1655-7652", "이재원",  "부천", "기본프로필사진"));
+      profileRepository.save(new Profile("company2@naver.com", "010-4613-1214", "기업2",  "서울", "기본프로필사진"));
+      profileRepository.save(new Profile("company3@naver.com", "010-7115-4611", "기업3",  "대전", "기본프로필사진"));
+      profileRepository.save(new Profile("company4@naver.com", "010-8841-5451", "기업4",  "대구", "기본프로필사진"));
+      profileRepository.save(new Profile("admin@naver.com", "010-4841-8515", "어드민",  "서울", "기본프로필사진"));
 
       volunteerWorkPostRepository.save(new VolunteerWorkPost("company1@naver.com", "다함께돌봄센터 봉사자 모집", "안녕하세요. 자원봉사자 모집합니다1", "서울", "서울시자원봉사센터 앞", "2023-02-24"));
       volunteerWorkPostRepository.save(new VolunteerWorkPost("company2@naver.com","환경정화활동 자원봉사자 모집", "안녕하세요. 자원봉사자 모집합니다2", "대전", "대전자원봉사센터 앞", "2023-02-25"));
@@ -95,7 +105,6 @@ public class VolunteerWorkProjectApplication {
       challengeAuthRepository.save(new ChallengeAuth("customer2@naver.com", "아름다운가게 옷 기부~", "안입는 옷이 많아서 기부했어요^^", "이미지6"));
       challengeAuthRepository.save(new ChallengeAuth("customer3@naver.com", "헌혈인증", "요즘 헌혈 공급이 적데요~ 많이들 참여하세요ㅠㅠ", "이미지7"));
       challengeAuthRepository.save(new ChallengeAuth("customer4@naver.com", "바다 쓰레기 줍기", "오늘 아침에 해변에 있는 쓰레기를 주웠어요 엄청 많음 ㅠㅠ", "이미지8"));
-
 
 
     };
