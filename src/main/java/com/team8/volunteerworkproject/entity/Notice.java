@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long noticeId;
 
-
-
         @Column(nullable = false)
         private String title;
 
@@ -24,11 +22,9 @@ import lombok.NoArgsConstructor;
 
 
 
-        public Notice(NoticeRequestDto requestDto) {
-            this.title = requestDto.getTitle();
-            this.content = requestDto.getContent();
-
-
+        public Notice(String title, String content) {
+            this.title = title;
+            this.content = content;
         }
 
 

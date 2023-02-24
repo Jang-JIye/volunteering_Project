@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
   @Override
   @Transactional
   public NoticeResponseDto createNotice(NoticeRequestDto requestDto) {
-    Notice notice = new Notice(requestDto);
+    Notice notice = new Notice(requestDto.getTitle(), requestDto.getContent());
     noticeRepository.save(notice);
     return new NoticeResponseDto(notice);
 

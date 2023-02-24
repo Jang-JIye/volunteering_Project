@@ -23,7 +23,7 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
     //챌린지 자랑 동록
     @Override
     public ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto) {
-        ChallengeAuth challengeAuth = new ChallengeAuth(requestDto);
+        ChallengeAuth challengeAuth = new ChallengeAuth(requestDto.getUserId(), requestDto.getTitle(), requestDto.getContent(), requestDto.getImage());
         ChallengeAuth savedChallengeAuth = challengeAuthRepository.save(challengeAuth);
         return new ChallengeAuthResponseDto(savedChallengeAuth);
     }

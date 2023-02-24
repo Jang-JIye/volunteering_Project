@@ -27,9 +27,9 @@ public class Comment extends Timestamp {
 
   private Long postId;
 
-  public Comment(CommentRequestDto requestDto, String userId, String userNickname,
+  public Comment(String comments, String userId, String userNickname,
       Long postId) {
-    this.comments = requestDto.getComments();
+    this.comments = comments;
     this.userNickname = userNickname;
     this.userId = userId;
     this.postId = postId;

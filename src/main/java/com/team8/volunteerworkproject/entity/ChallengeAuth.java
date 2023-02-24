@@ -34,18 +34,11 @@ public class ChallengeAuth extends Timestamp{
     @Column(nullable = false)
     private int likeNum;
 
-    public ChallengeAuth(ChallengeAuth challengeAuth) {
-        this.challengeAuthId = challengeAuth.getChallengeAuthId();
-        this.userId = challengeAuth.getUserId();
-        this.title = challengeAuth.getTitle();
-        this.content = challengeAuth.getContent();
-        this.image = challengeAuth.getImage();
-    }
 
-    public ChallengeAuth(ChallengeAuthRequestDto requestDto) {
-        this.userId = requestDto.getUserId();
-        this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
-        this.image = requestDto.getImage();
+    public ChallengeAuth(String userId, String title, String content, String image) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.image = image;
     }
 }
