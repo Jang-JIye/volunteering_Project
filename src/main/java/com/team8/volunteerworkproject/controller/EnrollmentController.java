@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.team8.volunteerworkproject.entity.Enrollment;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
@@ -31,7 +32,7 @@ public class EnrollmentController {
     //참여 신청(TRUE(확정) or FALSE(대기))
     @PostMapping("/volunteerWorkPosts/{postId}/enrollments") //TRUE, FALSE
     public ResponseEntity<StatusAndDataResponseDto> attend(@PathVariable Long postId,
-                                                           @RequestBody EnrollmentRequestDto requestDto,
+                                                           @Valid @RequestBody EnrollmentRequestDto requestDto,
                                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         EnrollmentResponseDto data = enrollmentService.attend(postId, requestDto, userDetails.getUserId());
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,"참여신청이 완료되었습니다.", data);

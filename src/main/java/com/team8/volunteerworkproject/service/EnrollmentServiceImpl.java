@@ -24,16 +24,19 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     //참여 신청
   @Override
   public EnrollmentResponseDto attend(Long postId, EnrollmentRequestDto requestDto, String userId) {
+    String username = requestDto.getUsername();
+    String phoneNumber = requestDto.getPhoneNumber();
+
+    if (username == null || username.isEmpty()) {
+      throw new IllegalArgumentException("이름을 입력해주세요.");
+    }
+    if (phoneNumber == null || phoneNumber.isEmpty()) {
+      throw new IllegalArgumentException("핸드폰 번호를 입력해주세요.");
+    }
+
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-/*        if (!enrollment.getUserId().equals(userId)) {
-            throw new IllegalArgumentException("이미 참여신청한 모집글입니다.");
-        } else {
-            enrollment.save(userId);
-        }
-        if (enrollmentRepository.findById(enrollmentId).isPresent()) {
-            throw new IllegalArgumentException("이미 참여를 신청한 모집글입니다.");
-        }*/
+
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
     enrollmentRepository.save(enrollment);
 
