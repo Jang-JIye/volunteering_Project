@@ -27,7 +27,7 @@ public class Enrollment extends  Timestamp{
     private String username;
 
     @Column
-    private int phoneNum;
+    private String phoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
@@ -40,7 +40,7 @@ public class Enrollment extends  Timestamp{
         /*this.postId = postId;*/
         this.userId = userId;
         this.username = requestDto.getUsername();
-        this.phoneNum = requestDto.getPhoneNum();
+        this.phoneNumber = requestDto.getPhoneNumber();
         this.post = post;
     }
 }
