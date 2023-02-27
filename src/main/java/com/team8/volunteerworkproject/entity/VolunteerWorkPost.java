@@ -45,6 +45,7 @@ public class VolunteerWorkPost extends Timestamp {
   @Column
   private LocalDateTime endTime;
 
+  //모집 날짜가 지나면 모집완료로 변경
   @PreUpdate
   public void beforeUpdate() {
     if (LocalDateTime.now().isAfter(getEndTime())) {
@@ -52,6 +53,13 @@ public class VolunteerWorkPost extends Timestamp {
     }
     else {
       postStatus = PostStatus.TRUE;
+    }
+  }
+  //모집 날짜 지난 경우 선택 불가
+  @PrePersist
+  public void checkEndTime() {
+    if (endTime.isBefore(LocalDateTime.now())) {
+      throw new IllegalArgumentException("모집기간이 이미 지났습니다.");
     }
   }
 
