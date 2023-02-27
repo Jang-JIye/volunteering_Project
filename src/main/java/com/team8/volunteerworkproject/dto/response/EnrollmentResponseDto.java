@@ -18,6 +18,7 @@ public class EnrollmentResponseDto {
     private String username;
     private String enrollmentStatus;
     private Long enrollmentId;
+    private String phoneNumber;
 
     public EnrollmentResponseDto(Enrollment enrollment) {
         this.postId = enrollment.getPost().getPostId();
@@ -27,6 +28,6 @@ public class EnrollmentResponseDto {
         this.enrollmentId = enrollment.getEnrollmentId();
         this.username = enrollment.getUsername();
         this.enrollmentStatus = String.valueOf(enrollment.getEnrollmentStatus());
+        this.phoneNumber = enrollment.getPhoneNumber();
     }
-//    private int phoneNum;
 }
