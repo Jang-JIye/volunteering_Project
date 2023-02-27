@@ -34,10 +34,7 @@ public class Enrollment extends  Timestamp{
     private VolunteerWorkPost post;
 
 
-
-
     public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId, VolunteerWorkPost post) {
-        /*this.postId = postId;*/
         this.userId = userId;
         this.username = requestDto.getUsername();
         this.phoneNum = requestDto.getPhoneNum();
