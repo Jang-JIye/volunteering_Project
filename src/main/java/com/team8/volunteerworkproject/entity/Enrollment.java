@@ -2,9 +2,7 @@ package com.team8.volunteerworkproject.entity;
 
 import com.team8.volunteerworkproject.dto.request.EnrollmentRequestDto;
 import com.team8.volunteerworkproject.enums.EnrollmentStatus;
-import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

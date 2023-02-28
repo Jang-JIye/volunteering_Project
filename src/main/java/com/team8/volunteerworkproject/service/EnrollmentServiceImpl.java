@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,10 +54,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     VolunteerWorkPost Post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("모집글이 존재하지 않습니다.")
     );
- /*       if (!enrollment.getUserId().equals(userId)) {
-            throw new IllegalArgumentException("참여한 모집글이 아닙니다.");
-        }
-        enrollment.delete(userId);*/
     Enrollment enrollment = enrollmentRepository.findByEnrollmentId(enrollmentId).orElseThrow(
         () -> new IllegalArgumentException("참가 신청한 게시글이 아닙니다,")
     );
