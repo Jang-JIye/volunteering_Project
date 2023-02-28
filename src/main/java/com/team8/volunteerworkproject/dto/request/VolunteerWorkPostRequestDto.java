@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Builder
@@ -18,5 +20,8 @@ public class VolunteerWorkPostRequestDto{
 
     private String centerName; //세부 주소
 
-    private String date; // 모집 날짜
+    private LocalDateTime endTime; //마감 날짜
+
+
+    //모집인원(maxEnrollmentNum)
 }
