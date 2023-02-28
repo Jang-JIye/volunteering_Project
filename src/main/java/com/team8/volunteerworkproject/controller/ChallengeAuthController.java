@@ -1,6 +1,7 @@
 package com.team8.volunteerworkproject.controller;
 
 import com.team8.volunteerworkproject.dto.request.ChallengeAuthRequestDto;
+import com.team8.volunteerworkproject.dto.request.ChallengeRequestDto;
 import com.team8.volunteerworkproject.dto.response.*;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
@@ -47,7 +48,7 @@ public class ChallengeAuthController {
 
     //챌린지 인증(자랑) 선택 조회
     @GetMapping("/{challengeAuthId}")
-    public ResponseEntity<StatusAndDataResponseDto> getChallege(@PathVariable Long challengeAuthId){
+    public ResponseEntity<StatusAndDataResponseDto> getChallege(@PathVariable Long challengeAuthId) {
         ChallengeAuthResponseDto data = challengeAuthService.getCahllengeAuth(challengeAuthId);
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "선택 챌린지 자랑 조회가 완료되었습니다.", data);
 
@@ -65,6 +66,18 @@ public class ChallengeAuthController {
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
         return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
     }
+
+    //챌린지 인증(자랑) 수정
+    @PatchMapping("/{challengeAuthId}")
+    public ResponseEntity<StatusAndDataResponseDto> updateChallengeAuth(@PathVariable Long challengeAuthId, @RequestBody ChallengeAuthRequestDto requestDto) {
+        ChallengeAuthResponseDto data = challengeAuthService.updateChallengeAuth(challengeAuthId, requestDto);
+        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "챌린지 인증 수정이 완료되었습니다.", data);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+        return new ResponseEntity<>(responseDto,headers,HttpStatus.OK);
+    }
+
 
     //나의 챌린지 전체조회
     @GetMapping("/myChallengeAuthList")

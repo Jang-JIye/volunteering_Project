@@ -1,5 +1,6 @@
 package com.team8.volunteerworkproject.entity;
 
+import com.team8.volunteerworkproject.dto.request.ChallengeAuthCommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +30,9 @@ public class ChallengeAuthComment extends Timestamp{
         this.comment = comment;
         this.userId = challengeAuth.getUserId();
         this.challengeAuth = challengeAuth;
+    }
+
+    public void updateChallengeAuthComment(ChallengeAuthCommentRequestDto requestDto) {
+        this.comment = requestDto.getComment();
     }
 }
