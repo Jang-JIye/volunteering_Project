@@ -8,6 +8,7 @@ import com.team8.volunteerworkproject.enums.EnrollmentStatus;
 import com.team8.volunteerworkproject.repository.EnrollmentRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+    //모집기간
+    if (post.getEndTime().isBefore(LocalDateTime.now())) {
+      throw new IllegalArgumentException("모집 완료된 게시글에는 참여신청을 할 수 없습니다.");
+    }
 
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
     enrollmentRepository.save(enrollment);
