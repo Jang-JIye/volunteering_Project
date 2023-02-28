@@ -58,7 +58,7 @@ public class EnrollmentController {
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/enrollments")
+    @GetMapping("/mypage/enrollments")
     public ResponseEntity<StatusAndDataResponseDto> getAllMyEnrollment(@AuthenticationPrincipal UserDetailsImpl userDetails){
         List<EnrollmentResponseDto> data = enrollmentService.getAllMyEnrollments(userDetails.getUserId());
 
