@@ -1,11 +1,13 @@
 package com.team8.volunteerworkproject.service;
 
 import com.team8.volunteerworkproject.dto.request.ChallengeAuthRequestDto;
+import com.team8.volunteerworkproject.dto.request.ChallengeRequestDto;
 import com.team8.volunteerworkproject.dto.response.AllChallengeAuthResponseDto;
 import com.team8.volunteerworkproject.dto.response.ChallengeAuthResponseDto;
 import com.team8.volunteerworkproject.entity.ChallengeAuth;
+import com.team8.volunteerworkproject.entity.ChallengeAuthComment;
+import com.team8.volunteerworkproject.repository.ChallengeAuthCommentRepository;
 import com.team8.volunteerworkproject.repository.ChallengeAuthRepository;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ChallengeAuthServiceImpl implements ChallengeAuthService {
 
     private final ChallengeAuthRepository challengeAuthRepository;
+    private final ChallengeAuthCommentRepository challengeAuthCommentRepository;
     private final ChallengeAuthLikeServiceImpl challengeAuthLikeService;
 
     //챌린지 자랑 동록
@@ -56,8 +59,9 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
         ChallengeAuth challengeAuth = challengeAuthRepository.findByChallengeAuthId(challengeAuthId).orElseThrow(
                 ()-> new IllegalArgumentException("찾으시는 챌린지 자랑 글이 없습니다.")
         );
+        List<ChallengeAuthComment> comments =  challengeAuthCommentRepository.findAllByChallengeAuth(challengeAuth);
         int likeNum = challengeAuthLikeService.count(challengeAuthId);
-        ChallengeAuthResponseDto responseDto = new ChallengeAuthResponseDto(challengeAuth, likeNum);
+        ChallengeAuthResponseDto responseDto = new ChallengeAuthResponseDto(challengeAuth, likeNum, comments);
         return responseDto;
     }
 
@@ -72,4 +76,13 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
         return responseDtos;
     }
 
+    @Override
+    public ChallengeAuthResponseDto updateChallengeAuth(Long challengeAuthId, ChallengeAuthRequestDto requestDto) {
+        ChallengeAuth challengeAuth = challengeAuthRepository.findByChallengeAuthId(challengeAuthId).orElseThrow(
+                ()-> new IllegalArgumentException("수정할 챌린지 자랑이 없습니다.")
+        );
+        challengeAuth.update(requestDto.getTitle(), requestDto.getContent(),requestDto.getImage());
+        ChallengeAuth savedChallengeAuth = challengeAuthRepository.save(challengeAuth);
+        return new ChallengeAuthResponseDto(savedChallengeAuth);
+    }
 }
