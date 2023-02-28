@@ -42,6 +42,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
       throw new IllegalArgumentException("모집 완료된 게시글에는 참여신청을 할 수 없습니다.");
     }
 
+    //이미 참여신청한 경우 중복체크
+    List<Enrollment> existingEnrollment = enrollmentRepository.findByUserIdAndPost_PostId(userId, postId);
+    if (!existingEnrollment.isEmpty()) {
+      throw new IllegalArgumentException("이미 해당 게시글에 참여하셨습니다.");
+    }
+
+
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
     enrollmentRepository.save(enrollment);
 
