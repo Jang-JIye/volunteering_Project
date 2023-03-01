@@ -26,7 +26,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
       VolunteerWorkPostRequestDto requestDto) {
 
     VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(),
-             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime());//닉네임, 지역,
+             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(), requestDto.getMaxEnrollmentNum(), requestDto.getImage());//닉네임, 지역,
     volunteerWorkPostRepository.save(post);
 
     return new VolunteerWorkPostResponseDto(post);

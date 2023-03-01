@@ -1,6 +1,7 @@
 package com.team8.volunteerworkproject.dto.response;
 
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
+import com.team8.volunteerworkproject.enums.PostStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,9 +21,13 @@ public class VolunteerWorkPostResponseDto {
     private int likeNum;
     private String centerName; //세부 주소
     private LocalDateTime endTime;
+    private int maxEnrollmentNum;
+    private PostStatus postStatus;
 //    private LocalDateTime schedule;
+    private String image;
 
     public VolunteerWorkPostResponseDto(VolunteerWorkPost post, int likeNum) {
+
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
@@ -30,6 +35,9 @@ public class VolunteerWorkPostResponseDto {
         this.likeNum = likeNum;
         this.centerName = post.getCenterName();
         this.endTime = post.getEndTime();
+        this.maxEnrollmentNum = post.getMaxEnrollmentNum();
+        this.postStatus = post.getPostStatus();
+        this.image = post.getImage();
 
   }
 
