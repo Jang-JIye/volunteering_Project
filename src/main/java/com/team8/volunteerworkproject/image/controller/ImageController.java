@@ -18,24 +18,22 @@ public class ImageController {
   private S3Service s3Service;
   private ImageService imageService;
 
-  @GetMapping("/gallery")
+  @GetMapping("/images")
   public String dispWrite(Model model) {
     List<ImageDto> imageDtoList = imageService.getList();
 
-    model.addAttribute("galleryList", imageDtoList);
+    model.addAttribute("imageList", imageDtoList);
 
-    return "/gallery";
+    return "/images";
   }
 
-  @PostMapping("/gallery")
+  @PostMapping("/images")
   public String execWrite(ImageDto imageDto, MultipartFile file) throws IOException {
     String imgPath = s3Service.upload(file);
     imageDto.setFilePath(imgPath);
 
-
-
     imageService.savePost(imageDto);
 
-    return "redirect:/gallery";
+    return "redirect:/images";
   }
 }
