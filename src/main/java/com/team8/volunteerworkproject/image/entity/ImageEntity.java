@@ -14,22 +14,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "gallery")
-public class GalleryEntity {
+@Table(name = "image")
+public class ImageEntity {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
-
-  @Column(length = 50, nullable = false)
-  private String title;
 
   @Column(columnDefinition = "TEXT")
   private String filePath;
 
   @Builder
-  public GalleryEntity(Long id, String title, String filePath) {
+  public ImageEntity(Long id, String filePath) {
     this.id = id;
-    this.title = title;
     this.filePath = filePath;
   }
 }

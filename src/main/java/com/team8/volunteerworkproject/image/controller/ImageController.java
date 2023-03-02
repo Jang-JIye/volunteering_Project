@@ -1,7 +1,7 @@
 package com.team8.volunteerworkproject.image.controller;
 
-import com.team8.volunteerworkproject.image.dto.GalleryDto;
-import com.team8.volunteerworkproject.image.service.GalleryService;
+import com.team8.volunteerworkproject.image.dto.ImageDto;
+import com.team8.volunteerworkproject.image.service.ImageService;
 import com.team8.volunteerworkproject.image.service.S3Service;
 import java.io.IOException;
 import java.util.List;
@@ -14,27 +14,27 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @AllArgsConstructor
-public class GalleryController {
+public class ImageController {
   private S3Service s3Service;
-  private GalleryService galleryService;
+  private ImageService imageService;
 
   @GetMapping("/gallery")
   public String dispWrite(Model model) {
-    List<GalleryDto> galleryDtoList = galleryService.getList();
+    List<ImageDto> imageDtoList = imageService.getList();
 
-    model.addAttribute("galleryList", galleryDtoList);
+    model.addAttribute("galleryList", imageDtoList);
 
     return "/gallery";
   }
 
   @PostMapping("/gallery")
-  public String execWrite(GalleryDto galleryDto, MultipartFile file) throws IOException {
+  public String execWrite(ImageDto imageDto, MultipartFile file) throws IOException {
     String imgPath = s3Service.upload(file);
-    galleryDto.setFilePath(imgPath);
+    imageDto.setFilePath(imgPath);
 
 
 
-    galleryService.savePost(galleryDto);
+    imageService.savePost(imageDto);
 
     return "redirect:/gallery";
   }

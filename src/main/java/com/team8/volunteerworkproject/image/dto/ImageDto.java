@@ -1,6 +1,6 @@
 package com.team8.volunteerworkproject.image.dto;
 
-import com.team8.volunteerworkproject.image.entity.GalleryEntity;
+import com.team8.volunteerworkproject.image.entity.ImageEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,25 +11,22 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class GalleryDto {
+public class ImageDto {
   private Long id;
-  private String title;
   private String filePath;
   private String imgFullPath;
 
-  public GalleryEntity toEntity(){
-    GalleryEntity build = GalleryEntity.builder()
+  public ImageEntity toEntity(){
+    ImageEntity build = ImageEntity.builder()
         .id(id)
-        .title(title)
         .filePath(filePath)
         .build();
     return build;
   }
 
   @Builder
-  public GalleryDto(Long id, String title, String filePath, String imgFullPath) {
+  public ImageDto(Long id, String filePath, String imgFullPath) {
     this.id = id;
-    this.title = title;
     this.filePath = filePath;
     this.imgFullPath = imgFullPath;
   }
