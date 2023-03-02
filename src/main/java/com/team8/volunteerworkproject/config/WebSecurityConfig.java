@@ -53,6 +53,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         .requestMatchers("/users/signin").permitAll()
         .requestMatchers("/admin/**").hasRole("ADMIN")
         .requestMatchers("/challenges/**").permitAll()
+        .requestMatchers("/images/**").permitAll()
+        .requestMatchers("/gallery/**").permitAll()
         .requestMatchers("/volunteerWorkPosts/**").permitAll()
         .requestMatchers("/notices/**").permitAll()
         .requestMatchers("/mypage/**").hasAnyRole("USER", "COMPANY")
