@@ -69,9 +69,9 @@ public class S3Service {
     );
 
     SimpleDateFormat date = new SimpleDateFormat("yyyymmddHHmmss");
-    String fileName =  userId + "/" + date.format(new Date()) + "-" + file.getOriginalFilename();
+    String fileName = "profile/" + date.format(new Date()) + "-" + file.getOriginalFilename();
 
-    profile.updateProfileImage(CLOUD_FRONT_DOMAIN_NAME + fileName);
+    profile.updateProfileImage(fileName);
 
     s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
         .withCannedAcl(CannedAccessControlList.PublicRead));

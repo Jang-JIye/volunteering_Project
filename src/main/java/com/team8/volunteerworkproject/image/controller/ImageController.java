@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("")
+@RequestMapping("/image")
 public class ImageController {
   private final S3Service s3Service;
 
