@@ -9,6 +9,7 @@ import com.team8.volunteerworkproject.entity.ChallengeAuthComment;
 import com.team8.volunteerworkproject.repository.ChallengeAuthCommentRepository;
 import com.team8.volunteerworkproject.repository.ChallengeAuthRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.authenticator.SavedRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +26,8 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
 
     //챌린지 자랑 동록
     @Override
-    public ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto) {
-        ChallengeAuth challengeAuth = new ChallengeAuth(requestDto.getUserId(), requestDto.getTitle(), requestDto.getContent(), requestDto.getImage());
+    public ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto, String userId) {
+        ChallengeAuth challengeAuth = new ChallengeAuth(requestDto.getUserId(),requestDto.getTitle(), requestDto.getContent(), requestDto.getImage());
         ChallengeAuth savedChallengeAuth = challengeAuthRepository.save(challengeAuth);
         return new ChallengeAuthResponseDto(savedChallengeAuth);
     }
