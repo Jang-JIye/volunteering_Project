@@ -1,7 +1,6 @@
 package com.team8.volunteerworkproject.controller;
 
 import com.team8.volunteerworkproject.dto.request.ChallengeAuthRequestDto;
-import com.team8.volunteerworkproject.dto.request.ChallengeRequestDto;
 import com.team8.volunteerworkproject.dto.response.*;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/challenge-auth")
 public class ChallengeAuthController {
 
     private final ChallengeAuthServiceImpl challengeAuthService;
