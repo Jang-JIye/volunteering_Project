@@ -31,6 +31,9 @@ public class Enrollment extends  Timestamp{
     @JoinColumn(name = "post_id", nullable = false)
     private VolunteerWorkPost post;
 
+    @Column(name = "post_id", insertable=false, updatable=false)
+    private Long postId;
+
 
     public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId, VolunteerWorkPost post) {
         this.userId = userId;
