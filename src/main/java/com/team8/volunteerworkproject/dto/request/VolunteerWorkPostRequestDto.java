@@ -12,6 +12,8 @@ import java.time.ZonedDateTime;
 @Getter
 @Builder
 public class VolunteerWorkPostRequestDto{
+    private String image;
+
     private String title;
 
     private String content;
@@ -22,6 +24,7 @@ public class VolunteerWorkPostRequestDto{
 
     private LocalDateTime endTime; //마감 날짜
 
+    private int maxEnrollmentNum;
 
     //모집인원(maxEnrollmentNum)
 }

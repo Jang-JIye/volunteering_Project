@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnrollmentRequestDto {
 
+    private String userId;
+
     private String username;
 
     //양식에 안맞아도 통과해버림....

@@ -45,6 +45,9 @@ public class VolunteerWorkPost extends Timestamp {
   @Column
   private LocalDateTime endTime;
 
+  @Column(nullable = false)
+  private String image;
+
   //모집 날짜가 지나면 모집완료로 변경
   @PreUpdate
   public void beforeUpdate() {
@@ -55,6 +58,10 @@ public class VolunteerWorkPost extends Timestamp {
       postStatus = PostStatus.TRUE;
     }
   }
+
+  @Column
+  private int maxEnrollmentNum;
+
   //모집 날짜 지난 경우 선택 불가
   @PrePersist
   public void checkEndTime() {
@@ -65,7 +72,7 @@ public class VolunteerWorkPost extends Timestamp {
 
 
   public VolunteerWorkPost(String userId, String title, String content,
-                           String area, String centerName, LocalDateTime endTime) {
+                           String area, String centerName, LocalDateTime endTime, int maxEnrollmentNum, String image) {
     this.userId = userId;
     this.title = title;
     this.content = content;
@@ -73,6 +80,8 @@ public class VolunteerWorkPost extends Timestamp {
 
     this.centerName = centerName;
     this.endTime = endTime;
+    this.maxEnrollmentNum = maxEnrollmentNum;
+    this.image = image;
   }
 
 
