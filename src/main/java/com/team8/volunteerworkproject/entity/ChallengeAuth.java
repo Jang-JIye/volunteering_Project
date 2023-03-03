@@ -45,6 +45,7 @@ public class ChallengeAuth extends Timestamp{
         this.image = image;
     }
 
+
     public void update(String title, String content, String image) {
         this.content = content;
         this.title = title;

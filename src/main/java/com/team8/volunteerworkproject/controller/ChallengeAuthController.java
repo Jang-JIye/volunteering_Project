@@ -26,8 +26,8 @@ public class ChallengeAuthController {
 
     //챌린지 인증(자랑) 등록하기
     @PostMapping
-    public ResponseEntity<StatusResponseDto> createChallenge(@RequestBody ChallengeAuthRequestDto requestDto){
-        ChallengeAuthResponseDto data = challengeAuthService.createChallengeAuth(requestDto);
+    public ResponseEntity<StatusResponseDto> createChallenge(@RequestBody ChallengeAuthRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
+        ChallengeAuthResponseDto data = challengeAuthService.createChallengeAuth(requestDto,userDetails.getUserId());
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "챌린지 인증하셨습니다.");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
