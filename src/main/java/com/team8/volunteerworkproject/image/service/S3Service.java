@@ -17,6 +17,7 @@ import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -60,6 +61,7 @@ public class S3Service {
 //    return fileName;
 //  }
 
+  @Transactional
   public String updateProfileImage(String userId, MultipartFile file) throws IOException {
 
     Profile profile = profileRepository.findByUserId(userId).orElseThrow(

@@ -55,6 +55,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         .requestMatchers("/challenges/**").permitAll()
         .requestMatchers("/volunteerWorkPosts/**").permitAll()
         .requestMatchers("/notices/**").permitAll()
+        .requestMatchers("/profileImage/**").hasAnyRole("USER", "COMPANY", "ADMIN")
         .requestMatchers("/mypage/**").hasAnyRole("USER", "COMPANY", "ADMIN")
         .requestMatchers("/challenge-auth/**").permitAll()
         .anyRequest().authenticated()
