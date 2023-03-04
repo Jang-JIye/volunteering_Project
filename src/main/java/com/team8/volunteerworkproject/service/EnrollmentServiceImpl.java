@@ -52,11 +52,20 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     int maxEnrollmentNum = post.getMaxEnrollmentNum();
     List<Enrollment> enrollmentUsers = enrollmentRepository.findByPost_PostId(postId);
     if (enrollmentUsers.size() >= maxEnrollmentNum) {
-      throw new IllegalArgumentException("최대 참가 인원에 도달하였습니다.");
+      //최대 인원에 도달한 경우
+      Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
+      enrollment.setStatus(EnrollmentStatus.FALSE); //FALSE로 받아오기
+      enrollment.setCreatedAt(LocalDateTime.now());
+      enrollment.setUpdatedAt(LocalDateTime.now());
+      enrollmentRepository.save(enrollment);
+
+      return new EnrollmentResponseDto(enrollment);
     }
 
     //버전 관리를 위한 version 필드 추가
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
+    enrollment.setCreatedAt(LocalDateTime.now());
+    enrollment.setUpdatedAt(LocalDateTime.now());
     enrollmentRepository.save(enrollment);
 
     return new EnrollmentResponseDto(enrollment);

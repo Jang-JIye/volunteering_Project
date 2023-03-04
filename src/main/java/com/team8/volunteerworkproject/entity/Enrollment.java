@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DialectOverride;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -37,6 +39,8 @@ public class Enrollment extends  Timestamp{
 
     @Version
     private Long version;
+    private EnrollmentStatus status;
+    private LocalDateTime createdAt;
 
 
     public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId, VolunteerWorkPost post) {
@@ -44,5 +48,21 @@ public class Enrollment extends  Timestamp{
         this.username = requestDto.getUsername();
         this.phoneNumber = requestDto.getPhoneNumber();
         this.post = post;
+    }
+
+    public void setStatus(EnrollmentStatus status) {
+        this.status = status;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime now) {
+
     }
 }
