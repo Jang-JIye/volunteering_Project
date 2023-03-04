@@ -45,9 +45,10 @@ public class Profile extends Timestamp{
     this.interestArea = interestArea;
   }
 
-  public Profile(String userId, String nickname) {
+  public Profile(String userId, String nickname, String image) {
     this.userId = userId;
     this.nickname = nickname;
+    this.image = image;
   }
 
   public void updateWithImage(ProfileRequestDto requestDto) {

@@ -12,7 +12,6 @@ import java.time.ZonedDateTime;
 @Getter
 @Builder
 public class VolunteerWorkPostRequestDto{
-    private String image;
 
     private String title;
 

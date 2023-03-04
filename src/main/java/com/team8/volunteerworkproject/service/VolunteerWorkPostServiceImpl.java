@@ -23,10 +23,10 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   @Override
   @Transactional
   public VolunteerWorkPostResponseDto createPost(String userId,
-      VolunteerWorkPostRequestDto requestDto) {
+      VolunteerWorkPostRequestDto requestDto, String imgPath) {
 
     VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(),
-             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(), requestDto.getMaxEnrollmentNum(), requestDto.getImage());//닉네임, 지역,
+             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(), requestDto.getMaxEnrollmentNum(), imgPath);//닉네임, 지역,
     volunteerWorkPostRepository.save(post);
 
     return new VolunteerWorkPostResponseDto(post);
@@ -36,14 +36,14 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   @Override
   @Transactional
   public VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto,
-      Long postId, String userId) {
+      Long postId, String userId, String imgPath) {
     VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
     if (!post.getUserId().equals(userId)) {
       throw new IllegalArgumentException("게시글의 작성자가 아닙니다.");
     } else {
-      post.update(requestDto);
+      post.update(requestDto, imgPath);
     }
     return new VolunteerWorkPostResponseDto(post);
   }
