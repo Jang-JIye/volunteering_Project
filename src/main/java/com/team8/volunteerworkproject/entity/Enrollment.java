@@ -5,6 +5,7 @@ import com.team8.volunteerworkproject.enums.EnrollmentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DialectOverride;
 
 @Getter
 @Entity
@@ -33,6 +34,9 @@ public class Enrollment extends  Timestamp{
 
     @Column(name = "post_id", insertable=false, updatable=false)
     private Long postId;
+
+    @Version
+    private Long version;
 
 
     public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId, VolunteerWorkPost post) {

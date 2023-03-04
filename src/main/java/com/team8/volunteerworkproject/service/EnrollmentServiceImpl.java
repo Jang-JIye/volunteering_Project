@@ -48,7 +48,14 @@ public class EnrollmentServiceImpl implements EnrollmentService {
       throw new IllegalArgumentException("이미 해당 게시글에 참여하셨습니다.");
     }
 
+    //참가 인원 수 체크
+    int maxEnrollmentNum = post.getMaxEnrollmentNum();
+    List<Enrollment> enrollmentUsers = enrollmentRepository.findByPost_PostId(postId);
+    if (enrollmentUsers.size() >= maxEnrollmentNum) {
+      throw new IllegalArgumentException("최대 참가 인원에 도달하였습니다.");
+    }
 
+    //버전 관리를 위한 version 필드 추가
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
     enrollmentRepository.save(enrollment);
 
@@ -69,6 +76,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
       throw new IllegalArgumentException("게시글 참여신청자와 일치하지 않습니다.");
     }
     //참여 취소 통과
+    //버전 관리를 위한 version 필드 추가
     enrollmentRepository.delete(enrollment);
   }
 
