@@ -64,11 +64,11 @@ public class VolunteerWorkProjectApplication {
 //      profileRepository.save(new Profile("company4@naver.com", "010-8841-5451", "기업4",  "대구", "기본프로필사진"));
 //      profileRepository.save(new Profile("admin@naver.com", "010-4841-8515", "어드민",  "서울", "기본프로필사진"));
 //
-//      volunteerWorkPostRepository.save(new VolunteerWorkPost("company1@naver.com", "다함께돌봄센터 봉사자 모집", "안녕하세요. 자원봉사자 모집합니다1", "서울", "서울시자원봉사센터 앞", "2023-02-24"));
-//      volunteerWorkPostRepository.save(new VolunteerWorkPost("company2@naver.com","환경정화활동 자원봉사자 모집", "안녕하세요. 자원봉사자 모집합니다2", "대전", "대전자원봉사센터 앞", "2023-02-25"));
-//      volunteerWorkPostRepository.save(new VolunteerWorkPost("company3@naver.com", "꿈마루 협동조합 발달장애인 돌봄 지원", "안녕하세요. 자원봉사자 모집합니다3", "부산", "부산자원봉사센터 앞", "2023-02-26"));
-//      volunteerWorkPostRepository.save(new VolunteerWorkPost("company4@naver.com","서구도서관 자원봉사 모집", "안녕하세요. 자원봉사자 모집합니다4", "인천", "인천자원봉사센터 앞", "2023-02-27"));
-//      volunteerWorkPostRepository.save(new VolunteerWorkPost("company1@naver.com", "홀몸 어르신 후원 물품 나눔 봉사", "안녕하세요. 자원봉사자 모집합니다5", "부천", "부천자원봉사센터 앞", "2023-02-28"));
+////      volunteerWorkPostRepository.save(new VolunteerWorkPost("company1@naver.com", "다함께돌봄센터 봉사자 모집", "안녕하세요. 자원봉사자 모집합니다1", "서울", "서울시자원봉사센터 앞", "2023-02-24"));
+////      volunteerWorkPostRepository.save(new VolunteerWorkPost("company2@naver.com","환경정화활동 자원봉사자 모집", "안녕하세요. 자원봉사자 모집합니다2", "대전", "대전자원봉사센터 앞", "2023-02-25"));
+////      volunteerWorkPostRepository.save(new VolunteerWorkPost("company3@naver.com", "꿈마루 협동조합 발달장애인 돌봄 지원", "안녕하세요. 자원봉사자 모집합니다3", "부산", "부산자원봉사센터 앞", "2023-02-26"));
+////      volunteerWorkPostRepository.save(new VolunteerWorkPost("company4@naver.com","서구도서관 자원봉사 모집", "안녕하세요. 자원봉사자 모집합니다4", "인천", "인천자원봉사센터 앞", "2023-02-27"));
+////      volunteerWorkPostRepository.save(new VolunteerWorkPost("company1@naver.com", "홀몸 어르신 후원 물품 나눔 봉사", "안녕하세요. 자원봉사자 모집합니다5", "부천", "부천자원봉사센터 앞", "2023-02-28"));
 //
 //      noticeRepository.save(new Notice("공지사항1", "공지사항입니다1"));
 //      noticeRepository.save(new Notice("공지사항2", "공지사항입니다2"));
