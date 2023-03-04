@@ -8,13 +8,16 @@ import com.team8.volunteerworkproject.entity.ChallengeAuth;
 import com.team8.volunteerworkproject.entity.ChallengeAuthComment;
 import com.team8.volunteerworkproject.repository.ChallengeAuthCommentRepository;
 import com.team8.volunteerworkproject.repository.ChallengeAuthRepository;
+import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.authenticator.SavedRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -26,16 +29,16 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
 
     //챌린지 자랑 동록
     @Override
-    public ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto, String userId) {
-        ChallengeAuth challengeAuth = new ChallengeAuth(requestDto.getUserId(),requestDto.getTitle(), requestDto.getContent(), requestDto.getImage());
+    public ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto, String imgPath, String userId) {
+        ChallengeAuth challengeAuth = new ChallengeAuth(requestDto.getUserId(),requestDto.getTitle(), requestDto.getContent(), imgPath);
         ChallengeAuth savedChallengeAuth = challengeAuthRepository.save(challengeAuth);
         return new ChallengeAuthResponseDto(savedChallengeAuth);
     }
 
     //챌린지 자랑 삭제
     @Override
-    public void deleteChallengeAuth(Long challengeAuthId) {
-        ChallengeAuth challengeAuth = challengeAuthRepository.findByChallengeAuthId(challengeAuthId).orElseThrow(
+    public void deleteChallengeAuth(Long challengeAuthId, String userId) {
+        ChallengeAuth challengeAuth = challengeAuthRepository.findByChallengeAuthIdAndUserId(challengeAuthId, userId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제할 챌린지 자랑이 존재하지 않습니다."));
         challengeAuthRepository.delete(challengeAuth);
 
@@ -78,11 +81,11 @@ public class ChallengeAuthServiceImpl implements ChallengeAuthService {
     }
 
     @Override
-    public ChallengeAuthResponseDto updateChallengeAuth(Long challengeAuthId, ChallengeAuthRequestDto requestDto) {
-        ChallengeAuth challengeAuth = challengeAuthRepository.findByChallengeAuthId(challengeAuthId).orElseThrow(
+    public ChallengeAuthResponseDto updateChallengeAuth(Long challengeAuthId, ChallengeAuthRequestDto requestDto, String imgPath, String userId) {
+        ChallengeAuth challengeAuth = challengeAuthRepository.findByChallengeAuthIdAndUserId(challengeAuthId, userId).orElseThrow(
                 ()-> new IllegalArgumentException("수정할 챌린지 자랑이 없습니다.")
         );
-        challengeAuth.update(requestDto.getTitle(), requestDto.getContent(),requestDto.getImage());
+        challengeAuth.update(requestDto.getTitle(), requestDto.getContent(), imgPath);
         ChallengeAuth savedChallengeAuth = challengeAuthRepository.save(challengeAuth);
         return new ChallengeAuthResponseDto(savedChallengeAuth);
     }
