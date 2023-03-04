@@ -62,7 +62,7 @@ public class S3Service {
   public String updateImage(MultipartFile file, String dirName) throws IOException {
 
     SimpleDateFormat date = new SimpleDateFormat("yyyymmddHHmmss");
-    String fileName = dirName + "/" + date.format(new Date()) + "-" + file.getOriginalFilename();
+    String fileName = "https://volunteering-project.s3.ap-northeast-2.amazonaws.com/" + dirName + "/" + date.format(new Date()) + "-" + file.getOriginalFilename();
 
     s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
         .withCannedAcl(CannedAccessControlList.PublicRead));
