@@ -1,8 +1,8 @@
-package com.team8.volunteerworkproject.image.controller;
+package com.team8.volunteerworkproject.controller;
 
 import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
-import com.team8.volunteerworkproject.image.service.S3Service;
+import com.team8.volunteerworkproject.service.S3Service;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -42,13 +42,13 @@ public class ImageController {
 //
 //    return "redirect:/images";
 //  }
-
-  @PostMapping("/profileImage")
-  public ResponseEntity<StatusAndDataResponseDto> profileImage(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam("file") MultipartFile file) throws IOException {
-    String imgPath = s3Service.updateProfileImage(userDetails.getUserId(), file);
-    StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 사진이 등록되었습니다.", imgPath);
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
-    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
-  }
+//
+//  @PostMapping("/profileImage")
+//  public ResponseEntity<StatusAndDataResponseDto> profileImage(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam("file") MultipartFile file) throws IOException {
+//    String imgPath = s3Service.updateProfileImage(userDetails.getUserId(), file);
+//    StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 사진이 등록되었습니다.", imgPath);
+//    HttpHeaders headers = new HttpHeaders();
+//    headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
+//    return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
+//  }
 }

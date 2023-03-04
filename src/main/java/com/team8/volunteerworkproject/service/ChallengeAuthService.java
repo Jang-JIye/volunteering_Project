@@ -14,12 +14,12 @@ import java.util.List;
 
 public interface ChallengeAuthService {
 
-    ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto, String userId);
-    void deleteChallengeAuth (@PathVariable Long challengeAuthId);
+    ChallengeAuthResponseDto createChallengeAuth(ChallengeAuthRequestDto requestDto, String imgPath, String userId);
+    void deleteChallengeAuth (@PathVariable Long challengeAuthId, String userId);
     List<AllChallengeAuthResponseDto> getAllChallengeAuth();
     ChallengeAuthResponseDto getCahllengeAuth(Long challengeAuthId);
     List<AllChallengeAuthResponseDto> getAllChallengeMyAuth(String userId);
-    ChallengeAuthResponseDto updateChallengeAuth(@PathVariable Long challengeAuthId, ChallengeAuthRequestDto requestDto);
+    ChallengeAuthResponseDto updateChallengeAuth(@PathVariable Long challengeAuthId, ChallengeAuthRequestDto requestDto, String imgPath, String userId);
 
 
 }

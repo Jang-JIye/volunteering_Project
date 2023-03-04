@@ -1,4 +1,4 @@
-package com.team8.volunteerworkproject.image.service;
+package com.team8.volunteerworkproject.service;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -39,9 +39,6 @@ public class S3Service {
 
   public static final String CLOUD_FRONT_DOMAIN_NAME = "d261u93iebql1x.cloudfront.net";
 
-  private final ProfileService profileService;
-  private final ProfileRepository profileRepository;
-
   @PostConstruct
   public void setS3Client() {
     AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -62,16 +59,10 @@ public class S3Service {
 //  }
 
   @Transactional
-  public String updateProfileImage(String userId, MultipartFile file) throws IOException {
-
-    Profile profile = profileRepository.findByUserId(userId).orElseThrow(
-        () -> new IllegalArgumentException("프로필이 존재하지 않습니다.")
-    );
+  public String updateImage(MultipartFile file, String dirName) throws IOException {
 
     SimpleDateFormat date = new SimpleDateFormat("yyyymmddHHmmss");
-    String fileName = "profile/" + date.format(new Date()) + "-" + file.getOriginalFilename();
-
-    profile.updateProfileImage(fileName);
+    String fileName = dirName + "/" + date.format(new Date()) + "-" + file.getOriginalFilename();
 
     s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
         .withCannedAcl(CannedAccessControlList.PublicRead));
