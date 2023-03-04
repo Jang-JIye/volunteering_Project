@@ -87,8 +87,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
   //게시글 별 참여 신청 내역 조회
   @Override
-  public List<EnrollmentResponseDto> getEnrollmentList() {
-    List<Enrollment> postEnrollments = enrollmentRepository.findAllByOrderByCreatedAtDesc();
+  public List<EnrollmentResponseDto> getEnrollmentList(Long postId) {
+    List<Enrollment> postEnrollments = enrollmentRepository.findAllByPost_PostIdOrderByCreatedAtDesc(postId);
     List<EnrollmentResponseDto> responseDto = new ArrayList<>();
     for (Enrollment enrollment : postEnrollments) {
       responseDto.add (new EnrollmentResponseDto(enrollment));
