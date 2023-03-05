@@ -13,7 +13,7 @@ public interface ChallengeService {
 
     ChallengeResponseDto updateChallenge(@PathVariable Long ChallengeId, ChallengeRequestDto requestDto, String imgPath);
 
-    String deleteChallenge(@PathVariable Long challengeId);
+    void deleteChallenge(@PathVariable Long challengeId);
 
     List<AllChallengeResponseDto> getAllChallenge();
     ChallengeResponseDto getChallenge(Long challengeId);
