@@ -1,12 +1,10 @@
 package com.team8.volunteerworkproject.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ChallengeRequestDto {
 
 
@@ -14,5 +12,11 @@ public class ChallengeRequestDto {
     private String title;
     private String content;
 
-
+    @Builder
+    public ChallengeRequestDto(String userId, String title, String content, String image) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.image = image;
+    }
 }

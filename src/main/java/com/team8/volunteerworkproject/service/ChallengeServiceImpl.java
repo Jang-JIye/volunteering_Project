@@ -41,11 +41,13 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     //챌린지 삭제
     @Override
-    public void deleteChallenge(Long challengeId) {
+    public String deleteChallenge(Long challengeId) {
         Challenge challenge = challengeRepository.findByChallengeId(challengeId).orElseThrow(
                 () -> new IllegalArgumentException("삭제할 챌린지가 존재하지 않습니다."));
 
         challengeRepository.delete(challenge);
+
+        return "챌린지가 삭제되었습니다.";
 
     }
 
