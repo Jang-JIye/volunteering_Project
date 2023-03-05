@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -134,8 +133,8 @@ class ChallengeControllerTest {
     public void 챌린지_전체조회() throws Exception {
         // given
         List<AllChallengeResponseDto> challengeList = new ArrayList<>();
-        challengeList.add(new AllChallengeResponseDto());
-        challengeList.add(new AllChallengeResponseDto());
+        challengeList.add(new AllChallengeResponseDto(new Challenge()));
+        challengeList.add(new AllChallengeResponseDto(new Challenge()));
         given(challengeService.getAllChallenge()).willReturn(challengeList);
 
         // when
