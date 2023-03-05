@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface VolunteerWorkPostService {
 
-    VolunteerWorkPostResponseDto createPost(String userId, VolunteerWorkPostRequestDto requestDto);
-    VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto, Long postId,  String userId);
+    VolunteerWorkPostResponseDto createPost(String userId, VolunteerWorkPostRequestDto requestDto, String imgPath);
+    VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto, Long postId,  String userId, String imgPath);
     void deletePost(Long postId, String userId);
     List<AllVolunteerWorkPostResponseDto> getAllPost();
     VolunteerWorkPostResponseDto getPost(Long postId);

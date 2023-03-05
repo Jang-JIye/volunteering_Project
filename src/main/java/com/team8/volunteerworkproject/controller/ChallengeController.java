@@ -7,6 +7,8 @@ import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.service.ChallengeServiceImpl;
+import com.team8.volunteerworkproject.service.S3Service;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,17 +18,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.Charset;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
 public class ChallengeController {
 
     private final ChallengeServiceImpl challengeService;
+    private final S3Service s3Service;
+    private static String dirName = "challenge";
 
     // 챌린지 등록
     @PostMapping("/admin/challenges")
-    public ResponseEntity<StatusResponseDto> createChallenge(@RequestBody ChallengeRequestDto requestDto){
-        ChallengeResponseDto data = challengeService.createChallenge(requestDto);
+    public ResponseEntity<StatusResponseDto> createChallenge(@RequestPart("requestDto") ChallengeRequestDto requestDto, @RequestPart("file")
+        MultipartFile file) throws IOException {
+        String imgPath = s3Service.updateImage(file, dirName);
+        ChallengeResponseDto data = challengeService.createChallenge(requestDto, imgPath);
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "챌린지 등록이 완료되었습니다.");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
@@ -36,8 +43,9 @@ public class ChallengeController {
 
     //챌린지 수정
     @PatchMapping("/admin/challenges/{challengeId}")
-    public ResponseEntity<StatusAndDataResponseDto> updateChallenge(@PathVariable Long challengeId, @RequestBody ChallengeRequestDto requestDto) {
-        ChallengeResponseDto data = challengeService.updateChallenge(challengeId, requestDto);
+    public ResponseEntity<StatusAndDataResponseDto> updateChallenge(@PathVariable Long challengeId, @RequestPart("requestDto") ChallengeRequestDto requestDto, @RequestPart("file") MultipartFile file) throws IOException{
+        String imgPath = s3Service.updateImage(file, dirName);
+        ChallengeResponseDto data = challengeService.updateChallenge(challengeId, requestDto, imgPath);
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "챌린지 수정이 완료되었습니다.", data);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));

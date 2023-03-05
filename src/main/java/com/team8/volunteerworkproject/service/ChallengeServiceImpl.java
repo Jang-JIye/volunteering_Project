@@ -21,20 +21,20 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     //챌린지 작성
     @Override
-    public ChallengeResponseDto createChallenge(ChallengeRequestDto requestDto) {
+    public ChallengeResponseDto createChallenge(ChallengeRequestDto requestDto, String imgPath) {
         Challenge challenge = new Challenge(requestDto.getUserId(), requestDto.getTitle(),
-            requestDto.getContent(), requestDto.getImage());
+            requestDto.getContent(), imgPath);
         Challenge savedChallenge = challengeRepository.save(challenge);
         return new ChallengeResponseDto(savedChallenge);
     }
 
     //챌린지 수정
     @Override
-    public ChallengeResponseDto updateChallenge(Long challengeId, ChallengeRequestDto requestDto) {
+    public ChallengeResponseDto updateChallenge(Long challengeId, ChallengeRequestDto requestDto, String imgPath) {
         Challenge challenge = challengeRepository.findByChallengeId(challengeId).orElseThrow(
                 ()-> new IllegalArgumentException("수정할 챌린지가 없습니다."));
 
-        challenge.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getImage());
+        challenge.update(requestDto.getTitle(), requestDto.getContent(), imgPath);
         Challenge savedChallenge = challengeRepository.save(challenge);
         return new ChallengeResponseDto(savedChallenge);
     }
