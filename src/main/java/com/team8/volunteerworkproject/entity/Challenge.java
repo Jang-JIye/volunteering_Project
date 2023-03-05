@@ -1,5 +1,6 @@
 package com.team8.volunteerworkproject.entity;
 
+import com.team8.volunteerworkproject.dto.request.ChallengeRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Challenge extends Timestamp{
 
     @Column(nullable = false)
     private String image;
+
 
     public Challenge(String userId, String title, String content, String image) {
         this.userId = userId;
