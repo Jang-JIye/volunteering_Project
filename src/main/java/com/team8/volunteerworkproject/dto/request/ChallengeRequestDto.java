@@ -11,7 +11,6 @@ public class ChallengeRequestDto {
     private String userId;
     private String title;
     private String content;
-    private String image;
 
     @Builder
     public ChallengeRequestDto(String userId, String title, String content, String image) {

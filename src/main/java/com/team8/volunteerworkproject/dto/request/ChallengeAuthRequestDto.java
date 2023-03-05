@@ -12,5 +12,4 @@ public class ChallengeAuthRequestDto {
     private String userId;
     private String title;
     private String content;
-    private String image;
 }

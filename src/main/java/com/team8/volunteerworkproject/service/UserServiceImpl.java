@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
   private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
   private final ProfileRepository profileRepository;
+  private static String basicProfileImage = "profile/basic_profile_image.jpeg";
 
   @Override
   public void signup(SignupRequestDto requestDto) {
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     User user = new User(userId, password, nickname, role, companyRegisterNumb);
-    Profile profile = new Profile(userId, nickname);
+    Profile profile = new Profile(userId, nickname, basicProfileImage);
     userRepository.save(user);
     profileRepository.save(profile);
   }

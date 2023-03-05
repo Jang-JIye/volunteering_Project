@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig implements WebMvcConfigurer {
 
   private final JwtUtil jwtUtil;
@@ -55,7 +55,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         .requestMatchers("/challenges/**").permitAll()
         .requestMatchers("/volunteerWorkPosts/**").permitAll()
         .requestMatchers("/notices/**").permitAll()
-        .requestMatchers("/mypage/**").hasAnyRole("USER", "COMPANY")
+        .requestMatchers("/profileImage/**").hasAnyRole("USER", "COMPANY", "ADMIN")
+        .requestMatchers("/mypage/**").hasAnyRole("USER", "COMPANY", "ADMIN")
         .requestMatchers("/challenge-auth/**").permitAll()
         .anyRequest().authenticated()
         .and().addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService),

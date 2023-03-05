@@ -7,6 +7,8 @@ import com.team8.volunteerworkproject.dto.response.StatusAndDataResponseDto;
 import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.service.ChallengeServiceImpl;
+import com.team8.volunteerworkproject.service.S3Service;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,24 +18,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.Charset;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
 public class ChallengeController {
 
     private final ChallengeServiceImpl challengeService;
+    private final S3Service s3Service;
+    private static String dirName = "challenge";
 
     // 챌린지 등록
     @PostMapping("/admin/challenges")
     public ResponseEntity<ChallengeResponseDto> createChallenge(@RequestBody ChallengeRequestDto requestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(challengeService.createChallenge(requestDto));
+
     }
 
     //챌린지 수정
     @PatchMapping("/admin/challenges/{challengeId}")
+
     public ResponseEntity<ChallengeResponseDto> updateChallenge(@PathVariable Long challengeId, @RequestBody ChallengeRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(challengeService.updateChallenge(challengeId,requestDto));
-    }
+
 
     //챌린지 삭제
     @DeleteMapping("/admin/challenges/{challengeId}")
