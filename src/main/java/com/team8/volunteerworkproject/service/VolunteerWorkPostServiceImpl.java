@@ -18,6 +18,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
 
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
   private final VolunteerWorkPostLikeServiceImpl volunteerWorkPostLikeService;
+  public static final String CLOUD_FRONT_DOMAIN_NAME = "d261u93iebql1x.cloudfront.net/";
 
   //게시글 작성
   @Override
@@ -25,8 +26,10 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   public VolunteerWorkPostResponseDto createPost(String userId,
       VolunteerWorkPostRequestDto requestDto, String imgPath) {
 
-    VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(),
-             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(), requestDto.getMaxEnrollmentNum(), imgPath);//닉네임, 지역,
+    VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(),
+        requestDto.getContent(),
+        requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(),
+        requestDto.getMaxEnrollmentNum(), CLOUD_FRONT_DOMAIN_NAME + imgPath);//닉네임, 지역,
     volunteerWorkPostRepository.save(post);
 
     return new VolunteerWorkPostResponseDto(post);
@@ -38,14 +41,21 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   public VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto,
       Long postId, String userId, String imgPath) {
     VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
-        () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
-
+        () -> new IllegalArgumentException("해당 봉사모집글이 존재하지 않습니다."));
     if (!post.getUserId().equals(userId)) {
-      throw new IllegalArgumentException("게시글의 작성자가 아닙니다.");
+      throw new IllegalArgumentException("봉사모집글의 작성자가 일치하지 않습니다.");
     } else {
-      post.update(requestDto, imgPath);
+      post.update(requestDto, CLOUD_FRONT_DOMAIN_NAME + imgPath);
     }
     return new VolunteerWorkPostResponseDto(post);
+  }
+
+  @Override
+  public String getPostImage(String userId, Long postId) {
+    VolunteerWorkPost post = volunteerWorkPostRepository.findByPostIdAndUserId(postId, userId)
+        .orElseThrow(
+            () -> new IllegalArgumentException("해당 봉사모집글이 존재하지 않거나, 해당기업의 봉사모집글이 아닙니다. "));
+     return post.getImage().substring(30);
   }
 
 
@@ -53,10 +63,10 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   @Override
   public void deletePost(Long postId, String userId) {
     VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
-        () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        () -> new IllegalArgumentException("해당 봉사모집글이 존재하지 않습니다."));
 
     if (!post.getUserId().equals(userId)) {
-      throw new IllegalArgumentException("게시글의 작성자가 일치하지 않습니다.");
+      throw new IllegalArgumentException("봉사모집글의 작성자가 일치하지 않습니다.");
     } else {
       volunteerWorkPostRepository.delete(post);
     }
@@ -80,7 +90,7 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   @Transactional(readOnly = true)
   public VolunteerWorkPostResponseDto getPost(Long postId) {
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
-        () -> new IllegalArgumentException("찾으시는 모집글이 없습니다.")
+        () -> new IllegalArgumentException("찾으시는 봉사모집글이 없습니다.")
     );
     int likeNum = volunteerWorkPostLikeService.count(postId);
     VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post, likeNum);

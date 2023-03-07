@@ -41,7 +41,7 @@ public class VolunteerWorkPostResponseDto {
 
   }
 
-    public VolunteerWorkPostResponseDto(VolunteerWorkPost post ){
+    public VolunteerWorkPostResponseDto(VolunteerWorkPost post){
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();

@@ -39,10 +39,8 @@ public class S3Service {
   @Value("${cloud.aws.region.static}")
   private String region;
 
-  public static final String CLOUD_FRONT_DOMAIN_NAME = "d261u93iebql1x.cloudfront.net";
+  public static final String CLOUD_FRONT_DOMAIN_NAME = "d261u93iebql1x.cloudfront.net/";
 
-  private final VolunteerWorkPostRepository volunteerWorkPostRepository;
-  private final ProfileRepository profileRepository;
 
   @PostConstruct
   public void setS3Client() {
@@ -53,15 +51,6 @@ public class S3Service {
         .withRegion(this.region)
         .build();
   }
-
-//  public String upload(MultipartFile file) throws IOException {
-//    String fileName = file.getOriginalFilename();
-//
-//    s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
-//        .withCannedAcl(CannedAccessControlList.PublicRead));
-//
-//    return fileName;
-//  }
 
   @Transactional
   public String updateImage(MultipartFile file, String dirName) throws IOException {
@@ -74,41 +63,5 @@ public class S3Service {
 
     return fileName;
   }
-
-  @Transactional
-  public String updateProfileImage(String userId, MultipartFile file, String dirName) throws IOException {
-    Profile profile = profileRepository.findByUserId(userId).orElseThrow(
-        () -> new IllegalArgumentException("프로필이 존재하지 않습니다.")
-    );
-
-    SimpleDateFormat date = new SimpleDateFormat("yyyymmddHHmmss");
-    String fileName = dirName + "/" + date.format(new Date()) + "-" + file.getOriginalFilename();
-
-    profile.updateProfileImage(fileName);
-
-    s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
-        .withCannedAcl(CannedAccessControlList.PublicRead));
-
-    return fileName;
-  }
-
-//  @Transactional
-//  public String update(MultipartFile file, String dirName, Long postId) throws IOException {
-//    VolunteerWorkPost post = volunteerWorkPostRepository.findById(postId).orElseThrow(
-//        () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
-//
-//    if(!file.isEmpty()) {
-//
-//      SimpleDateFormat date = new SimpleDateFormat("yyyymmddHHmmss");
-//      String fileName = dirName + "/" + date.format(new Date()) + "-" + file.getOriginalFilename();
-//
-//      s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
-//          .withCannedAcl(CannedAccessControlList.PublicRead));
-//
-//      return fileName;
-//    }
-//    return post.getImage();
-//  }
-
 
 }

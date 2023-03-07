@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChallengeAuthRequestDto {
 
-    private String userId;
+//    private String userId;
     private String title;
     private String content;
 }

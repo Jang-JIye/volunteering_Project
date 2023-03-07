@@ -9,6 +9,7 @@ import com.team8.volunteerworkproject.service.ChallengeAuthServiceImpl;
 import com.team8.volunteerworkproject.service.S3Service;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,17 +28,23 @@ public class ChallengeAuthController {
   private final ChallengeAuthServiceImpl challengeAuthService;
   private final S3Service s3Service;
   private static String dirName = "challengeAuth";
+  private static String imgPath = "challengeAuth/challengeAuth-basic.jpg";
 
   //챌린지 인증(자랑) 등록하기
   @PostMapping("/challenge-auth")
   public ResponseEntity<StatusResponseDto> createChallenge(
       @RequestPart("requestDto") ChallengeAuthRequestDto requestDto,
-      @RequestPart("file") MultipartFile file, @AuthenticationPrincipal UserDetailsImpl userDetails)
+      @RequestPart(value = "file", required = false) MultipartFile file,
+      @AuthenticationPrincipal UserDetailsImpl userDetails)
       throws IOException {
-    String imgPath = s3Service.updateImage(file, dirName);
+    if (file == null) {
+      imgPath = imgPath;
+    } else {
+      imgPath = s3Service.updateImage(file, dirName);
+    }
     ChallengeAuthResponseDto data = challengeAuthService.createChallengeAuth(requestDto, imgPath,
         userDetails.getUserId());
-    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "챌린지 인증하셨습니다.");
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "챌린지 인증이 등록되었습니다.");
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
@@ -71,7 +78,8 @@ public class ChallengeAuthController {
 
   //챌린지 인증(자랑) 삭제
   @DeleteMapping("/challenge-auth/{challengeAuthId}")
-  public ResponseEntity<StatusResponseDto> deleteChallengeAuth(@PathVariable Long challengeAuthId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+  public ResponseEntity<StatusResponseDto> deleteChallengeAuth(@PathVariable Long challengeAuthId,
+      @AuthenticationPrincipal UserDetailsImpl userDetails) {
     challengeAuthService.deleteChallengeAuth(challengeAuthId, userDetails.getUserId());
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "챌린지 자랑 삭제가 완료되었습니다.");
     HttpHeaders headers = new HttpHeaders();
@@ -84,9 +92,13 @@ public class ChallengeAuthController {
   public ResponseEntity<StatusAndDataResponseDto> updateChallengeAuth(
       @PathVariable Long challengeAuthId,
       @RequestPart("requestDto") ChallengeAuthRequestDto requestDto,
-      @RequestPart("file") MultipartFile file,
-      @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException{
-    String imgPath = s3Service.updateImage(file, dirName);
+      @RequestPart(value = "file", required = false) MultipartFile file,
+      @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+    if (file == null) {
+      imgPath = challengeAuthService.getchallengeAuthImage(userDetails.getUserId(), challengeAuthId);
+    } else {
+      imgPath = s3Service.updateImage(file, dirName);
+    }
     ChallengeAuthResponseDto data = challengeAuthService.updateChallengeAuth(challengeAuthId,
         requestDto, imgPath, userDetails.getUserId());
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,
