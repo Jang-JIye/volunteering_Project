@@ -22,6 +22,4 @@ public class ProfileResponseDto {
         this.image = profile.getImage();
     }
 
-  public void updateProfileImage(String s) {
-  }
 }

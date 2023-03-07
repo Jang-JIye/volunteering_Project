@@ -15,6 +15,7 @@ import com.team8.volunteerworkproject.service.VolunteerWorkPostServiceImpl;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,16 +36,21 @@ public class VolunteerWorkPostController {
   private final VolunteerWorkPostServiceImpl volunteerWorkPostService;
   private final S3Service s3Service;
   private static String dirName = "volunteerWorkPost";
+  private static String imgPath = "volunteerWorkPost/volunteerWorkPost-basic.jpg";
 
   //게시글 작성
   @Secured(UserRoleEnum.Authority.COMPANY)
   @PostMapping("/volunteerWorkPosts")
   public ResponseEntity<StatusResponseDto> createPost(
       @RequestPart("requestDto") VolunteerWorkPostRequestDto requestDto,
-      @RequestPart("file") MultipartFile file,
+      @RequestPart(value = "file", required = false) MultipartFile file,
       @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
-    String imgPath = s3Service.updateImage(file, dirName);
-    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.");
+    if(file == null){
+      imgPath = imgPath;
+    }else {
+      imgPath = s3Service.updateImage(file, dirName);
+    }
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "봉사모집글이 작성되었습니다.");
     volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto, imgPath);
     HttpHeaders headers = new HttpHeaders();//필추
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
@@ -58,14 +64,18 @@ public class VolunteerWorkPostController {
   @PatchMapping("/volunteerWorkPosts/{postId}")
   public ResponseEntity<StatusAndDataResponseDto> updatePost(
       @RequestPart("requestDto") VolunteerWorkPostRequestDto requestDto,
-      @RequestPart("file") MultipartFile file,
+      @RequestPart(value = "file", required = false) MultipartFile file,
       @PathVariable Long postId,
       @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
-    String imgPath = s3Service.updateImage(file, dirName);
+    if(file == null){
+      imgPath = volunteerWorkPostService.getPostImage(userDetails.getUserId(), postId);
+    }else {
+      imgPath = s3Service.updateImage(file, dirName);
+    }
     VolunteerWorkPostResponseDto data = volunteerWorkPostService.updatePost(requestDto, postId,
         userDetails.getUserId(), imgPath);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,
-        "게시글이 수정되었습니다.", data);
+        "봉사모집글이 수정되었습니다.", data);
 
     HttpHeaders headers = new HttpHeaders();//필추
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
@@ -79,7 +89,7 @@ public class VolunteerWorkPostController {
   @DeleteMapping("/volunteerWorkPosts/{postId}")
   public ResponseEntity<StatusResponseDto> deletePost(@PathVariable Long postId,
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "해당 게시글이 삭제되었습니다.");
+    StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "해당 봉사모집글이 삭제되었습니다.");
     volunteerWorkPostService.deletePost(postId, userDetails.getUserId());
 
     HttpHeaders headers = new HttpHeaders();//필추
@@ -95,7 +105,7 @@ public class VolunteerWorkPostController {
     List<AllVolunteerWorkPostResponseDto> data = volunteerWorkPostService.getAllPost();
 
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,
-        "전체 모집글 조회가 완료되었습니다.", data);
+        "전체 봉사모집글 조회가 완료되었습니다.", data);
 
     HttpHeaders headers = new HttpHeaders();//필추
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
@@ -107,7 +117,7 @@ public class VolunteerWorkPostController {
   public ResponseEntity<StatusAndDataResponseDto> getPost(@PathVariable Long postId) {
     VolunteerWorkPostResponseDto data = volunteerWorkPostService.getPost(postId);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,
-        "선택 모집글 조회가 완료되었습니다.", data);
+        "선택한 봉사모집글 조회가 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);

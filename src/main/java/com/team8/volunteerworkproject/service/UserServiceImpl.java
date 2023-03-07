@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
   private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
   private final ProfileRepository profileRepository;
   private static String basicProfileImage = "profile/basic_profile_image.jpeg";
+  public static final String CLOUD_FRONT_DOMAIN_NAME = "d261u93iebql1x.cloudfront.net/";
 
   @Override
   public void signup(SignupRequestDto requestDto) {
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     User user = new User(userId, password, nickname, role, companyRegisterNumb);
-    Profile profile = new Profile(userId, nickname, basicProfileImage);
+    Profile profile = new Profile(userId, nickname, CLOUD_FRONT_DOMAIN_NAME+basicProfileImage);
     userRepository.save(user);
     profileRepository.save(profile);
   }

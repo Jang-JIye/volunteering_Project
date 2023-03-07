@@ -11,6 +11,7 @@ public interface VolunteerWorkPostService {
 
     VolunteerWorkPostResponseDto createPost(String userId, VolunteerWorkPostRequestDto requestDto, String imgPath);
     VolunteerWorkPostResponseDto updatePost(VolunteerWorkPostRequestDto requestDto, Long postId,  String userId, String imgPath);
+    String getPostImage(String userId, Long postId);
     void deletePost(Long postId, String userId);
     List<AllVolunteerWorkPostResponseDto> getAllPost();
     VolunteerWorkPostResponseDto getPost(Long postId);

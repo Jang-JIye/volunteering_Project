@@ -11,7 +11,8 @@ public interface ChallengeService {
 
     ChallengeResponseDto createChallenge(ChallengeRequestDto requestDto, String imgPath);
 
-    ChallengeResponseDto updateChallenge(@PathVariable Long ChallengeId, ChallengeRequestDto requestDto, String imgPath);
+    ChallengeResponseDto updateChallenge(@PathVariable Long challengeId, ChallengeRequestDto requestDto, String imgPath);
+    String getChallengeImage(Long challengeId);
 
     void deleteChallenge(@PathVariable Long challengeId);
 

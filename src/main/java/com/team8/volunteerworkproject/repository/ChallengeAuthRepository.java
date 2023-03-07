@@ -13,4 +13,5 @@ public interface ChallengeAuthRepository extends JpaRepository<ChallengeAuth, Lo
     Optional<ChallengeAuth> findByChallengeAuthId(Long challengeAuthId);
     Optional<ChallengeAuth> findByChallengeAuthIdAndUserId(Long challengeAuthId, String userId);
     List<ChallengeAuth> findAllByUserId(String userId);
+
 }
