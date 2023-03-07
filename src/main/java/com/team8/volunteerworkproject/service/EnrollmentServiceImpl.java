@@ -8,11 +8,11 @@ import com.team8.volunteerworkproject.enums.EnrollmentStatus;
 import com.team8.volunteerworkproject.repository.EnrollmentRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,16 +24,31 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     //참여 신청
   @Override
   public EnrollmentResponseDto attend(Long postId, EnrollmentRequestDto requestDto, String userId) {
+    String username = requestDto.getUsername();
+    String phoneNumber = requestDto.getPhoneNumber();
+
+    if (username == null || username.isEmpty()) {
+      throw new IllegalArgumentException("이름을 입력해주세요.");
+    }
+    if (phoneNumber == null || phoneNumber.isEmpty()) {
+      throw new IllegalArgumentException("핸드폰 번호를 입력해주세요.");
+    }
+
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-/*        if (!enrollment.getUserId().equals(userId)) {
-            throw new IllegalArgumentException("이미 참여신청한 모집글입니다.");
-        } else {
-            enrollment.save(userId);
-        }
-        if (enrollmentRepository.findById(enrollmentId).isPresent()) {
-            throw new IllegalArgumentException("이미 참여를 신청한 모집글입니다.");
-        }*/
+
+    //모집기간
+    if (post.getEndTime().isBefore(LocalDateTime.now())) {
+      throw new IllegalArgumentException("모집 완료된 게시글에는 참여신청을 할 수 없습니다.");
+    }
+
+    //이미 참여신청한 경우 중복체크
+    List<Enrollment> existingEnrollment = enrollmentRepository.findByUserIdAndPost_PostId(userId, postId);
+    if (!existingEnrollment.isEmpty()) {
+      throw new IllegalArgumentException("이미 해당 게시글에 참여하셨습니다.");
+    }
+
+
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
     enrollmentRepository.save(enrollment);
 
@@ -46,10 +61,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     VolunteerWorkPost Post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("모집글이 존재하지 않습니다.")
     );
- /*       if (!enrollment.getUserId().equals(userId)) {
-            throw new IllegalArgumentException("참여한 모집글이 아닙니다.");
-        }
-        enrollment.delete(userId);*/
     Enrollment enrollment = enrollmentRepository.findByEnrollmentId(enrollmentId).orElseThrow(
         () -> new IllegalArgumentException("참가 신청한 게시글이 아닙니다,")
     );

@@ -19,7 +19,7 @@ public class Comment extends Timestamp {
   private Long commentId;
 
   @Column(nullable = false)
-  private String contents;
+  private String comments;
 
   private String userNickname;
 
@@ -27,9 +27,9 @@ public class Comment extends Timestamp {
 
   private Long postId;
 
-  public Comment(CommentRequestDto requestDto, String userId, String userNickname,
+  public Comment(String comments, String userId, String userNickname,
       Long postId) {
-    this.contents = requestDto.getContents();
+    this.comments = comments;
     this.userNickname = userNickname;
     this.userId = userId;
     this.postId = postId;
@@ -38,7 +38,7 @@ public class Comment extends Timestamp {
 //    commentRepository.save(comment);
 
   public void updateComment(CommentRequestDto requestDto) {
-    this.contents = requestDto.getContents();
+    this.comments = requestDto.getComments();
   }
 
 }

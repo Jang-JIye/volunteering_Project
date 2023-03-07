@@ -1,9 +1,12 @@
 package com.team8.volunteerworkproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team8.volunteerworkproject.dto.request.ChallengeAuthRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -24,24 +27,27 @@ public class ChallengeAuth extends Timestamp{
     @Column(nullable = false)
     private String content;
 
+
+//    @OneToMany(mappedBy = "challengeAuth", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<ChallengeAuthComment> comments;
+
     @Column(nullable = false)
     private String image;
 
     @Column(nullable = false)
     private int likeNum;
 
-    public ChallengeAuth(ChallengeAuth challengeAuth) {
-        this.challengeAuthId = challengeAuth.getChallengeAuthId();
-        this.userId = challengeAuth.getUserId();
-        this.title = challengeAuth.getTitle();
-        this.content = challengeAuth.getContent();
-        this.image = challengeAuth.getImage();
+
+    public ChallengeAuth(String userId, String title, String content, String image) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.image = image;
     }
 
-    public ChallengeAuth(ChallengeAuthRequestDto requestDto) {
-        this.userId = requestDto.getUserId();
-        this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
-        this.image = requestDto.getImage();
+    public void update(String title, String content, String image) {
+        this.content = content;
+        this.title = title;
+        this.image= image;
     }
 }

@@ -13,16 +13,21 @@ import lombok.NoArgsConstructor;
 public class EnrollmentResponseDto {
     private Long postId;
     private String userId;
+    private String title;
+    private String area;
     private String username;
     private String enrollmentStatus;
     private Long enrollmentId;
+    private String phoneNumber;
 
     public EnrollmentResponseDto(Enrollment enrollment) {
         this.postId = enrollment.getPost().getPostId();
         this.userId = enrollment.getUserId();
+        this.title = enrollment.getPost().getTitle();
+        this.area = enrollment.getPost().getArea();
         this.enrollmentId = enrollment.getEnrollmentId();
         this.username = enrollment.getUsername();
         this.enrollmentStatus = String.valueOf(enrollment.getEnrollmentStatus());
+        this.phoneNumber = enrollment.getPhoneNumber();
     }
-//    private int phoneNum;
 }

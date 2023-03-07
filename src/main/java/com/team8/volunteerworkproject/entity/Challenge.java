@@ -27,11 +27,11 @@ public class Challenge extends Timestamp{
     private String image;
 
 
-    public Challenge(ChallengeRequestDto requestDto) {
-        this.userId = requestDto.getUserId();
-        this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
-        this.image = requestDto.getImage();
+    public Challenge(String userId, String title, String content, String image) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.image = image;
     }
 
     public void update(String title, String content, String image) {

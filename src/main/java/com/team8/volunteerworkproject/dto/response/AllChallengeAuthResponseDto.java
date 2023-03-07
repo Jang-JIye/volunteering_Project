@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AllChallengeAuthResponseDto {
 
-    private Long ChallengeAuthId;
+    private Long challengeAuthId;
     private String title;
     private String content;
     private int likeNum;
 
     public AllChallengeAuthResponseDto(ChallengeAuth challengeAuth) {
-        ChallengeAuthId = challengeAuth.getChallengeAuthId();
+        this.challengeAuthId = challengeAuth.getChallengeAuthId();
         this.title = challengeAuth.getTitle();
         this.content = challengeAuth.getContent();
         this.likeNum = challengeAuth.getLikeNum();

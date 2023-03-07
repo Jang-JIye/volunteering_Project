@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ChallengeAuthRepository extends JpaRepository<ChallengeAuth, Long> {
 
     Optional<ChallengeAuth> findByChallengeAuthId(Long challengeAuthId);
+    List<ChallengeAuth> findAllByUserId(String userId);
 }

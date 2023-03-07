@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
     VolunteerWorkPost volunteerWorkPost = volunteerWorkPostRepository.findById(postId).orElseThrow(
         () -> new IllegalArgumentException("해당 게시글이 없습니다.")
     );
-    Comment comment = new Comment(requestDto, userDetails.getUserId(),
+    Comment comment = new Comment(requestDto.getComments(), userDetails.getUserId(),
         userDetails.getUser().getNickname(), postId);
     commentRepository.save(comment);
     return new CommentResponseDto(comment);

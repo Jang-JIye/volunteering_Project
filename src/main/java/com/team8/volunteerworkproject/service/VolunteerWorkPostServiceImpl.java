@@ -4,8 +4,6 @@ import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
 import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
-import com.team8.volunteerworkproject.repository.UserRepository;
-import com.team8.volunteerworkproject.repository.VolunteerWorkPostLikeRepository;
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +24,9 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
   @Transactional
   public VolunteerWorkPostResponseDto createPost(String userId,
       VolunteerWorkPostRequestDto requestDto) {
-//        User user = (User) userRepository.findByUserId(userDetails.getUserId()).orElseThrow(() -> new IllegalArgumentException("동일한 유저가 아님"));
 
     VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(),
-            /*requestDto.getPostStatus(),*/ requestDto.getArea(), requestDto.getCenterName(), requestDto.getDate());//닉네임, 지역,
+             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(), requestDto.getMaxEnrollmentNum(), requestDto.getImage());//닉네임, 지역,
     volunteerWorkPostRepository.save(post);
 
     return new VolunteerWorkPostResponseDto(post);
@@ -46,9 +43,6 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     if (!post.getUserId().equals(userId)) {
       throw new IllegalArgumentException("게시글의 작성자가 아닙니다.");
     } else {
-//            post.update(requestDto);
-//            volunteerWorkPostRepository.save(post);
-//            volunteerWorkPostRepository.save(post); // update 로 변경된 나머지를 다시 DB에 저장
       post.update(requestDto);
     }
     return new VolunteerWorkPostResponseDto(post);
