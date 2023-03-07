@@ -47,6 +47,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
     http.cors().and().csrf().disable().authorizeHttpRequests()
         .requestMatchers(HttpMethod.OPTIONS).permitAll()
         .requestMatchers("/users/signup").permitAll()
