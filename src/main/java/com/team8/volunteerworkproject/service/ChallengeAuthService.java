@@ -20,6 +20,7 @@ public interface ChallengeAuthService {
     ChallengeAuthResponseDto getCahllengeAuth(Long challengeAuthId);
     List<AllChallengeAuthResponseDto> getAllChallengeMyAuth(String userId);
     ChallengeAuthResponseDto updateChallengeAuth(@PathVariable Long challengeAuthId, ChallengeAuthRequestDto requestDto, String imgPath, String userId);
+    String getchallengeAuthImage(String userId, Long challengeAuthId);
 
 
 }

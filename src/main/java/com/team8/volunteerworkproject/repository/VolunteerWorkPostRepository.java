@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface VolunteerWorkPostRepository extends JpaRepository<VolunteerWorkPost, Long> {
     Optional<VolunteerWorkPost> findByPostId(Long postId);
+    Optional<VolunteerWorkPost> findByPostIdAndUserId(Long postId, String userId);
     List<VolunteerWorkPost> findAllByOrderByCreatedAtDesc();
 }

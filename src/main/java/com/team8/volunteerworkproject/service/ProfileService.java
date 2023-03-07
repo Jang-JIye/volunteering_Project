@@ -9,8 +9,9 @@ public interface ProfileService {
 //  ProfileResponseDto createProfile(String userId, ProfileRequestDto requestDto);
 
   ProfileResponseDto getCustomerProfile(String userId);
+  String getProfileImage(String userId);
+  ProfileResponseDto updateProfile(String userId, ProfileRequestDto requestDto, String imgPath);
 
-  ProfileResponseDto updateProfile(UserDetailsImpl userDetails, ProfileRequestDto requestDto);
 
 
 

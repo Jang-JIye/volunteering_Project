@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface ChallengeService {
 
-    ChallengeResponseDto createChallenge(ChallengeRequestDto requestDto);
+    ChallengeResponseDto createChallenge(ChallengeRequestDto requestDto, String imgPath);
 
-    ChallengeResponseDto updateChallenge(@PathVariable Long ChallengeId, ChallengeRequestDto requestDto);
+    ChallengeResponseDto updateChallenge(@PathVariable Long challengeId, ChallengeRequestDto requestDto, String imgPath);
+    String getChallengeImage(Long challengeId);
 
     void deleteChallenge(@PathVariable Long challengeId);
 

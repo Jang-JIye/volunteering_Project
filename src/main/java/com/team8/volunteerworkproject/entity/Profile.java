@@ -45,30 +45,26 @@ public class Profile extends Timestamp{
     this.interestArea = interestArea;
   }
 
-  public Profile(String userId, String nickname) {
+  public Profile(String userId, String nickname, String image) {
     this.userId = userId;
     this.nickname = nickname;
+    this.image = image;
   }
 
-  public void updateWithImage(ProfileRequestDto requestDto) {
+
+  public void updateProfile(ProfileRequestDto requestDto, String image) {
     this.nickname = requestDto.getNickname();
     this.phoneNumber = requestDto.getPhoneNumber();
     this.interestArea = requestDto.getInterestArea();
-    this.image = requestDto.getImage();
+    this.image = image;
   }
 
-  public void updateWithoutImage(ProfileRequestDto requestDto) {
-    this.nickname = requestDto.getNickname();
-    this.phoneNumber = requestDto.getPhoneNumber();
-    this.interestArea = requestDto.getInterestArea();
+  public void updateProfileImage(String image){
+    this.image = image;
   }
-
 
   public void changeUserEnum(UserStatus status){
     this.status = status;
   }
 
-  public void updateProfileImage(String filePath) {
-    this.image = filePath;
-  }
 }

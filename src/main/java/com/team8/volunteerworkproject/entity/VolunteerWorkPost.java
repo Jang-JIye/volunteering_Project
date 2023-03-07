@@ -84,13 +84,12 @@ public class VolunteerWorkPost extends Timestamp {
     this.image = image;
   }
 
-
-
-  public void update(VolunteerWorkPostRequestDto requestDto) {//지역, 상태,
+  public void update(VolunteerWorkPostRequestDto requestDto, String imgPath) {//지역, 상태,
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
     this.area = requestDto.getArea();
     this.endTime = requestDto.getEndTime();
+    this.image = imgPath;
   }
 
 }
