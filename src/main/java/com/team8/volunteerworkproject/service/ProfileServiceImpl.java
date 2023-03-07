@@ -65,12 +65,13 @@ public class ProfileServiceImpl implements ProfileService {
   @Override
   public ProfileResponseDto updateProfile(String userId, ProfileRequestDto requestDto, String imgPath) {
     User user = userRepository.findByUserId(userId).orElseThrow(
+
         () -> new IllegalArgumentException("등록된 아이디가 없습니다.")
     );
-    Profile profile = profileRepository.findByUserId(userId).orElseThrow(
+    Profile profile = profileRepository.findByUserId(userDetails.getUserId()).orElseThrow(
         () -> new IllegalArgumentException("프로필이 존재하지 않습니다.")
     );
-    if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+    if (!passwordEncoder.matches(requestDto.getPassword(), userDetails.getUser().getPassword())) {
       throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
     }
       profile.updateProfile(requestDto, CLOUD_FRONT_DOMAIN_NAME+imgPath);
@@ -78,7 +79,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     profileRepository.save(profile);
     userRepository.save(user);
-    return new ProfileResponseDto(userId, profile);
+    return new ProfileResponseDto(userDetails.getUserId(), profile);
   }
 
 }

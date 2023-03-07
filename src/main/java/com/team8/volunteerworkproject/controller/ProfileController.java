@@ -70,6 +70,7 @@ public class ProfileController {
         imgPath);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK,
         "프로필이 수정되었습니다.", data);
+
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);

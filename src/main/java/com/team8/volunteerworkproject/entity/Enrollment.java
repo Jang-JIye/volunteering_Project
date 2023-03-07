@@ -5,6 +5,9 @@ import com.team8.volunteerworkproject.enums.EnrollmentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DialectOverride;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -34,11 +37,32 @@ public class Enrollment extends  Timestamp{
     @Column(name = "post_id", insertable=false, updatable=false)
     private Long postId;
 
+    @Version
+    private Long version;
+    private EnrollmentStatus status;
+    private LocalDateTime createdAt;
+
 
     public Enrollment(Long postId, EnrollmentRequestDto requestDto, String userId, VolunteerWorkPost post) {
         this.userId = userId;
         this.username = requestDto.getUsername();
         this.phoneNumber = requestDto.getPhoneNumber();
         this.post = post;
+    }
+
+    public void setStatus(EnrollmentStatus status) {
+        this.status = status;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime now) {
+
     }
 }
