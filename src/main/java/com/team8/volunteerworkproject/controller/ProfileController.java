@@ -47,7 +47,7 @@ public class ProfileController {
 
   @PatchMapping("/mypage/profiles")
   public ResponseEntity<StatusAndDataResponseDto> updateProfile(@RequestBody ProfileRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    ProfileResponseDto data = profileService.updateProfile(userDetails.getUserId(), requestDto);
+    ProfileResponseDto data = profileService.updateProfile(userDetails, requestDto);
     StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "프로필 수정이 완료되었습니다.", data);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));
