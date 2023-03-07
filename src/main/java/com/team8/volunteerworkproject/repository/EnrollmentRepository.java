@@ -10,19 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository <Enrollment, String> {
-
-/*
-    void attend(Enrollment enrollment);
-
-    void cancel(Enrollment enrollment);
-*/
-
     Optional<Enrollment> findByEnrollmentId(Long enrollmentId);
     List<Enrollment> findAllByUserIdAndEnrollmentStatusOrderByCreatedAtDesc(String userId, EnrollmentStatus status);
-    //List<Enrollment> findAllByPostIdOrderByCreatedAtDesc(Long postId);
-    List<Enrollment> findAllByOrderByCreatedAtDesc();
     List<Enrollment> findByUserIdAndPost_PostId(String userId, Long postId);
-
-    //List<Enrollment> findByPostIdOrderByCreatedAtDesc(Long postId);
+    List<Enrollment> findAllByPost_PostIdOrderByCreatedAtDesc(Long postId);
+    List<Enrollment> findByPost_PostId(Long postId);
 }
 

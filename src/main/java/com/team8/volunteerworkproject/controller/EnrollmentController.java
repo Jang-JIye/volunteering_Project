@@ -72,7 +72,7 @@ public class EnrollmentController {
     //봉사 게시글 별 참여 신청 내역
     @GetMapping("/volunteerWorkPosts/{postId}/enrollments")
     public ResponseEntity<StatusAndDataResponseDto> getEnrollmentList(@PathVariable Long postId) {
-        List <EnrollmentResponseDto> data = enrollmentService.getEnrollmentList();
+        List <EnrollmentResponseDto> data = enrollmentService.getEnrollmentList(postId);
 
         StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "참여신청 조회가 완료되었습니다.", data);
 

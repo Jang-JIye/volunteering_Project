@@ -48,8 +48,24 @@ public class EnrollmentServiceImpl implements EnrollmentService {
       throw new IllegalArgumentException("이미 해당 게시글에 참여하셨습니다.");
     }
 
+    //참가 인원 수 체크
+    int maxEnrollmentNum = post.getMaxEnrollmentNum();
+    List<Enrollment> enrollmentUsers = enrollmentRepository.findByPost_PostId(postId);
+    if (enrollmentUsers.size() >= maxEnrollmentNum) {
+      //최대 인원에 도달한 경우
+      Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
+      enrollment.setStatus(EnrollmentStatus.FALSE); //FALSE로 받아오기
+      enrollment.setCreatedAt(LocalDateTime.now());
+      enrollment.setUpdatedAt(LocalDateTime.now());
+      enrollmentRepository.save(enrollment);
 
+      return new EnrollmentResponseDto(enrollment);
+    }
+
+    //버전 관리를 위한 version 필드 추가
     Enrollment enrollment = new Enrollment(postId, requestDto, userId, post);
+    enrollment.setCreatedAt(LocalDateTime.now());
+    enrollment.setUpdatedAt(LocalDateTime.now());
     enrollmentRepository.save(enrollment);
 
     return new EnrollmentResponseDto(enrollment);
@@ -69,6 +85,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
       throw new IllegalArgumentException("게시글 참여신청자와 일치하지 않습니다.");
     }
     //참여 취소 통과
+    //버전 관리를 위한 version 필드 추가
     enrollmentRepository.delete(enrollment);
   }
 
@@ -87,8 +104,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
   //게시글 별 참여 신청 내역 조회
   @Override
-  public List<EnrollmentResponseDto> getEnrollmentList() {
-    List<Enrollment> postEnrollments = enrollmentRepository.findAllByOrderByCreatedAtDesc();
+  public List<EnrollmentResponseDto> getEnrollmentList(Long postId) {
+    List<Enrollment> postEnrollments = enrollmentRepository.findAllByPost_PostIdOrderByCreatedAtDesc(postId);
     List<EnrollmentResponseDto> responseDto = new ArrayList<>();
     for (Enrollment enrollment : postEnrollments) {
       responseDto.add (new EnrollmentResponseDto(enrollment));
