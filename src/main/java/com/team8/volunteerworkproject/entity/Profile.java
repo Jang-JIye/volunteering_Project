@@ -23,10 +23,11 @@ public class Profile extends Timestamp{
   private String nickname;
   private String interestArea;
   private String companyRegisterNumb;
-  private String image = "기본 프로필 사진";
+  private String image;
   @Column(nullable = false)
   @Enumerated(value = EnumType.STRING)
   private UserStatus status = UserStatus.NORMAL;
+
 
   public Profile(String userId, String phoneNumber, String nickname, String interestArea,
       String image) {
@@ -63,4 +64,11 @@ public class Profile extends Timestamp{
   }
 
 
+  public void changeUserEnum(UserStatus status){
+    this.status = status;
+  }
+
+  public void updateProfileImage(String filePath) {
+    this.image = filePath;
+  }
 }

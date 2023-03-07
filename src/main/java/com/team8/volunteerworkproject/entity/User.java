@@ -40,6 +40,13 @@ public class User extends Timestamp {
     this.companyRegisterNumb = companyRegisterNumb;
   }
 
+  public User(String userId, String password, String nickname, String companyRegisterNumb) {
+    this.userId = userId;
+    this.password = password;
+    this.nickname = nickname;
+    this.companyRegisterNumb = companyRegisterNumb;
+  }
+
   public void changeRole(UserRoleEnum role) {
     this.role = role;
   }

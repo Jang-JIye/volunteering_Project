@@ -10,7 +10,7 @@ public interface ProfileService {
 
   ProfileResponseDto getCustomerProfile(String userId);
 
-  ProfileResponseDto updateProfile(String userId, ProfileRequestDto requestDto);
+  ProfileResponseDto updateProfile(UserDetailsImpl userDetails, ProfileRequestDto requestDto);
 
 
 

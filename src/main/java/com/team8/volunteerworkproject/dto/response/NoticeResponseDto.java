@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class NoticeResponseDto  extends  Timestamp{
 
-    private String userId;
+
 
     private String title;
 
@@ -21,25 +21,21 @@ public class NoticeResponseDto  extends  Timestamp{
 
     private LocalDateTime modifiedAt;
 
+    private Long noticeId;
 
 
 
-    public NoticeResponseDto(String userId, Notice notice) {
-        this.userId = userId;
+
+    public NoticeResponseDto(Notice notice) {
         this.title = notice.getTitle();
         this.content = notice.getContent();
         this.createdAt = notice.getCreatedAt();
         this.modifiedAt =notice.getModifiedAt();
+        this.noticeId = notice.getNoticeId();
 
 
     }
 
-    public NoticeResponseDto(Notice notice) {
-        this.userId = notice.getUserId();
-        this.title = notice.getTitle();
-        this.content =notice.getContent();
-        this.createdAt = notice.getCreatedAt();
-        this.modifiedAt =notice.getModifiedAt();
-    }
+
 
 }

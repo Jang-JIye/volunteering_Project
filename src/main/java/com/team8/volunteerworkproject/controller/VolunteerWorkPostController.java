@@ -8,6 +8,7 @@ import com.team8.volunteerworkproject.dto.response.StatusResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.enums.StatusEnum;
 import com.team8.volunteerworkproject.enums.UserRoleEnum;
+import com.team8.volunteerworkproject.enums.UserRoleEnum.Authority;
 import com.team8.volunteerworkproject.security.UserDetailsImpl;
 import com.team8.volunteerworkproject.service.VolunteerWorkPostServiceImpl;
 import java.nio.charset.Charset;
@@ -31,18 +32,23 @@ public class VolunteerWorkPostController {
     private final VolunteerWorkPostServiceImpl volunteerWorkPostService;
 
     //게시글 작성
-    //@Secured(UserRoleEnum.Authority.COMPANY)
+    @Secured(UserRoleEnum.Authority.COMPANY)
     @PostMapping("/volunteerWorkPosts")
-    public ResponseEntity<StatusAndDataResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
-        StatusAndDataResponseDto responseDto = new StatusAndDataResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.", data);
+    public ResponseEntity<StatusResponseDto> createPost(@RequestBody VolunteerWorkPostRequestDto requestDto,
+                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        //VolunteerWorkPostResponseDto data =  volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
+        StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "게시글이 작성되었습니다.");
+        volunteerWorkPostService.createPost(userDetails.getUserId(), requestDto);
+
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
+
         return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
         // new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
     }
 
     //게시글 수정
+    @Secured(UserRoleEnum.Authority.COMPANY)
     @PatchMapping("/volunteerWorkPosts/{postId}")
     public ResponseEntity<StatusAndDataResponseDto> updatePost(@RequestBody VolunteerWorkPostRequestDto requestDto,
                                                    @PathVariable Long postId,
@@ -58,11 +64,13 @@ public class VolunteerWorkPostController {
 
 
     //게시글 삭제
+    @Secured({UserRoleEnum.Authority.COMPANY, Authority.ADMIN})
     @DeleteMapping("/volunteerWorkPosts/{postId}")
     public ResponseEntity<StatusResponseDto> deletePost(@PathVariable Long postId,
                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
         StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "해당 게시글이 삭제되었습니다.");
         volunteerWorkPostService.deletePost(postId, userDetails.getUserId());
+
         HttpHeaders headers = new HttpHeaders();//필추
         headers.setContentType((new MediaType("application", "json", Charset.forName("UTF-8"))));//필추
 

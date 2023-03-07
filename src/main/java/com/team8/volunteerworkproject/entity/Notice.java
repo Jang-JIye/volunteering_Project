@@ -14,9 +14,6 @@ import lombok.NoArgsConstructor;
         private Long noticeId;
 
         @Column(nullable = false)
-        private String userId;
-
-        @Column(nullable = false)
         private String title;
 
         @Column(nullable = false)
@@ -25,10 +22,9 @@ import lombok.NoArgsConstructor;
 
 
 
-        public Notice(NoticeRequestDto requestDto, String userId) {
-            this.title = requestDto.getTitle();
-            this.content = requestDto.getContent();
-            this.userId =userId;
+        public Notice(String title, String content) {
+            this.title = title;
+            this.content = content;
         }
 
 

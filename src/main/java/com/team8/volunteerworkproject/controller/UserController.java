@@ -36,6 +36,7 @@ public class UserController {
   private final JwtUtil jwtUtil;
   private final RedisDao redisDao;
 
+  //회원가입
   @PostMapping("/users/signup")
   public ResponseEntity<StatusResponseDto> signup(@RequestBody @Valid SignupRequestDto requestDto) {
     StatusResponseDto responseDto = new StatusResponseDto(StatusEnum.OK, "회원가입이 완료되었습니다.");
@@ -45,6 +46,7 @@ public class UserController {
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
 
+  //로그인
   @PostMapping("/users/signin")
   public ResponseEntity<StatusResponseDto> signin(@RequestBody @Valid SigninRequestDto requestDto,
       HttpServletResponse response) {
@@ -62,6 +64,7 @@ public class UserController {
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
 
+  //로그아웃
   @PostMapping("/users/signout")
   public ResponseEntity<StatusResponseDto> signout(
       @AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response) {
@@ -73,6 +76,7 @@ public class UserController {
     return new ResponseEntity<>(responseDto, headers, HttpStatus.OK);
   }
 
+  //회원탈퇴
   @PatchMapping("users/unregister")
   public ResponseEntity<StatusResponseDto> updateProfile(@RequestBody PwcheckRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
     userService.unregister(userDetails.getUserId(), requestDto);

@@ -84,8 +84,7 @@ public class JwtUtil {
   }
 
   public String getRefreshTokenFromRedis(String key) {
-//        String userId = this.getUserInfoFromToken(token).getSubject();
-    return redisDAO.getValues(key).toString();
+    return String.valueOf(redisDAO.getValues(key).orElse(""));
   }
 
   public String reissueAccessToken(String refreshToken) {

@@ -4,12 +4,6 @@ import com.team8.volunteerworkproject.dto.request.VolunteerWorkPostRequestDto;
 import com.team8.volunteerworkproject.dto.response.AllVolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.dto.response.VolunteerWorkPostResponseDto;
 import com.team8.volunteerworkproject.entity.VolunteerWorkPost;
-
-import com.team8.volunteerworkproject.entity.VolunteerWorkPostLike;
-import com.team8.volunteerworkproject.repository.VolunteerWorkPostLikeRepository;
-
-import com.team8.volunteerworkproject.repository.UserRepository;
-
 import com.team8.volunteerworkproject.repository.VolunteerWorkPostRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
 
   private final VolunteerWorkPostRepository volunteerWorkPostRepository;
-  private final UserRepository userRepository;
-
-  private final VolunteerWorkPostLikeRepository volunteerWorkPostLikeRepository;
+  private final VolunteerWorkPostLikeServiceImpl volunteerWorkPostLikeService;
 
   //게시글 작성
   @Override
   @Transactional
   public VolunteerWorkPostResponseDto createPost(String userId,
       VolunteerWorkPostRequestDto requestDto) {
-//        User user = (User) userRepository.findByUserId(userDetails.getUserId()).orElseThrow(() -> new IllegalArgumentException("동일한 유저가 아님"));
 
-    VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(),
-        requestDto.getContent(), requestDto.getPostStatus(), requestDto.getArea());//닉네임, 지역,
+    VolunteerWorkPost post = new VolunteerWorkPost(userId, requestDto.getTitle(), requestDto.getContent(),
+             requestDto.getArea(), requestDto.getCenterName(), requestDto.getEndTime(), requestDto.getMaxEnrollmentNum(), requestDto.getImage());//닉네임, 지역,
     volunteerWorkPostRepository.save(post);
 
     return new VolunteerWorkPostResponseDto(post);
@@ -52,15 +43,11 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     if (!post.getUserId().equals(userId)) {
       throw new IllegalArgumentException("게시글의 작성자가 아닙니다.");
     } else {
-//            post.update(requestDto);
-//            volunteerWorkPostRepository.save(post);
-//            volunteerWorkPostRepository.save(post); // update 로 변경된 나머지를 다시 DB에 저장
       post.update(requestDto);
     }
     return new VolunteerWorkPostResponseDto(post);
   }
 
-  
 
   //게시글 삭제
   @Override
@@ -74,14 +61,8 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
       volunteerWorkPostRepository.delete(post);
     }
   }
-  
-  //좋아요 갯수
-  @Override
-  public Integer count(Long postId) {
-      List<VolunteerWorkPostLike> postLikes = volunteerWorkPostLikeRepository.findAllByPostId(postId);
-      return postLikes.size();
-  }
-    
+
+
   // 전체 모집글 조회
   @Override
   @Transactional(readOnly = true)
@@ -101,7 +82,9 @@ public class VolunteerWorkPostServiceImpl implements VolunteerWorkPostService {
     VolunteerWorkPost post = volunteerWorkPostRepository.findByPostId(postId).orElseThrow(
         () -> new IllegalArgumentException("찾으시는 모집글이 없습니다.")
     );
-    VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post);
+    int likeNum = volunteerWorkPostLikeService.count(postId);
+    VolunteerWorkPostResponseDto responseDto = new VolunteerWorkPostResponseDto(post, likeNum);
+
     return responseDto;
   }
 
